@@ -2,6 +2,7 @@
 <html lang="en">
 <head>
   <meta charset="utf-8">
+  <script>document.documentElement.className += ' js';</script>
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Lakeview United Methodist Church | Lipa City, Batangas</title>
   <meta name="description" content="Lakeview United Methodist Church in Lipa City, Batangas. Sunday worship 9:30-11:30 AM, Connect Groups, Lunch Fellowship, and Discipleship Groups. Come as you are.">
@@ -21,6 +22,7 @@
     --serif:'Iowan Old Style','Hoefler Text','Palatino Linotype',Palatino,Georgia,serif;
     --sans:'Avenir Next','Segoe UI',system-ui,-apple-system,Helvetica,Arial,sans-serif;
     --wrap:1120px;
+    --ease:cubic-bezier(.16,.68,.32,1);
   }
   @media (prefers-color-scheme:dark){
     :root{
@@ -51,14 +53,40 @@
   .btn-ghost:hover{background:var(--ink);color:var(--paper)}
   section{padding:clamp(64px,9vw,120px) 0}
 
+  /* ===== PREMIUM MOTION ===== */
+  /* scroll reveal (hidden from first paint only when JS is on) */
+  html.js .reveal{opacity:0;transform:translateY(32px);filter:blur(6px);
+    transition:opacity .9s var(--ease), transform .9s var(--ease), filter .9s var(--ease)}
+  html.js .reveal.in{opacity:1;transform:none;filter:none}
+  /* staggered children */
+  .grid3 .card:nth-child(2),.contact-grid>div:nth-child(2){transition-delay:.09s}
+  .grid3 .card:nth-child(3){transition-delay:.18s}
+  .grid3 .card:nth-child(4){transition-delay:.10s}
+  .grid3 .card:nth-child(5){transition-delay:.19s}
+  .grid3 .card:nth-child(6){transition-delay:.28s}
+  .times-grid .time-card:nth-child(2){transition-delay:.10s}
+  .times-grid .time-card:nth-child(3){transition-delay:.20s}
+  /* parallax layer inside any clipped media box */
+  .media-inner{position:absolute;inset:-18% 0;height:136%;will-change:transform;backface-visibility:hidden}
+  .kenburns{width:100%;height:100%;animation:kb 20s ease-in-out infinite alternate;will-change:transform}
+  @keyframes kb{from{transform:scale(1)}to{transform:scale(1.09)}}
+
   /* NAV */
   .nav{position:sticky;top:0;z-index:50;background:color-mix(in srgb,var(--paper) 88%,transparent);
-       backdrop-filter:blur(10px);border-bottom:1px solid var(--line)}
-  .nav .wrap{display:flex;align-items:center;justify-content:space-between;height:74px}
+       backdrop-filter:blur(10px);border-bottom:1px solid var(--line);
+       transition:box-shadow .3s var(--ease), background .3s var(--ease)}
+  .nav.scrolled{box-shadow:0 10px 34px -20px rgba(0,0,0,.55)}
+  .nav .wrap{display:flex;align-items:center;justify-content:space-between;height:74px;
+       transition:height .3s var(--ease)}
+  .nav.scrolled .wrap{height:60px}
   .brand{display:flex;align-items:center;gap:.7rem;font-family:var(--serif);font-size:1.15rem;font-weight:600}
   .mark{width:34px;height:34px;flex:none}
   .nav-links{display:flex;gap:1.8rem;align-items:center;font-size:.93rem;font-weight:500}
+  .nav-links a{position:relative}
+  .nav-links a::after{content:"";position:absolute;left:0;right:100%;bottom:-4px;height:2px;
+       background:var(--flame);transition:right .3s var(--ease)}
   .nav-links a:hover{color:var(--flame)}
+  .nav-links a:hover::after{right:0}
   .nav-cta{display:flex;gap:.6rem;align-items:center}
   .menu-btn{display:none;background:none;border:0;color:inherit;font-size:1.6rem;cursor:pointer}
   @media(max-width:860px){
@@ -83,7 +111,7 @@
      background:
        linear-gradient(180deg,color-mix(in srgb,var(--lake-700) 30%,transparent),transparent 40%),
        linear-gradient(160deg,var(--lake-500),var(--lake-900))}
-  .hero-art figcaption{position:absolute;left:16px;bottom:16px;color:#fff;
+  .hero-art figcaption{position:absolute;left:16px;bottom:16px;color:#fff;z-index:2;
      font-size:.8rem;background:rgba(0,0,0,.35);padding:.35rem .7rem;border-radius:8px}
   @media(max-width:860px){.hero .wrap{grid-template-columns:1fr}.hero-art{aspect-ratio:16/11}}
 
@@ -102,14 +130,15 @@
   @media(max-width:820px){.split{grid-template-columns:1fr;gap:36px}}
   .band{background:var(--band)}
   .imgph{border-radius:16px;aspect-ratio:5/4;border:1px solid var(--line);
-    background:linear-gradient(150deg,var(--sand),var(--sand-deep));position:relative}
-  .imgph span{position:absolute;inset:0;display:grid;place-items:center;color:var(--muted);
+    position:relative;overflow:hidden}
+  .imgph .media-inner{background:linear-gradient(150deg,var(--sand),var(--sand-deep))}
+  .imgph span{position:absolute;inset:0;z-index:2;display:grid;place-items:center;color:var(--muted);
     font-size:.85rem;letter-spacing:.05em}
 
   .grid3{display:grid;grid-template-columns:repeat(3,1fr);gap:24px}
   @media(max-width:820px){.grid3{grid-template-columns:1fr}}
   .card{background:var(--card);border:1px solid var(--line);border-radius:16px;padding:30px;
-        transition:transform .18s,box-shadow .18s}
+        transition:transform .18s,box-shadow .18s, opacity .9s var(--ease), filter .9s var(--ease)}
   .card:hover{transform:translateY(-4px);box-shadow:0 18px 40px -24px rgba(0,0,0,.4)}
   .card h3{font-size:1.3rem;margin-bottom:.5rem}
   .card p{color:var(--muted);font-size:.96rem}
@@ -163,8 +192,16 @@
      font-size:.82rem;display:flex;justify-content:space-between;flex-wrap:wrap;gap:10px}
   @media(max-width:720px){.foot .wrap{grid-template-columns:1fr}}
 
-  @media(prefers-reduced-motion:reduce){*{transition:none!important}}
   :focus-visible{outline:2px solid var(--flame);outline-offset:3px;border-radius:4px}
+
+  /* accessibility: honor reduced-motion */
+  @media (prefers-reduced-motion:reduce){
+    html.js .reveal{opacity:1;transform:none;filter:none;transition:none}
+    .kenburns{animation:none}
+    .media-inner{position:absolute;inset:0;height:100%}
+    *{scroll-behavior:auto}
+  }
+  html{scroll-behavior:smooth}
 </style>
 </head>
 <body>
@@ -198,7 +235,7 @@
   <!-- HERO -->
   <section class="hero" id="top">
     <div class="wrap">
-      <div>
+      <div class="reveal">
         <p class="eyebrow">A United Methodist Congregation</p>
         <h1>Come as you are. There's a seat by the water for you.</h1>
         <p class="lead">Lakeview United Methodist Church is a warm, growing family in Lipa City, Batangas where honest questions, open hearts, and everyday people meet the grace of God. Whether you have been in church your whole life or have never set foot in one, you belong here.</p>
@@ -207,9 +244,9 @@
           <a href="#sermons" class="btn btn-ghost">Watch a Message</a>
         </div>
       </div>
-      <figure class="hero-art">
-        <!-- Replace .ph div with: <img src="images/hero.jpg" alt="Lakeview congregation gathered"> -->
-        <div class="ph"></div>
+      <figure class="hero-art reveal" data-speed="0.09">
+        <!-- To use a real photo: put <img class="kenburns" style="object-fit:cover" src="images/hero.jpg" alt="..."> inside .media-inner -->
+        <div class="media-inner"><div class="ph kenburns"></div></div>
         <figcaption>Sunday worship at Lakeview</figcaption>
       </figure>
     </div>
@@ -218,24 +255,24 @@
   <!-- SERVICE TIMES -->
   <section class="times" aria-label="Service times">
     <div class="wrap times-grid">
-      <div class="time-card">
+      <div class="time-card reveal">
         <div class="k">Sunday Worship</div>
         <div class="t">9:30 - 11:30 AM</div>
         <div class="d">Every Sunday · Everyone welcome</div>
       </div>
-      <div class="time-card">
+      <div class="time-card reveal">
         <div class="k">Connect Groups</div>
         <div class="t">11:30 AM - 12:00 NN</div>
         <div class="d">Right after worship, over the week ahead</div>
       </div>
-      <div class="time-card">
+      <div class="time-card reveal">
         <div class="k">Find Us</div>
         <div class="t">Brgy. Halang</div>
         <div class="d">Purok 1, Lipa City, Batangas 4217</div>
       </div>
     </div>
     <div class="wrap" style="margin-top:22px">
-      <p style="text-align:center;color:#c4dadb;font-size:.95rem">
+      <p class="reveal" style="text-align:center;color:#c4dadb;font-size:.95rem">
         Stay for <strong style="color:#fff">Lunch Fellowship</strong> after Connect Groups, then
         <strong style="color:#fff">Discipleship Groups</strong> continue through the afternoon. Come for the morning, stay for the day.
       </p>
@@ -245,8 +282,11 @@
   <!-- WELCOME / PASTOR -->
   <section id="about">
     <div class="wrap split">
-      <div class="imgph"><span>[ Photo: Pastor / congregation ]</span></div>
-      <div>
+      <div class="imgph reveal" data-speed="0.07">
+        <div class="media-inner"></div>
+        <span>[ Photo: Pastor / congregation ]</span>
+      </div>
+      <div class="reveal">
         <p class="eyebrow">Welcome</p>
         <h2>A church built on grace, not perfection</h2>
         <p class="lead" style="margin-top:1.1rem">We are ordinary people learning to follow Jesus together. As Methodists, we believe grace goes before us, meets us, and grows us. You will find real friendship, thoughtful teaching, and a community that shows up for one another Monday through Saturday too.</p>
@@ -259,38 +299,38 @@
   <!-- MINISTRIES -->
   <section class="band" id="ministries">
     <div class="wrap">
-      <div class="section-head">
+      <div class="section-head reveal">
         <p class="eyebrow">Ministries</p>
         <h2>There's a place for every season of life</h2>
         <p class="lead">From your youngest to your oldest, from first questions to lifelong faith, here is where people connect at Lakeview.</p>
       </div>
       <div class="grid3">
-        <div class="card">
+        <div class="card reveal">
           <div class="icon">&#9733;</div>
           <h3>Kids</h3>
           <p>Safe, joyful, Bible-based classes for children during worship. Check-in is quick and secure.</p>
         </div>
-        <div class="card">
+        <div class="card reveal">
           <div class="icon">&#9670;</div>
           <h3>Youth</h3>
           <p>Students gather for games, real talk, and a faith that holds up in the real world.</p>
         </div>
-        <div class="card">
+        <div class="card reveal">
           <div class="icon">&#9829;</div>
           <h3>Connect &amp; Discipleship Groups</h3>
           <p>Life is better in circles than rows. Join a group that studies Scripture and does life together.</p>
         </div>
-        <div class="card">
+        <div class="card reveal">
           <div class="icon">&#9835;</div>
           <h3>Music &amp; Worship</h3>
           <p>If you love to sing or play, there's a spot for you on the worship team.</p>
         </div>
-        <div class="card">
+        <div class="card reveal">
           <div class="icon">&#10010;</div>
           <h3>Outreach &amp; Missions</h3>
           <p>We serve Lipa City and nearby barangays through feeding programs, outreach, and partnerships that put faith into action.</p>
         </div>
-        <div class="card">
+        <div class="card reveal">
           <div class="icon">&#9997;</div>
           <h3>Prayer</h3>
           <p>Carrying something heavy? Our prayer team would be honored to pray with you this week, in confidence.</p>
@@ -302,22 +342,22 @@
   <!-- EVENTS -->
   <section id="events">
     <div class="wrap">
-      <div class="section-head">
+      <div class="section-head reveal">
         <p class="eyebrow">What's Coming Up</p>
         <h2>Events &amp; gatherings</h2>
       </div>
       <!-- Replace these with your real events. -->
-      <div class="event">
+      <div class="event reveal">
         <div class="date-chip"><div class="m">Jul</div><div class="d">20</div></div>
         <div><h3>Community Fellowship</h3><p>Food, games, and neighbors. Bring a friend.</p></div>
         <a href="#visit" class="btn btn-ghost">Details</a>
       </div>
-      <div class="event">
+      <div class="event reveal">
         <div class="date-chip"><div class="m">Jul</div><div class="d">27</div></div>
         <div><h3>Baptism Sunday</h3><p>Celebrating new life in Christ during worship. Want to be baptized? Let us know.</p></div>
         <a href="#visit" class="btn btn-ghost">Sign Up</a>
       </div>
-      <div class="event">
+      <div class="event reveal">
         <div class="date-chip"><div class="m">Aug</div><div class="d">03</div></div>
         <div><h3>Back-to-School Blessing</h3><p>A blessing for students and teachers as the school year begins.</p></div>
         <a href="#visit" class="btn btn-ghost">Details</a>
@@ -328,24 +368,24 @@
   <!-- SERMONS -->
   <section class="band" id="sermons">
     <div class="wrap">
-      <div class="section-head">
+      <div class="section-head reveal">
         <p class="eyebrow">Messages</p>
         <h2>Missed Sunday? Catch up here</h2>
         <p class="lead">Watch or listen to recent teaching anytime. New messages posted every week.</p>
       </div>
       <div class="grid3">
-        <div class="card">
-          <div class="imgph" style="aspect-ratio:16/9;margin-bottom:18px"><span>[ Video thumbnail ]</span></div>
+        <div class="card reveal">
+          <div class="imgph" style="aspect-ratio:16/9;margin-bottom:18px" data-speed="0.05"><div class="media-inner"></div><span>[ Video thumbnail ]</span></div>
           <h3>Grace Upon Grace</h3>
           <p>Part 1 of our series in the Gospel of John.</p>
         </div>
-        <div class="card">
-          <div class="imgph" style="aspect-ratio:16/9;margin-bottom:18px"><span>[ Video thumbnail ]</span></div>
+        <div class="card reveal">
+          <div class="imgph" style="aspect-ratio:16/9;margin-bottom:18px" data-speed="0.05"><div class="media-inner"></div><span>[ Video thumbnail ]</span></div>
           <h3>When the Water Is Deep</h3>
           <p>Finding steady faith in life's uncertain seasons.</p>
         </div>
-        <div class="card">
-          <div class="imgph" style="aspect-ratio:16/9;margin-bottom:18px"><span>[ Video thumbnail ]</span></div>
+        <div class="card reveal">
+          <div class="imgph" style="aspect-ratio:16/9;margin-bottom:18px" data-speed="0.05"><div class="media-inner"></div><span>[ Video thumbnail ]</span></div>
           <h3>The Table Is Open</h3>
           <p>What communion teaches us about belonging.</p>
         </div>
@@ -356,7 +396,7 @@
   <!-- GIVE -->
   <section id="give">
     <div class="wrap">
-      <div class="give">
+      <div class="give reveal">
         <p class="eyebrow" style="color:#ffd7cd">Generosity</p>
         <h2>Your giving makes ministry possible</h2>
         <p class="lead">Every gift helps us love Lipa City, care for families, and share hope.</p>
@@ -372,20 +412,20 @@
   <!-- VISIT / CONTACT -->
   <section class="band" id="visit">
     <div class="wrap">
-      <div class="section-head">
+      <div class="section-head reveal">
         <p class="eyebrow">Plan Your Visit</p>
         <h2>We would love to meet you</h2>
         <p class="lead">Tell us you're coming and we'll have someone ready to greet you and save you a seat. No pressure, no strings.</p>
       </div>
       <div class="contact-grid">
-        <div>
+        <div class="reveal">
           <div class="info-row"><div class="icon">&#9906;</div><div><div class="k">Address</div><div class="v">Purok 1, Brgy. Halang, Lipa City, Batangas 4217</div></div></div>
           <div class="info-row"><div class="icon">&#9742;</div><div><div class="k">Phone</div><div class="v">[ your phone number ]</div></div></div>
           <div class="info-row"><div class="icon">&#9993;</div><div><div class="k">Email</div><div class="v">[ your email ]</div></div></div>
           <div class="info-row"><div class="icon">&#127760;</div><div><div class="k">Facebook</div><div class="v"><a href="https://web.facebook.com/profile.php?id=100064322214820" target="_blank" rel="noopener" style="color:var(--flame)">Message us on Facebook</a></div></div></div>
           <p style="margin-top:24px;color:var(--muted);font-size:.9rem">Prefer to just show up? That's completely fine. Come as you are.</p>
         </div>
-        <div>
+        <div class="reveal">
           <!-- Paste a GHL form embed here, or an embedded Google Map, or a Google Form. -->
           <div class="embed-slot">
             <div>
@@ -431,6 +471,52 @@
       <span>Made with grace</span>
     </div>
   </footer>
-<script>document.getElementById('yr').textContent=new Date().getFullYear();</script>
+
+<script>
+  document.getElementById('yr').textContent = new Date().getFullYear();
+  (function () {
+    var reduce = window.matchMedia && matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+    /* 1. Scroll reveal */
+    if ('IntersectionObserver' in window) {
+      var io = new IntersectionObserver(function (entries) {
+        entries.forEach(function (e) {
+          if (e.isIntersecting) { e.target.classList.add('in'); io.unobserve(e.target); }
+        });
+      }, { threshold: 0.15, rootMargin: '0px 0px -8% 0px' });
+      document.querySelectorAll('.reveal').forEach(function (el) { io.observe(el); });
+    } else {
+      document.querySelectorAll('.reveal').forEach(function (el) { el.classList.add('in'); });
+    }
+
+    if (reduce) return;
+
+    /* 2. Parallax on images */
+    var items = [].slice.call(document.querySelectorAll('[data-speed]')).map(function (el) {
+      return { el: el, inner: el.querySelector('.media-inner') || el, speed: parseFloat(el.dataset.speed) };
+    });
+    var vh = window.innerHeight, ticking = false;
+    function update() {
+      ticking = false;
+      var mid = vh / 2;
+      for (var i = 0; i < items.length; i++) {
+        var it = items[i], r = it.el.getBoundingClientRect();
+        if (r.bottom < -120 || r.top > vh + 120) continue;
+        var off = (r.top + r.height / 2) - mid;
+        it.inner.style.transform = 'translate3d(0,' + (-off * it.speed).toFixed(1) + 'px,0)';
+      }
+    }
+    function onScroll() { if (!ticking) { ticking = true; requestAnimationFrame(update); } }
+    window.addEventListener('scroll', onScroll, { passive: true });
+    window.addEventListener('resize', function () { vh = window.innerHeight; update(); });
+    update();
+
+    /* 3. Sticky nav condense */
+    var nav = document.querySelector('.nav');
+    window.addEventListener('scroll', function () {
+      nav.classList.toggle('scrolled', window.scrollY > 20);
+    }, { passive: true });
+  })();
+</script>
 </body>
 </html>
