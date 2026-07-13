@@ -1,0 +1,436 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Lakeview United Methodist Church | Lipa City, Batangas</title>
+  <meta name="description" content="Lakeview United Methodist Church in Lipa City, Batangas. Sunday worship 9:30-11:30 AM, Connect Groups, Lunch Fellowship, and Discipleship Groups. Come as you are.">
+  <meta name="theme-color" content="#0e2a33">
+  <meta property="og:title" content="Lakeview United Methodist Church">
+  <meta property="og:description" content="A warm United Methodist family in Lipa City, Batangas. Sunday worship at 9:30 AM. Come as you are.">
+  <meta property="og:type" content="website">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 40 40'><circle cx='20' cy='20' r='19' fill='%230e2a33'/><path d='M20 8v24M12 16h16' stroke='%239fd0d4' stroke-width='3' stroke-linecap='round'/><path d='M26 12c3 3 3 7 0 10-1-4-3-5-3-5 2 3 1 6-1 7 1-5-2-7-2-7 4-1 6-3 6-5z' fill='%23e2664e'/></svg>">
+<style>
+  :root{
+    --lake-900:#0e2a33; --lake-700:#144a56; --lake-500:#1f7a86; --lake-300:#5fb3ba;
+    --sand:#e9e2d3; --sand-deep:#d8cdb6;
+    --flame:#c8442b;            /* nod to the UMC cross-and-flame */
+    --ink:#12222a; --muted:#4c5f65;
+    --paper:#f7f4ee; --card:#ffffff; --line:#e2ddd2;
+    --band:#eef2f0;
+    --serif:'Iowan Old Style','Hoefler Text','Palatino Linotype',Palatino,Georgia,serif;
+    --sans:'Avenir Next','Segoe UI',system-ui,-apple-system,Helvetica,Arial,sans-serif;
+    --wrap:1120px;
+  }
+  @media (prefers-color-scheme:dark){
+    :root{
+      --ink:#eef3f2; --muted:#a9bcbf; --paper:#0d1c22; --card:#122932;
+      --line:#20404a; --band:#102630; --sand:#20343a; --sand-deep:#183038;
+      --lake-300:#6fc3ca; --flame:#e2664e;
+    }
+  }
+  html,body{margin:0;padding:0}
+  *{box-sizing:border-box}
+  body{background:var(--paper);color:var(--ink);font-family:var(--sans);line-height:1.6;
+      -webkit-font-smoothing:antialiased;overflow-x:hidden}
+  img{max-width:100%;display:block}
+  a{color:inherit;text-decoration:none}
+  .wrap{max-width:var(--wrap);margin:0 auto;padding:0 24px}
+  .eyebrow{font-size:.72rem;letter-spacing:.22em;text-transform:uppercase;
+           color:var(--flame);font-weight:700}
+  h1,h2,h3{font-family:var(--serif);font-weight:600;line-height:1.1;
+                       text-wrap:balance;margin:0}
+  h2{font-size:clamp(1.9rem,4vw,2.9rem);letter-spacing:-.01em}
+  .lead{font-size:1.12rem;color:var(--muted);max-width:60ch}
+  .btn{display:inline-flex;align-items:center;gap:.5rem;font-weight:600;font-size:.95rem;
+       padding:.85rem 1.5rem;border-radius:999px;transition:transform .15s,box-shadow .15s;
+       cursor:pointer;border:1px solid transparent}
+  .btn-primary{background:var(--flame);color:#fff}
+  .btn-primary:hover{transform:translateY(-2px);box-shadow:0 10px 24px -8px var(--flame)}
+  .btn-ghost{border-color:currentColor;color:var(--ink)}
+  .btn-ghost:hover{background:var(--ink);color:var(--paper)}
+  section{padding:clamp(64px,9vw,120px) 0}
+
+  /* NAV */
+  .nav{position:sticky;top:0;z-index:50;background:color-mix(in srgb,var(--paper) 88%,transparent);
+       backdrop-filter:blur(10px);border-bottom:1px solid var(--line)}
+  .nav .wrap{display:flex;align-items:center;justify-content:space-between;height:74px}
+  .brand{display:flex;align-items:center;gap:.7rem;font-family:var(--serif);font-size:1.15rem;font-weight:600}
+  .mark{width:34px;height:34px;flex:none}
+  .nav-links{display:flex;gap:1.8rem;align-items:center;font-size:.93rem;font-weight:500}
+  .nav-links a:hover{color:var(--flame)}
+  .nav-cta{display:flex;gap:.6rem;align-items:center}
+  .menu-btn{display:none;background:none;border:0;color:inherit;font-size:1.6rem;cursor:pointer}
+  @media(max-width:860px){
+    .nav-links{display:none}
+    .menu-btn{display:block}
+    .nav-links.open{display:flex;position:absolute;top:74px;left:0;right:0;flex-direction:column;
+      background:var(--paper);padding:24px;border-bottom:1px solid var(--line);gap:1.2rem}
+  }
+
+  /* HERO */
+  .hero{position:relative;padding:clamp(80px,14vw,150px) 0 clamp(64px,9vw,120px);
+        background:
+          radial-gradient(120% 90% at 80% -10%, color-mix(in srgb,var(--lake-300) 30%,transparent), transparent 60%),
+          linear-gradient(180deg,var(--band),var(--paper))}
+  .hero .wrap{display:grid;grid-template-columns:1.1fr .9fr;gap:56px;align-items:center}
+  .hero h1{font-size:clamp(2.6rem,6.2vw,4.6rem);letter-spacing:-.02em}
+  .hero .lead{margin-top:1.3rem;font-size:1.2rem}
+  .hero-cta{display:flex;gap:.9rem;flex-wrap:wrap;margin-top:2rem}
+  .hero-art{position:relative;border-radius:20px;overflow:hidden;aspect-ratio:4/5;
+            border:1px solid var(--line);box-shadow:0 30px 60px -30px rgba(0,0,0,.4)}
+  .hero-art .ph{width:100%;height:100%;
+     background:
+       linear-gradient(180deg,color-mix(in srgb,var(--lake-700) 30%,transparent),transparent 40%),
+       linear-gradient(160deg,var(--lake-500),var(--lake-900))}
+  .hero-art figcaption{position:absolute;left:16px;bottom:16px;color:#fff;
+     font-size:.8rem;background:rgba(0,0,0,.35);padding:.35rem .7rem;border-radius:8px}
+  @media(max-width:860px){.hero .wrap{grid-template-columns:1fr}.hero-art{aspect-ratio:16/11}}
+
+  /* SERVICE STRIP */
+  .times{background:var(--lake-900);color:#eaf3f4}
+  .times .wrap.times-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:2px;
+     background:color-mix(in srgb,#fff 8%,transparent);border-radius:16px;overflow:hidden}
+  .time-card{background:var(--lake-900);padding:34px 28px}
+  .time-card .k{font-size:.72rem;letter-spacing:.18em;text-transform:uppercase;color:var(--lake-300)}
+  .time-card .t{font-family:var(--serif);font-size:1.8rem;margin:.35rem 0}
+  .time-card .d{color:#b9d2d4;font-size:.95rem}
+  @media(max-width:720px){.times .wrap.times-grid{grid-template-columns:1fr}}
+
+  /* GENERIC BLOCKS */
+  .split{display:grid;grid-template-columns:1fr 1fr;gap:56px;align-items:center}
+  @media(max-width:820px){.split{grid-template-columns:1fr;gap:36px}}
+  .band{background:var(--band)}
+  .imgph{border-radius:16px;aspect-ratio:5/4;border:1px solid var(--line);
+    background:linear-gradient(150deg,var(--sand),var(--sand-deep));position:relative}
+  .imgph span{position:absolute;inset:0;display:grid;place-items:center;color:var(--muted);
+    font-size:.85rem;letter-spacing:.05em}
+
+  .grid3{display:grid;grid-template-columns:repeat(3,1fr);gap:24px}
+  @media(max-width:820px){.grid3{grid-template-columns:1fr}}
+  .card{background:var(--card);border:1px solid var(--line);border-radius:16px;padding:30px;
+        transition:transform .18s,box-shadow .18s}
+  .card:hover{transform:translateY(-4px);box-shadow:0 18px 40px -24px rgba(0,0,0,.4)}
+  .card h3{font-size:1.3rem;margin-bottom:.5rem}
+  .card p{color:var(--muted);font-size:.96rem}
+  .icon{width:44px;height:44px;border-radius:12px;display:grid;place-items:center;
+        background:color-mix(in srgb,var(--flame) 14%,transparent);color:var(--flame);margin-bottom:16px}
+
+  .section-head{max-width:64ch;margin-bottom:48px}
+  .section-head h2{margin-top:.6rem}
+  .section-head p{margin-top:1rem}
+
+  /* EVENTS */
+  .event{display:grid;grid-template-columns:96px 1fr auto;gap:24px;align-items:center;
+     padding:24px 0;border-top:1px solid var(--line)}
+  .event:last-child{border-bottom:1px solid var(--line)}
+  .date-chip{text-align:center;background:var(--card);border:1px solid var(--line);
+     border-radius:12px;padding:12px 8px}
+  .date-chip .m{font-size:.7rem;letter-spacing:.12em;text-transform:uppercase;color:var(--flame);font-weight:700}
+  .date-chip .d{font-family:var(--serif);font-size:1.7rem;line-height:1}
+  .event h3{font-size:1.2rem}
+  .event p{color:var(--muted);font-size:.92rem;margin-top:.2rem}
+  @media(max-width:640px){.event{grid-template-columns:72px 1fr}.event .btn{grid-column:2}}
+
+  /* GIVE */
+  .give{background:
+      radial-gradient(90% 120% at 10% 10%, color-mix(in srgb,var(--flame) 16%,transparent),transparent 55%),
+      var(--lake-900);color:#eaf3f4;border-radius:24px;padding:clamp(40px,6vw,72px);text-align:center}
+  .give h2{color:#fff}
+  .give .lead{color:#c4dadb;margin:1rem auto 2rem}
+  .give .btn-ghost{color:#fff}
+  .give .btn-ghost:hover{background:#fff;color:var(--lake-900)}
+
+  /* CONTACT */
+  .contact-grid{display:grid;grid-template-columns:1fr 1fr;gap:48px}
+  @media(max-width:820px){.contact-grid{grid-template-columns:1fr}}
+  .info-row{display:flex;gap:14px;padding:16px 0;border-bottom:1px solid var(--line)}
+  .info-row .icon{margin:0;flex:none;width:40px;height:40px}
+  .info-row .k{font-weight:600}
+  .info-row .v{color:var(--muted);font-size:.95rem}
+  .embed-slot{border:1.5px dashed var(--line);border-radius:16px;min-height:420px;
+     display:grid;place-items:center;text-align:center;color:var(--muted);padding:28px;
+     background:var(--card)}
+
+  /* FOOTER */
+  .foot{background:var(--lake-900);color:#b9d2d4;padding:64px 0 40px}
+  .foot .wrap{display:grid;grid-template-columns:2fr 1fr 1fr;gap:40px}
+  .foot .brand{color:#fff}
+  .foot h4{color:#fff;font-family:var(--serif);font-size:1.05rem;margin:0 0 14px}
+  .foot a{display:block;padding:5px 0;font-size:.93rem}
+  .foot a:hover{color:#fff}
+  .foot-bottom{border-top:1px solid rgba(255,255,255,.12);margin-top:40px;padding-top:20px;
+     font-size:.82rem;display:flex;justify-content:space-between;flex-wrap:wrap;gap:10px}
+  @media(max-width:720px){.foot .wrap{grid-template-columns:1fr}}
+
+  @media(prefers-reduced-motion:reduce){*{transition:none!important}}
+  :focus-visible{outline:2px solid var(--flame);outline-offset:3px;border-radius:4px}
+</style>
+</head>
+<body>
+
+  <!-- NAV -->
+  <header class="nav">
+    <div class="wrap">
+      <a class="brand" href="#top">
+        <svg class="mark" viewBox="0 0 40 40" aria-hidden="true">
+          <circle cx="20" cy="20" r="19" fill="none" stroke="var(--lake-500)" stroke-width="2"/>
+          <path d="M20 8v24M12 16h16" stroke="var(--lake-700)" stroke-width="3" stroke-linecap="round"/>
+          <path d="M26 12c3 3 3 7 0 10-1-4-3-5-3-5 2 3 1 6-1 7 1-5-2-7-2-7 4-1 6-3 6-5z" fill="var(--flame)"/>
+        </svg>
+        Lakeview UMC
+      </a>
+      <nav class="nav-links" id="menu">
+        <a href="#visit">Visit</a>
+        <a href="#about">About</a>
+        <a href="#ministries">Ministries</a>
+        <a href="#events">Events</a>
+        <a href="#sermons">Sermons</a>
+        <a href="#give">Give</a>
+      </nav>
+      <div class="nav-cta">
+        <a href="#visit" class="btn btn-primary">Plan a Visit</a>
+        <button class="menu-btn" aria-label="Menu" onclick="document.getElementById('menu').classList.toggle('open')">&#9776;</button>
+      </div>
+    </div>
+  </header>
+
+  <!-- HERO -->
+  <section class="hero" id="top">
+    <div class="wrap">
+      <div>
+        <p class="eyebrow">A United Methodist Congregation</p>
+        <h1>Come as you are. There's a seat by the water for you.</h1>
+        <p class="lead">Lakeview United Methodist Church is a warm, growing family in Lipa City, Batangas where honest questions, open hearts, and everyday people meet the grace of God. Whether you have been in church your whole life or have never set foot in one, you belong here.</p>
+        <div class="hero-cta">
+          <a href="#visit" class="btn btn-primary">Plan Your First Visit</a>
+          <a href="#sermons" class="btn btn-ghost">Watch a Message</a>
+        </div>
+      </div>
+      <figure class="hero-art">
+        <!-- Replace .ph div with: <img src="images/hero.jpg" alt="Lakeview congregation gathered"> -->
+        <div class="ph"></div>
+        <figcaption>Sunday worship at Lakeview</figcaption>
+      </figure>
+    </div>
+  </section>
+
+  <!-- SERVICE TIMES -->
+  <section class="times" aria-label="Service times">
+    <div class="wrap times-grid">
+      <div class="time-card">
+        <div class="k">Sunday Worship</div>
+        <div class="t">9:30 - 11:30 AM</div>
+        <div class="d">Every Sunday · Everyone welcome</div>
+      </div>
+      <div class="time-card">
+        <div class="k">Connect Groups</div>
+        <div class="t">11:30 AM - 12:00 NN</div>
+        <div class="d">Right after worship, over the week ahead</div>
+      </div>
+      <div class="time-card">
+        <div class="k">Find Us</div>
+        <div class="t">Brgy. Halang</div>
+        <div class="d">Purok 1, Lipa City, Batangas 4217</div>
+      </div>
+    </div>
+    <div class="wrap" style="margin-top:22px">
+      <p style="text-align:center;color:#c4dadb;font-size:.95rem">
+        Stay for <strong style="color:#fff">Lunch Fellowship</strong> after Connect Groups, then
+        <strong style="color:#fff">Discipleship Groups</strong> continue through the afternoon. Come for the morning, stay for the day.
+      </p>
+    </div>
+  </section>
+
+  <!-- WELCOME / PASTOR -->
+  <section id="about">
+    <div class="wrap split">
+      <div class="imgph"><span>[ Photo: Pastor / congregation ]</span></div>
+      <div>
+        <p class="eyebrow">Welcome</p>
+        <h2>A church built on grace, not perfection</h2>
+        <p class="lead" style="margin-top:1.1rem">We are ordinary people learning to follow Jesus together. As Methodists, we believe grace goes before us, meets us, and grows us. You will find real friendship, thoughtful teaching, and a community that shows up for one another Monday through Saturday too.</p>
+        <p style="margin-top:1.1rem;color:var(--muted)">"My hope is that the moment you walk in, you feel less like a visitor and more like you're coming home."<br><strong style="color:var(--ink)">- Rev. Jesus Villamin, Pastor</strong></p>
+        <a href="#visit" class="btn btn-ghost" style="margin-top:1.6rem">What to Expect</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- MINISTRIES -->
+  <section class="band" id="ministries">
+    <div class="wrap">
+      <div class="section-head">
+        <p class="eyebrow">Ministries</p>
+        <h2>There's a place for every season of life</h2>
+        <p class="lead">From your youngest to your oldest, from first questions to lifelong faith, here is where people connect at Lakeview.</p>
+      </div>
+      <div class="grid3">
+        <div class="card">
+          <div class="icon">&#9733;</div>
+          <h3>Kids</h3>
+          <p>Safe, joyful, Bible-based classes for children during worship. Check-in is quick and secure.</p>
+        </div>
+        <div class="card">
+          <div class="icon">&#9670;</div>
+          <h3>Youth</h3>
+          <p>Students gather for games, real talk, and a faith that holds up in the real world.</p>
+        </div>
+        <div class="card">
+          <div class="icon">&#9829;</div>
+          <h3>Connect &amp; Discipleship Groups</h3>
+          <p>Life is better in circles than rows. Join a group that studies Scripture and does life together.</p>
+        </div>
+        <div class="card">
+          <div class="icon">&#9835;</div>
+          <h3>Music &amp; Worship</h3>
+          <p>If you love to sing or play, there's a spot for you on the worship team.</p>
+        </div>
+        <div class="card">
+          <div class="icon">&#10010;</div>
+          <h3>Outreach &amp; Missions</h3>
+          <p>We serve Lipa City and nearby barangays through feeding programs, outreach, and partnerships that put faith into action.</p>
+        </div>
+        <div class="card">
+          <div class="icon">&#9997;</div>
+          <h3>Prayer</h3>
+          <p>Carrying something heavy? Our prayer team would be honored to pray with you this week, in confidence.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- EVENTS -->
+  <section id="events">
+    <div class="wrap">
+      <div class="section-head">
+        <p class="eyebrow">What's Coming Up</p>
+        <h2>Events &amp; gatherings</h2>
+      </div>
+      <!-- Replace these with your real events. -->
+      <div class="event">
+        <div class="date-chip"><div class="m">Jul</div><div class="d">20</div></div>
+        <div><h3>Community Fellowship</h3><p>Food, games, and neighbors. Bring a friend.</p></div>
+        <a href="#visit" class="btn btn-ghost">Details</a>
+      </div>
+      <div class="event">
+        <div class="date-chip"><div class="m">Jul</div><div class="d">27</div></div>
+        <div><h3>Baptism Sunday</h3><p>Celebrating new life in Christ during worship. Want to be baptized? Let us know.</p></div>
+        <a href="#visit" class="btn btn-ghost">Sign Up</a>
+      </div>
+      <div class="event">
+        <div class="date-chip"><div class="m">Aug</div><div class="d">03</div></div>
+        <div><h3>Back-to-School Blessing</h3><p>A blessing for students and teachers as the school year begins.</p></div>
+        <a href="#visit" class="btn btn-ghost">Details</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- SERMONS -->
+  <section class="band" id="sermons">
+    <div class="wrap">
+      <div class="section-head">
+        <p class="eyebrow">Messages</p>
+        <h2>Missed Sunday? Catch up here</h2>
+        <p class="lead">Watch or listen to recent teaching anytime. New messages posted every week.</p>
+      </div>
+      <div class="grid3">
+        <div class="card">
+          <div class="imgph" style="aspect-ratio:16/9;margin-bottom:18px"><span>[ Video thumbnail ]</span></div>
+          <h3>Grace Upon Grace</h3>
+          <p>Part 1 of our series in the Gospel of John.</p>
+        </div>
+        <div class="card">
+          <div class="imgph" style="aspect-ratio:16/9;margin-bottom:18px"><span>[ Video thumbnail ]</span></div>
+          <h3>When the Water Is Deep</h3>
+          <p>Finding steady faith in life's uncertain seasons.</p>
+        </div>
+        <div class="card">
+          <div class="imgph" style="aspect-ratio:16/9;margin-bottom:18px"><span>[ Video thumbnail ]</span></div>
+          <h3>The Table Is Open</h3>
+          <p>What communion teaches us about belonging.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- GIVE -->
+  <section id="give">
+    <div class="wrap">
+      <div class="give">
+        <p class="eyebrow" style="color:#ffd7cd">Generosity</p>
+        <h2>Your giving makes ministry possible</h2>
+        <p class="lead">Every gift helps us love Lipa City, care for families, and share hope.</p>
+        <!-- Point this at your GCash / bank / online giving link. -->
+        <div style="display:flex;gap:.9rem;justify-content:center;flex-wrap:wrap">
+          <a href="#visit" class="btn btn-primary">Give Online</a>
+          <a href="#visit" class="btn btn-ghost">Other Ways to Give</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- VISIT / CONTACT -->
+  <section class="band" id="visit">
+    <div class="wrap">
+      <div class="section-head">
+        <p class="eyebrow">Plan Your Visit</p>
+        <h2>We would love to meet you</h2>
+        <p class="lead">Tell us you're coming and we'll have someone ready to greet you and save you a seat. No pressure, no strings.</p>
+      </div>
+      <div class="contact-grid">
+        <div>
+          <div class="info-row"><div class="icon">&#9906;</div><div><div class="k">Address</div><div class="v">Purok 1, Brgy. Halang, Lipa City, Batangas 4217</div></div></div>
+          <div class="info-row"><div class="icon">&#9742;</div><div><div class="k">Phone</div><div class="v">[ your phone number ]</div></div></div>
+          <div class="info-row"><div class="icon">&#9993;</div><div><div class="k">Email</div><div class="v">[ your email ]</div></div></div>
+          <div class="info-row"><div class="icon">&#127760;</div><div><div class="k">Facebook</div><div class="v"><a href="https://web.facebook.com/profile.php?id=100064322214820" target="_blank" rel="noopener" style="color:var(--flame)">Message us on Facebook</a></div></div></div>
+          <p style="margin-top:24px;color:var(--muted);font-size:.9rem">Prefer to just show up? That's completely fine. Come as you are.</p>
+        </div>
+        <div>
+          <!-- Paste a GHL form embed here, or an embedded Google Map, or a Google Form. -->
+          <div class="embed-slot">
+            <div>
+              <strong style="color:var(--ink);display:block;margin-bottom:8px">[ Contact form or map goes here ]</strong>
+              Paste a GoHighLevel form embed, a Google Map, or a Google Form here.
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer class="foot">
+    <div class="wrap">
+      <div>
+        <div class="brand">
+          <svg class="mark" viewBox="0 0 40 40" aria-hidden="true">
+            <circle cx="20" cy="20" r="19" fill="none" stroke="#5fb3ba" stroke-width="2"/>
+            <path d="M20 8v24M12 16h16" stroke="#9fd0d4" stroke-width="3" stroke-linecap="round"/>
+            <path d="M26 12c3 3 3 7 0 10-1-4-3-5-3-5 2 3 1 6-1 7 1-5-2-7-2-7 4-1 6-3 6-5z" fill="#e2664e"/>
+          </svg>
+          Lakeview UMC
+        </div>
+        <p style="margin-top:14px;max-width:34ch;font-size:.92rem">A United Methodist congregation in Lipa City, Batangas. Open hearts. Open minds. Open doors.</p>
+      </div>
+      <div>
+        <h4>Visit</h4>
+        <a href="#visit">Plan a Visit</a>
+        <a href="#about">What to Expect</a>
+        <a href="#events">Events</a>
+        <a href="#sermons">Sermons</a>
+      </div>
+      <div>
+        <h4>Connect</h4>
+        <a href="#give">Give</a>
+        <a href="#ministries">Ministries</a>
+        <a href="https://web.facebook.com/profile.php?id=100064322214820" target="_blank" rel="noopener">Facebook</a>
+      </div>
+    </div>
+    <div class="wrap foot-bottom">
+      <span>&copy; <span id="yr"></span> Lakeview United Methodist Church</span>
+      <span>Made with grace</span>
+    </div>
+  </footer>
+<script>document.getElementById('yr').textContent=new Date().getFullYear();</script>
+</body>
+</html>
