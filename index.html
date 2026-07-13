@@ -171,21 +171,24 @@
         <p class="eyebrow">What's Coming Up</p>
         <h2>Events &amp; gatherings</h2>
       </div>
-      <!-- Replace these with your real events. -->
-      <div class="event reveal">
-        <div class="date-chip"><div class="m">Jul</div><div class="d">20</div></div>
-        <div><h3>Community Fellowship</h3><p>Food, games, and neighbors. Bring a friend.</p></div>
-        <a href="#visit" class="btn btn-ghost">Details</a>
-      </div>
-      <div class="event reveal">
-        <div class="date-chip"><div class="m">Jul</div><div class="d">27</div></div>
-        <div><h3>Baptism Sunday</h3><p>Celebrating new life in Christ during worship. Want to be baptized? Let us know.</p></div>
-        <a href="#visit" class="btn btn-ghost">Sign Up</a>
-      </div>
-      <div class="event reveal">
-        <div class="date-chip"><div class="m">Aug</div><div class="d">03</div></div>
-        <div><h3>Back-to-School Blessing</h3><p>A blessing for students and teachers as the school year begins.</p></div>
-        <a href="#visit" class="btn btn-ghost">Details</a>
+      <!-- Events load from your Google Sheet when connected (see config.js).
+           Until then, these built-in examples show as a fallback. -->
+      <div id="events-list">
+        <div class="event reveal">
+          <div class="date-chip"><div class="m">Jul</div><div class="d">20</div></div>
+          <div><h3>Community Fellowship</h3><p>Food, games, and neighbors. Bring a friend.</p></div>
+          <a href="#visit" class="btn btn-ghost">Details</a>
+        </div>
+        <div class="event reveal">
+          <div class="date-chip"><div class="m">Jul</div><div class="d">27</div></div>
+          <div><h3>Baptism Sunday</h3><p>Celebrating new life in Christ during worship. Want to be baptized? Let us know.</p></div>
+          <a href="#visit" class="btn btn-ghost">Sign Up</a>
+        </div>
+        <div class="event reveal">
+          <div class="date-chip"><div class="m">Aug</div><div class="d">03</div></div>
+          <div><h3>Back-to-School Blessing</h3><p>A blessing for students and teachers as the school year begins.</p></div>
+          <a href="#visit" class="btn btn-ghost">Details</a>
+        </div>
       </div>
     </div>
   </section>
@@ -298,6 +301,7 @@
     </div>
   </footer>
 
+  <script src="config.js"></script>
   <script src="main.js"></script>
 </body>
 </html>

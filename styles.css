@@ -175,7 +175,15 @@ a.card:hover .more{gap:.6rem}
 .date-chip .d{font-family:var(--serif);font-size:1.7rem;line-height:1}
 .event h3{font-size:1.2rem}
 .event p{color:var(--muted);font-size:.92rem;margin-top:.2rem}
-@media(max-width:640px){.event{grid-template-columns:72px 1fr}.event .btn{grid-column:2}}
+/* optional event photo (from the Google Sheet Image column) */
+.event.has-img{grid-template-columns:88px 120px 1fr auto}
+.event-thumb{width:120px;height:80px;border-radius:10px;object-fit:cover;border:1px solid var(--line)}
+@media(max-width:640px){
+  .event{grid-template-columns:72px 1fr}
+  .event.has-img{grid-template-columns:72px 1fr}
+  .event-thumb{display:none}
+  .event .btn{grid-column:2}
+}
 
 /* GIVE / CTA BAND */
 .give{background:
