@@ -10,6 +10,17 @@
     menuBtn.addEventListener('click', function () { menu.classList.toggle('open'); });
   }
 
+  /* mobile: tap "Ministries" to expand/collapse its submenu instead of navigating */
+  var ministriesToggle = document.querySelector('.nav-item > a');
+  if (ministriesToggle) {
+    ministriesToggle.addEventListener('click', function (e) {
+      if (window.matchMedia('(max-width: 860px)').matches) {
+        e.preventDefault();
+        ministriesToggle.parentElement.classList.toggle('open');
+      }
+    });
+  }
+
   /* ---------- motion helpers ---------- */
   var reduce = window.matchMedia && matchMedia('(prefers-reduced-motion: reduce)').matches;
   var io = null;
