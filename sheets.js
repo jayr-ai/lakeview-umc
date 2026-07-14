@@ -69,11 +69,48 @@ window.LV = (function () {
       });
   }
 
+  // Convert a Google Drive share link into a directly-embeddable image URL.
+  // Leaves normal http(s) image URLs untouched.
+  function toImageUrl(u) {
+    if (!u) return '';
+    var m = u.match(/\/d\/([-\w]+)/) || u.match(/[?&]id=([-\w]+)/);
+    if (m) return 'https://drive.google.com/thumbnail?id=' + m[1] + '&sz=w1600';
+    return u;
+  }
+
+  function fetchTabByGid(gid) {
+    var cfg = window.LV_CONFIG || {};
+    if (!cfg.sheetId || !gid) return Promise.resolve(null);
+    var url = 'https://docs.google.com/spreadsheets/d/' + encodeURIComponent(cfg.sheetId) +
+      '/gviz/tq?tqx=out:csv&gid=' + encodeURIComponent(gid);
+    return fetch(url)
+      .then(function (r) { if (!r.ok) throw new Error('HTTP ' + r.status); return r.text(); })
+      .then(function (t) { return rowsToObjects(parseCSV(t)); });
+  }
+
+  // Resolves to [{placeholder, type, location, url}] or null when not configured.
+  function fetchPhotos() {
+    var cfg = window.LV_CONFIG || {};
+    return fetchTabByGid(cfg.photosGid).then(function (rows) {
+      if (!rows) return null;
+      return rows.map(function (o) {
+        return {
+          placeholder: (o.placeholder || '').trim(),
+          type: (o.type || '').trim(),
+          location: (o['current location'] || '').trim(),
+          url: (o['replace with this photo'] || '').trim()
+        };
+      });
+    });
+  }
+
   return {
     parseCSV: parseCSV,
     rowsToObjects: rowsToObjects,
     parseDate: parseDate,
     normalize: normalize,
-    fetchEvents: fetchEvents
+    fetchEvents: fetchEvents,
+    fetchPhotos: fetchPhotos,
+    toImageUrl: toImageUrl
   };
 })();

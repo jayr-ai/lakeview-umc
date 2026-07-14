@@ -110,6 +110,47 @@
   }
   window.LakeviewRenderEvents = renderEvents;
 
+  /* ---------- photos from the Google Sheet ---------- */
+  function setPhoto(el, url, alt) {
+    var img = document.createElement('img');
+    img.src = url;
+    img.alt = alt || '';
+    img.className = 'kenburns';
+    img.loading = 'lazy';
+    img.style.cssText = 'width:100%;height:100%;object-fit:cover';
+    el.innerHTML = '';
+    el.appendChild(img);
+    var box = el.parentElement; // hide any placeholder label in the same media box
+    if (box) { var lbl = box.querySelector(':scope > span'); if (lbl) lbl.style.display = 'none'; }
+  }
+
+  function pageFile() {
+    return (location.pathname.split('/').pop() || 'index.html').toLowerCase();
+  }
+
+  function loadPhotosFromSheet() {
+    if (!window.LV || !LV.fetchPhotos) return;
+    var slots = document.querySelectorAll('[data-photo]');
+    if (!slots.length) return;
+    var here = pageFile();
+    LV.fetchPhotos().then(function (rows) {
+      if (!rows) return;
+      var map = {};
+      rows.forEach(function (r) {
+        if (!r.url) return;
+        var rf = (r.location.split('/').pop() || 'index.html').toLowerCase();
+        if (rf && rf !== here) return; // rows with no location apply anywhere
+        map[r.placeholder] = LV.toImageUrl(r.url);
+      });
+      slots.forEach(function (el) {
+        var key = (el.getAttribute('data-photo') || '').trim();
+        if (map[key]) setPhoto(el, map[key], el.getAttribute('data-photo-alt'));
+      });
+    }).catch(function (err) {
+      console.warn('Lakeview: could not load photos from sheet -', err.message);
+    });
+  }
+
   function loadEventsFromSheet() {
     var list = document.getElementById('events-list');
     if (!list || !window.LV) return;
@@ -139,5 +180,6 @@
     }
   }
 
+  loadPhotosFromSheet();
   loadEventsFromSheet();
 })();

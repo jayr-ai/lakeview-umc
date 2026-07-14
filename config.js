@@ -1,21 +1,18 @@
 /* =============================================================
    LAKEVIEW UMC - SITE CONFIG
-   This is the ONLY file you edit to connect your Google Sheet.
+   This is the master Google Sheet that feeds the website.
    =============================================================
 
-   HOW TO CONNECT YOUR GOOGLE SHEET (one time):
-   1. Make a Google Sheet with a tab named exactly: Events
-   2. Row 1 headers (exactly): Date | Title | Description | Image | Link
-   3. Share it: Share -> General access -> "Anyone with the link" -> Viewer
-   4. Copy the Sheet ID from its URL. Example:
-        https://docs.google.com/spreadsheets/d/1AbCdEfGhIjKlMnOpQrStUvWxYz/edit
-        the ID is the part between /d/ and /edit  ->  1AbCdEfGhIjKlMnOpQrStUvWxYz
-   5. Paste that ID between the quotes below and save.
+   One sheet, multiple tabs:
+     - Photos tab (gid below): maps each photo placeholder to a Google Drive link
+     - Events tab (named "Events"): calendar + homepage events
 
-   Leave sheetId as "" (empty) to keep the built-in example events.
+   To swap a photo: paste a Google Drive share link ("Anyone with the link")
+   into the "Replace with this photo" column. The site updates automatically.
 */
 window.LV_CONFIG = {
-  sheetId: "",          // <-- paste your Google Sheet ID here
-  eventsTab: "Events",  // the tab (sheet) name that holds your events
-  hidePastEvents: true  // true = automatically hide events whose date has passed
+  sheetId: "1Xe8ERT4hDJEoFLefh6s053wWTHM7rkwfPhPjCpfQhys",  // master sheet
+  eventsTab: "Events",       // tab (sheet) name that holds events
+  photosGid: "271429802",    // tab id (gid) that holds the photo links
+  hidePastEvents: true       // automatically hide events whose date has passed
 };
