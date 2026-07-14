@@ -41,6 +41,7 @@
           </div>
         </div>
         <a href="#events">Events</a>
+        <a href="calendar.html">Calendar</a>
         <a href="#sermons">Sermons</a>
         <a href="#give">Give</a>
       </nav>
@@ -167,9 +168,12 @@
   <!-- EVENTS -->
   <section id="events">
     <div class="wrap">
-      <div class="section-head reveal">
-        <p class="eyebrow">What's Coming Up</p>
-        <h2>Events &amp; gatherings</h2>
+      <div class="section-head reveal" style="display:flex;justify-content:space-between;align-items:flex-end;gap:20px;flex-wrap:wrap;max-width:none">
+        <div>
+          <p class="eyebrow">What's Coming Up</p>
+          <h2>Events &amp; gatherings</h2>
+        </div>
+        <a href="calendar.html" class="btn btn-ghost">View Full Calendar &#8594;</a>
       </div>
       <!-- Events load from your Google Sheet when connected (see config.js).
            Until then, these built-in examples show as a fallback. -->
@@ -302,6 +306,7 @@
   </footer>
 
   <script src="config.js"></script>
+  <script src="sheets.js"></script>
   <script src="main.js"></script>
 </body>
 </html>

@@ -1,0 +1,138 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <script>document.documentElement.className += ' js';</script>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Calendar | Lakeview United Methodist Church</title>
+  <meta name="description" content="What's happening at Lakeview United Methodist Church in Lipa City, Batangas. Monthly and weekly calendar of worship, groups, and events.">
+  <meta name="theme-color" content="#0e2a33">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 40 40'><circle cx='20' cy='20' r='19' fill='%230e2a33'/><path d='M20 8v24M12 16h16' stroke='%239fd0d4' stroke-width='3' stroke-linecap='round'/><path d='M26 12c3 3 3 7 0 10-1-4-3-5-3-5 2 3 1 6-1 7 1-5-2-7-2-7 4-1 6-3 6-5z' fill='%23e2664e'/></svg>">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+  <!-- NAV -->
+  <header class="nav">
+    <div class="wrap">
+      <a class="brand" href="index.html">
+        <svg class="mark" viewBox="0 0 40 40" aria-hidden="true">
+          <circle cx="20" cy="20" r="19" fill="none" stroke="var(--lake-500)" stroke-width="2"/>
+          <path d="M20 8v24M12 16h16" stroke="var(--lake-700)" stroke-width="3" stroke-linecap="round"/>
+          <path d="M26 12c3 3 3 7 0 10-1-4-3-5-3-5 2 3 1 6-1 7 1-5-2-7-2-7 4-1 6-3 6-5z" fill="var(--flame)"/>
+        </svg>
+        Lakeview UMC
+      </a>
+      <nav class="nav-links" id="menu">
+        <a href="index.html#visit">Visit</a>
+        <a href="index.html#about">About</a>
+        <div class="nav-item">
+          <a href="index.html#ministries" class="underline">Ministries <span class="caret">&#9662;</span></a>
+          <div class="dd">
+            <a href="kids.html">Lakeview Kids <small>Nursery to Grade 6</small></a>
+            <a href="youth.html">Lakeview Youth <small>Teens</small></a>
+            <a href="connect-groups.html">Connect &amp; Discipleship <small>Small groups</small></a>
+            <a href="music.html">Music &amp; Worship <small>Choir &amp; band</small></a>
+            <a href="outreach.html">Outreach &amp; Missions <small>Serving Lipa City</small></a>
+            <a href="prayer.html">Prayer <small>Prayer team</small></a>
+          </div>
+        </div>
+        <a href="calendar.html">Calendar</a>
+        <a href="index.html#sermons">Sermons</a>
+        <a href="index.html#give">Give</a>
+      </nav>
+      <div class="nav-cta">
+        <a href="index.html#visit" class="btn btn-primary">Plan a Visit</a>
+        <button class="menu-btn" aria-label="Menu">&#9776;</button>
+      </div>
+    </div>
+  </header>
+
+  <!-- HEADER -->
+  <section class="hero sub" id="top" style="padding-bottom:clamp(30px,5vw,56px)">
+    <div class="wrap">
+      <div class="reveal" style="max-width:64ch">
+        <p class="eyebrow">Calendar</p>
+        <h1>What's happening at Lakeview</h1>
+        <p class="lead">Your one stop to see everything coming up, worship, groups, outreach, and special gatherings. Switch between month and week, tap any day for details, and scroll down for the next three months.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- CALENDAR -->
+  <section style="padding-top:0">
+    <div class="wrap">
+      <div class="reveal">
+        <div class="cal-toolbar">
+          <div class="cal-heading">
+            <div class="cal-navbtns">
+              <button class="iconbtn" id="cal-prev" aria-label="Previous">&#8249;</button>
+              <button class="iconbtn" id="cal-next" aria-label="Next">&#8250;</button>
+            </div>
+            <div class="cal-title" id="cal-title">Loading...</div>
+            <button class="btn-today" id="cal-todaybtn">Today</button>
+          </div>
+          <div class="seg" role="tablist" aria-label="Calendar view">
+            <button id="seg-month" class="active">Month</button>
+            <button id="seg-week">Week</button>
+          </div>
+        </div>
+        <div id="cal-body"><p style="color:var(--muted)">Loading calendar...</p></div>
+        <div id="cal-daydetail"></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- AGENDA -->
+  <section class="band">
+    <div class="wrap">
+      <div class="section-head reveal">
+        <p class="eyebrow">The next three months</p>
+        <h2>Everything coming up</h2>
+        <p class="lead">Events roll off this list automatically once they have passed, so what you see is always current.</p>
+      </div>
+      <div id="cal-agenda"><p style="color:var(--muted)">Loading events...</p></div>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer class="foot">
+    <div class="wrap">
+      <div>
+        <div class="brand">
+          <svg class="mark" viewBox="0 0 40 40" aria-hidden="true">
+            <circle cx="20" cy="20" r="19" fill="none" stroke="#5fb3ba" stroke-width="2"/>
+            <path d="M20 8v24M12 16h16" stroke="#9fd0d4" stroke-width="3" stroke-linecap="round"/>
+            <path d="M26 12c3 3 3 7 0 10-1-4-3-5-3-5 2 3 1 6-1 7 1-5-2-7-2-7 4-1 6-3 6-5z" fill="#e2664e"/>
+          </svg>
+          Lakeview UMC
+        </div>
+        <p style="margin-top:14px;max-width:34ch;font-size:.92rem">A United Methodist congregation in Lipa City, Batangas. Open hearts. Open minds. Open doors.</p>
+      </div>
+      <div>
+        <h4>Visit</h4>
+        <a href="index.html#visit">Plan a Visit</a>
+        <a href="index.html#about">What to Expect</a>
+        <a href="calendar.html">Calendar</a>
+        <a href="index.html#sermons">Sermons</a>
+      </div>
+      <div>
+        <h4>Ministries</h4>
+        <a href="kids.html">Lakeview Kids</a>
+        <a href="youth.html">Lakeview Youth</a>
+        <a href="connect-groups.html">Connect &amp; Discipleship</a>
+        <a href="https://web.facebook.com/profile.php?id=100064322214820" target="_blank" rel="noopener">Facebook</a>
+      </div>
+    </div>
+    <div class="wrap foot-bottom">
+      <span>&copy; <span id="yr"></span> Lakeview United Methodist Church</span>
+      <span>Made with grace</span>
+    </div>
+  </footer>
+
+  <script src="config.js"></script>
+  <script src="sheets.js"></script>
+  <script src="main.js"></script>
+  <script src="calendar.js"></script>
+</body>
+</html>
