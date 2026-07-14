@@ -111,17 +111,29 @@
   window.LakeviewRenderEvents = renderEvents;
 
   /* ---------- photos from the Google Sheet ---------- */
-  function setPhoto(el, url, alt) {
-    var img = document.createElement('img');
-    img.src = url;
-    img.alt = alt || '';
-    img.className = 'kenburns';
-    img.loading = 'lazy';
-    img.style.cssText = 'width:100%;height:100%;object-fit:cover';
+  function setPhoto(el, urls, alt) {
+    if (typeof urls === 'string') urls = [urls];
+    var reduce = window.matchMedia && matchMedia('(prefers-reduced-motion: reduce)').matches;
     el.innerHTML = '';
-    el.appendChild(img);
+    var imgs = urls.map(function (u, idx) {
+      var img = document.createElement('img');
+      img.src = u;
+      img.alt = alt || '';
+      img.loading = idx === 0 ? 'eager' : 'lazy';
+      img.className = 'kenburns slide' + (idx === 0 ? ' active' : '');
+      el.appendChild(img);
+      return img;
+    });
     var box = el.parentElement; // hide any placeholder label in the same media box
     if (box) { var lbl = box.querySelector(':scope > span'); if (lbl) lbl.style.display = 'none'; }
+    if (imgs.length > 1 && !reduce) {
+      var i = 0;
+      setInterval(function () {
+        imgs[i].classList.remove('active');
+        i = (i + 1) % imgs.length;
+        imgs[i].classList.add('active');
+      }, 5000);
+    }
   }
 
   function pageFile() {
@@ -140,11 +152,15 @@
         if (!r.url) return;
         var rf = (r.location.split('/').pop() || 'index.html').toLowerCase();
         if (rf && rf !== here) return; // rows with no location apply anywhere
-        map[r.placeholder] = LV.toImageUrl(r.url);
+        // one cell may hold several links (newline/comma separated); rows also stack
+        var urls = r.url.split(/[\r\n,]+/).map(function (s) { return s.trim(); })
+          .filter(Boolean).map(LV.toImageUrl);
+        if (!urls.length) return;
+        map[r.placeholder] = (map[r.placeholder] || []).concat(urls);
       });
       slots.forEach(function (el) {
         var key = (el.getAttribute('data-photo') || '').trim();
-        if (map[key]) setPhoto(el, map[key], el.getAttribute('data-photo-alt'));
+        if (map[key] && map[key].length) setPhoto(el, map[key], el.getAttribute('data-photo-alt'));
       });
     }).catch(function (err) {
       console.warn('Lakeview: could not load photos from sheet -', err.message);
