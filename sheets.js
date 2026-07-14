@@ -36,22 +36,28 @@ window.LV = (function () {
 
   function parseDate(s) {
     if (!s) return null;
+    s = String(s).trim();
     var d = new Date(s);
+    if (!isNaN(d.getTime())) return d;
+    d = new Date(s.replace(/-/g, ' ')); // handles "Jul-18-2026"
     return isNaN(d.getTime()) ? null : d;
   }
 
   function normalize(o) {
+    var date = o['event date'] || o.date;
     return {
-      dateRaw: o.date || '',
-      date: parseDate(o.date),
+      dateRaw: date || '',
+      date: parseDate(date),
       endDate: parseDate(o['end'] || o['enddate'] || o['end date']),
-      time: o.time || '',
-      title: o.title || '',
-      description: o.description || '',
+      time: o['event start time'] || o.time || '',
+      title: o['event title'] || o.title || '',
+      category: o['event name'] || o.category || '',
+      description: o['event description'] || o.description || '',
       image: o.image || '',
       link: o.link || '',
       button: o.button || '',
-      location: o.location || ''
+      location: o['event location'] || o.location || '',
+      published: (o['published'] || o['publish'] || '').trim()
     };
   }
 
@@ -60,12 +66,17 @@ window.LV = (function () {
   function fetchEvents() {
     var cfg = window.LV_CONFIG || {};
     if (!cfg.sheetId) return Promise.resolve(null);
-    var url = 'https://docs.google.com/spreadsheets/d/' + encodeURIComponent(cfg.sheetId) +
-      '/gviz/tq?tqx=out:csv&sheet=' + encodeURIComponent(cfg.eventsTab || 'Events');
+    var base = 'https://docs.google.com/spreadsheets/d/' + encodeURIComponent(cfg.sheetId) + '/gviz/tq?tqx=out:csv&';
+    var url = base + (cfg.eventsGid != null && cfg.eventsGid !== ''
+      ? 'gid=' + encodeURIComponent(cfg.eventsGid)
+      : 'sheet=' + encodeURIComponent(cfg.eventsTab || 'Events'));
     return fetch(url)
       .then(function (r) { if (!r.ok) throw new Error('HTTP ' + r.status); return r.text(); })
       .then(function (t) {
-        return rowsToObjects(parseCSV(t)).map(normalize).filter(function (e) { return e.title; });
+        return rowsToObjects(parseCSV(t)).map(normalize).filter(function (e) {
+          // Only rows explicitly marked Published = YES (column G) go live.
+          return e.title && /^\s*yes\s*$/i.test(e.published);
+        });
       });
   }
 

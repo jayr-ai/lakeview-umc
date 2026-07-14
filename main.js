@@ -81,7 +81,9 @@
     return '<div class="event reveal' + (hasImg ? ' has-img' : '') + '">' +
       '<div class="date-chip">' + chip + '</div>' +
       thumb +
-      '<div><h3>' + esc(ev.title) + '</h3>' +
+      '<div>' +
+      (ev.category ? '<p class="eyebrow" style="margin-bottom:5px">' + esc(ev.category) + '</p>' : '') +
+      '<h3>' + esc(ev.title) + '</h3>' +
       (meta ? '<p style="color:var(--flame);font-weight:600">' + meta + '</p>' : '') +
       (ev.description ? '<p>' + esc(ev.description) + '</p>' : '') + '</div>' +
       '<a href="' + href + '"' + target + ' class="btn btn-ghost">' + btn + '</a>' +

@@ -12,7 +12,8 @@
 */
 window.LV_CONFIG = {
   sheetId: "1Xe8ERT4hDJEoFLefh6s053wWTHM7rkwfPhPjCpfQhys",  // master sheet
-  eventsTab: "Events",       // tab (sheet) name that holds events
+  eventsGid: "0",            // tab id (gid) that holds calendar events
   photosGid: "271429802",    // tab id (gid) that holds the photo links
   hidePastEvents: true       // automatically hide events whose date has passed
+  // Only rows with Published = YES (column G) appear on the site.
 };
