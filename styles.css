@@ -121,7 +121,12 @@ html.js .reveal.in{opacity:1;transform:none;filter:none}
      linear-gradient(160deg,var(--lake-500),var(--lake-900))}
 .hero-art figcaption{position:absolute;left:16px;bottom:16px;color:#fff;z-index:2;
    font-size:.8rem;background:rgba(0,0,0,.35);padding:.35rem .7rem;border-radius:8px}
-@media(max-width:860px){.hero .wrap{grid-template-columns:1fr}.hero-art{aspect-ratio:16/11}}
+@media(max-width:860px){
+  .hero .wrap{grid-template-columns:1fr}
+  /* full-bleed hero image, edge to edge like a mobile app */
+  .hero-art{aspect-ratio:4/3;border-radius:0;border-left:0;border-right:0;
+    margin-left:-24px;margin-right:-24px}
+}
 /* subpage hero is a touch smaller */
 .hero.sub{padding:clamp(60px,9vw,110px) 0 clamp(48px,7vw,90px)}
 .hero.sub h1{font-size:clamp(2.3rem,5vw,3.7rem)}
@@ -245,8 +250,9 @@ html{scroll-behavior:smooth}
   padding:.5rem 1.05rem;border-radius:999px;cursor:pointer;transition:background .2s,color .2s}
 .seg button.active{background:var(--flame);color:#fff}
 
-.cal-grid{display:grid;grid-template-columns:repeat(7,1fr);gap:1px;background:var(--line);
-  border:1px solid var(--line);border-radius:16px;overflow:hidden}
+.cal-grid{display:grid;grid-template-columns:repeat(7,1fr);gap:1px;
+  background:color-mix(in srgb,var(--muted) 16%,transparent);
+  border:1px solid color-mix(in srgb,var(--muted) 16%,transparent);border-radius:16px;overflow:hidden}
 .cal-dow{background:var(--card);text-align:center;padding:12px 4px;font-size:.68rem;letter-spacing:.1em;
   text-transform:uppercase;color:var(--muted);font-weight:700}
 .cal-cell{background:var(--card);min-height:116px;padding:8px;display:flex;flex-direction:column;gap:4px;

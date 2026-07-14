@@ -182,8 +182,8 @@
       return { date: d, endDate: null, title: title, description: desc || '', time: time || '', location: '', image: '', link: '', button: '' };
     }
     return [
-      mk(1, 'Sunday Worship', 'Come as you are.', '9:30 AM'),
-      mk(1, 'Connect Groups', 'Right after worship.', '11:30 AM'),
+      mk(1, 'Sunday Worship', 'Come as you are.', '9:00 AM'),
+      mk(1, 'Connect Groups', 'Late morning.', '11:00 AM'),
       mk(6, 'Youth Night', 'Games, worship, and real talk.', '6:00 PM'),
       mk(12, 'Community Feeding Program', 'Serving meals across Lipa City.'),
       mk(19, 'Leaders Planning Meeting', 'Monthly ministry planning.'),
