@@ -1,10 +1,10 @@
 :root{
-  --lake-900:#0e2a33; --lake-700:#144a56; --lake-500:#1f7a86; --lake-300:#5fb3ba;
+  --lake-900:#0E2E57; --lake-700:#16467F; --lake-500:#1C79D0; --lake-300:#4C9BE2;
   --sand:#e9e2d3; --sand-deep:#d8cdb6;
-  --flame:#c8442b;            /* nod to the UMC cross-and-flame */
-  --ink:#12222a; --muted:#4c5f65;
-  --paper:#f7f4ee; --card:#ffffff; --line:#e2ddd2;
-  --band:#eef2f0;
+  --flame:#EE5A2A; --gold:#D8A340;   /* Landasin brand: orange pins + gold rules */
+  --ink:#14243D; --muted:#566B86;
+  --paper:#F5F0E3; --card:#ffffff; --line:#E4DECE;
+  --band:#EAF1F9;
   --serif:'Iowan Old Style','Hoefler Text','Palatino Linotype',Palatino,Georgia,serif;
   --sans:'Avenir Next','Segoe UI',system-ui,-apple-system,Helvetica,Arial,sans-serif;
   --wrap:1120px;
@@ -12,9 +12,9 @@
 }
 @media (prefers-color-scheme:dark){
   :root{
-    --ink:#eef3f2; --muted:#a9bcbf; --paper:#0d1c22; --card:#122932;
-    --line:#20404a; --band:#102630; --sand:#20343a; --sand-deep:#183038;
-    --lake-300:#6fc3ca; --flame:#e2664e;
+    --ink:#EAF1FB; --muted:#9FB2CC; --paper:#091A31; --card:#12294A;
+    --line:#20406E; --band:#0D2247; --sand:#1B2E4E; --sand-deep:#152743;
+    --lake-300:#5FA6E6; --flame:#F1734A; --gold:#E0B255;
   }
 }
 html,body{margin:0;padding:0}
@@ -26,6 +26,9 @@ a{color:inherit;text-decoration:none}
 .wrap{max-width:var(--wrap);margin:0 auto;padding:0 24px}
 .eyebrow{font-size:.72rem;letter-spacing:.22em;text-transform:uppercase;
          color:var(--flame);font-weight:700}
+.section-head .eyebrow::after{content:"";display:block;width:42px;height:3px;
+  background:var(--gold);border-radius:2px;margin-top:12px}
+.section-head.center .eyebrow::after{margin-left:auto;margin-right:auto}
 h1,h2,h3{font-family:var(--serif);font-weight:600;line-height:1.1;
                      text-wrap:balance;margin:0}
 h2{font-size:clamp(1.9rem,4vw,2.9rem);letter-spacing:-.01em}
@@ -64,7 +67,7 @@ html.js .reveal.in{opacity:1;transform:none;filter:none}
      transition:height .3s var(--ease)}
 .nav.scrolled .wrap{height:60px}
 .brand{display:flex;align-items:center;gap:.7rem;font-family:var(--serif);font-size:1.15rem;font-weight:600}
-.mark{width:34px;height:34px;flex:none}
+.mark{width:auto;height:34px;flex:none}
 .nav-links{display:flex;gap:1.8rem;align-items:center;font-size:.93rem;font-weight:500}
 .nav-links>a,.nav-item>a{position:relative}
 .nav-links>a::after,.nav-item>a.underline::after{content:"";position:absolute;left:0;right:100%;bottom:-4px;height:2px;
@@ -129,7 +132,7 @@ html.js .reveal.in{opacity:1;transform:none;filter:none}
    background:color-mix(in srgb,#fff 8%,transparent);border-radius:16px;overflow:hidden}
 .times .wrap.times-grid.four{grid-template-columns:repeat(4,1fr)}
 .time-card{background:var(--lake-900);padding:34px 28px}
-.time-card .k{font-size:.72rem;letter-spacing:.18em;text-transform:uppercase;color:var(--lake-300)}
+.time-card .k{font-size:.72rem;letter-spacing:.18em;text-transform:uppercase;color:var(--gold)}
 .time-card .t{font-family:var(--serif);font-size:1.8rem;margin:.35rem 0}
 .time-card .d{color:#b9d2d4;font-size:.95rem}
 @media(max-width:900px){.times .wrap.times-grid.four{grid-template-columns:repeat(2,1fr)}}

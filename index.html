@@ -12,30 +12,6 @@
   <meta property="og:type" content="website">
   <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 40 40'><circle cx='20' cy='20' r='19' fill='%230e2a33'/><path d='M20 8v24M12 16h16' stroke='%239fd0d4' stroke-width='3' stroke-linecap='round'/><path d='M26 12c3 3 3 7 0 10-1-4-3-5-3-5 2 3 1 6-1 7 1-5-2-7-2-7 4-1 6-3 6-5z' fill='%23e2664e'/></svg>">
   <link rel="stylesheet" href="styles.css">
-  <style>
-    /* ===== LANDASIN brand palette (Option A) - HOMEPAGE SAMPLE override =====
-       Scoped to this page only. Other pages keep the current look until approved. */
-    :root{
-      --lake-900:#0E2E57; --lake-700:#16467F; --lake-500:#1C79D0; --lake-300:#4C9BE2;
-      --flame:#EE5A2A; --gold:#D8A340;
-      --paper:#F5F0E3; --ink:#14243D; --muted:#566B86;
-      --band:#EAF1F9; --line:#E4DECE; --card:#FFFFFF;
-    }
-    @media (prefers-color-scheme:dark){
-      :root{
-        --lake-900:#0E2E57; --lake-700:#1B4C86; --lake-500:#2A82D8; --lake-300:#5FA6E6;
-        --flame:#F1734A; --gold:#E0B255;
-        --paper:#091A31; --ink:#EAF1FB; --muted:#9FB2CC;
-        --card:#12294A; --line:#20406E; --band:#0D2247;
-        --sand:#1B2E4E; --sand-deep:#152743;
-      }
-    }
-    /* gold flourish under section eyebrows, echoing the cover's gold rules */
-    .section-head .eyebrow::after{content:"";display:block;width:42px;height:3px;
-      background:var(--gold);border-radius:2px;margin-top:12px}
-    /* gold service-strip labels */
-    .time-card .k{color:var(--gold)}
-  </style>
 </head>
 <body>
 
@@ -43,10 +19,9 @@
   <header class="nav">
     <div class="wrap">
       <a class="brand" href="index.html">
-        <svg class="mark" viewBox="0 0 40 40" aria-hidden="true">
-          <circle cx="20" cy="20" r="19" fill="none" stroke="var(--lake-500)" stroke-width="2"/>
-          <path d="M20 8v24M12 16h16" stroke="var(--lake-700)" stroke-width="3" stroke-linecap="round"/>
-          <path d="M26 12c3 3 3 7 0 10-1-4-3-5-3-5 2 3 1 6-1 7 1-5-2-7-2-7 4-1 6-3 6-5z" fill="var(--flame)"/>
+        <svg class="mark" viewBox="0 0 120 150" role="img" aria-label="United Methodist Church cross and flame">
+          <path fill="#E11B22" d="M58 6 C80 26,70 46,54 56 C42 63,36 74,40 88 C44 100,54 106,50 120 C34 110,24 92,28 72 C31 58,44 52,44 40 C44 30,50 20,46 10 C52 12,58 12,58 6 Z"/>
+          <path fill="var(--ink)" d="M76 18 h7 v42 h21 v7 h-21 v65 h-7 v-65 h-21 v-7 h21 z"/>
         </svg>
         Lakeview UMC
       </a>
@@ -299,10 +274,9 @@
     <div class="wrap">
       <div>
         <div class="brand">
-          <svg class="mark" viewBox="0 0 40 40" aria-hidden="true">
-            <circle cx="20" cy="20" r="19" fill="none" stroke="#4C9BE2" stroke-width="2"/>
-            <path d="M20 8v24M12 16h16" stroke="#8FB6E4" stroke-width="3" stroke-linecap="round"/>
-            <path d="M26 12c3 3 3 7 0 10-1-4-3-5-3-5 2 3 1 6-1 7 1-5-2-7-2-7 4-1 6-3 6-5z" fill="#EE5A2A"/>
+          <svg class="mark" viewBox="0 0 120 150" aria-hidden="true">
+            <path fill="#E11B22" d="M58 6 C80 26,70 46,54 56 C42 63,36 74,40 88 C44 100,54 106,50 120 C34 110,24 92,28 72 C31 58,44 52,44 40 C44 30,50 20,46 10 C52 12,58 12,58 6 Z"/>
+            <path fill="#F5F0E3" d="M76 18 h7 v42 h21 v7 h-21 v65 h-7 v-65 h-21 v-7 h21 z"/>
           </svg>
           Lakeview UMC
         </div>
