@@ -84,14 +84,12 @@
     }
     var items = evs.map(function (e) {
       var meta = [e.time, e.location].filter(Boolean).map(esc).join(' &middot; ');
-      var link = (e.link && /^https?:\/\//i.test(e.link))
-        ? ' <a href="' + esc(e.link) + '" target="_blank" rel="noopener" style="color:var(--flame);font-weight:600">Details &#8594;</a>' : '';
       return '<li><span class="bullet"></span><div>' +
         (e.category ? '<span style="color:var(--flame);font-weight:700;font-size:.72rem;letter-spacing:.06em;text-transform:uppercase;display:block">' + esc(e.category) + '</span>' : '') +
         '<b>' + esc(e.title) + '</b>' +
         (meta ? '<span class="muted">' + meta + '</span>' : '') +
         (e.description ? '<span class="muted">' + esc(e.description) + '</span>' : '') +
-        link + '</div></li>';
+        '</div></li>';
     }).join('');
     return '<div class="day-detail">' + head +
       '<h3>' + evs.length + (evs.length === 1 ? ' event' : ' events') + '</h3><ul>' + items + '</ul></div>';

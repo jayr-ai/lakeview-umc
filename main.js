@@ -74,9 +74,6 @@
     var thumb = hasImg
       ? '<img class="event-thumb" src="' + esc(ev.image) + '" alt="' + esc(ev.title) + '" loading="lazy">'
       : '';
-    var href = (ev.link && /^https?:\/\//i.test(ev.link)) ? esc(ev.link) : '#visit';
-    var target = href.indexOf('http') === 0 ? ' target="_blank" rel="noopener"' : '';
-    var btn = (ev.button && ev.button.trim()) ? esc(ev.button) : 'Details';
     var meta = [ev.whenLabel, ev.time, ev.location].filter(Boolean).map(esc).join(' &middot; ');
     return '<div class="event reveal' + (hasImg ? ' has-img' : '') + '">' +
       '<div class="date-chip">' + chip + '</div>' +
@@ -86,7 +83,6 @@
       '<h3>' + esc(ev.title) + '</h3>' +
       (meta ? '<p style="color:var(--flame);font-weight:600">' + meta + '</p>' : '') +
       (ev.description ? '<p>' + esc(ev.description) + '</p>' : '') + '</div>' +
-      '<a href="' + href + '"' + target + ' class="btn btn-ghost">' + btn + '</a>' +
       '</div>';
   }
 
