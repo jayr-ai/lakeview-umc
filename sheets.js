@@ -95,7 +95,8 @@ window.LV = (function () {
       return d >= start && d <= end;
     }
     if (d < start) return false;
-    if (ev.repeatUntil && d > stripTime(ev.repeatUntil)) return false;
+    var until = ev.repeatUntil || ev.endDate; // for recurring events, End Date = stop date
+    if (until && d > stripTime(until)) return false;
     if (rec.type === 'daily') return true;
     if (rec.type === 'weekly') return d.getDay() === start.getDay();
     if (rec.type === 'weeklyDays') return rec.days.indexOf(d.getDay()) > -1;
@@ -113,7 +114,8 @@ window.LV = (function () {
     }
     var start = stripTime(ev.date);
     var d = new Date(Math.max(start.getTime(), from.getTime()));
-    var until = ev.repeatUntil ? stripTime(ev.repeatUntil) : null;
+    var untilRaw = ev.repeatUntil || ev.endDate; // recurring: End Date = stop date
+    var until = untilRaw ? stripTime(untilRaw) : null;
     for (var g = 0; g < 500; g++, d.setDate(d.getDate() + 1)) {
       if (until && d > until) return null;
       if (occursOn(ev, d)) return new Date(d);
