@@ -1,0 +1,32 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="robots" content="noindex,nofollow">
+  <title>Opening the Lakeview events sheet…</title>
+  <!-- Redirect target: the Events tab of the master Google Sheet. Change the URL below to point elsewhere. -->
+  <meta http-equiv="refresh" content="0; url=https://docs.google.com/spreadsheets/d/1Xe8ERT4hDJEoFLefh6s053wWTHM7rkwfPhPjCpfQhys/edit?gid=0#gid=0">
+  <style>
+    body{margin:0;min-height:100vh;display:grid;place-items:center;text-align:center;
+      background:#F5F0E3;color:#14243D;font-family:'Avenir Next','Segoe UI',system-ui,sans-serif;padding:24px}
+    .box{max-width:30ch}
+    h1{font-family:'Iowan Old Style',Palatino,Georgia,serif;font-weight:600;font-size:1.4rem;margin:0 0 8px}
+    p{color:#566B86;font-size:.95rem;margin:.4rem 0}
+    a{color:#EE5A2A;font-weight:600}
+    .spin{width:34px;height:34px;border-radius:50%;border:3px solid #E4DECE;border-top-color:#EE5A2A;
+      margin:0 auto 18px;animation:s .8s linear infinite}
+    @keyframes s{to{transform:rotate(360deg)}}
+    @media(prefers-reduced-motion:reduce){.spin{animation:none}}
+  </style>
+</head>
+<body>
+  <div class="box">
+    <div class="spin" aria-hidden="true"></div>
+    <h1>Opening the events sheet…</h1>
+    <p>Taking you to the Lakeview UMC events sheet.</p>
+    <p><a id="go" href="https://docs.google.com/spreadsheets/d/1Xe8ERT4hDJEoFLefh6s053wWTHM7rkwfPhPjCpfQhys/edit?gid=0#gid=0">Tap here if it does not open automatically.</a></p>
+  </div>
+  <script>location.replace(document.getElementById('go').href);</script>
+</body>
+</html>
