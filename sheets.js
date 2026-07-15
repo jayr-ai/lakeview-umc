@@ -69,7 +69,7 @@ window.LV = (function () {
     var base = 'https://docs.google.com/spreadsheets/d/' + encodeURIComponent(cfg.sheetId) + '/gviz/tq?tqx=out:csv&';
     var url = base + (cfg.eventsGid != null && cfg.eventsGid !== ''
       ? 'gid=' + encodeURIComponent(cfg.eventsGid)
-      : 'sheet=' + encodeURIComponent(cfg.eventsTab || 'Events'));
+      : 'sheet=' + encodeURIComponent(cfg.eventsTab || 'Events')) + '&_=' + Date.now();
     return fetch(url)
       .then(function (r) { if (!r.ok) throw new Error('HTTP ' + r.status); return r.text(); })
       .then(function (t) {
@@ -93,7 +93,7 @@ window.LV = (function () {
     var cfg = window.LV_CONFIG || {};
     if (!cfg.sheetId || !gid) return Promise.resolve(null);
     var url = 'https://docs.google.com/spreadsheets/d/' + encodeURIComponent(cfg.sheetId) +
-      '/gviz/tq?tqx=out:csv&gid=' + encodeURIComponent(gid);
+      '/gviz/tq?tqx=out:csv&gid=' + encodeURIComponent(gid) + '&_=' + Date.now();
     return fetch(url)
       .then(function (r) { if (!r.ok) throw new Error('HTTP ' + r.status); return r.text(); })
       .then(function (t) { return rowsToObjects(parseCSV(t)); });
