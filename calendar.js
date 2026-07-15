@@ -17,13 +17,8 @@
   function esc(s) { return String(s || '').replace(/[&<>"]/g, function (m) { return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[m]; }); }
 
   function eventsOn(day) {
-    var t = startOfDay(day).getTime();
-    return EVENTS.filter(function (e) {
-      if (!e.date) return false;
-      var s = startOfDay(e.date).getTime();
-      var en = e.endDate ? startOfDay(e.endDate).getTime() : s;
-      return t >= s && t <= en;
-    });
+    // recurrence + multi-day aware (from the shared data layer)
+    return EVENTS.filter(function (e) { return window.LV && LV.occursOn(e, day); });
   }
 
   /* ---------- month view ---------- */
@@ -108,11 +103,9 @@
     if (!host) return;
     var today = startOfDay(new Date());
     var windowEnd = new Date(today.getFullYear(), today.getMonth() + 3, 0); // last day of +2 month
-    var subset = EVENTS.filter(function (e) {
-      if (!e.date) return false;
-      var end = e.endDate || e.date;
-      return startOfDay(end) >= today && startOfDay(e.date) <= windowEnd;
-    }).sort(function (a, b) { return a.date - b.date; });
+    // each event once, at its next occurrence, within the 3-month window
+    var subset = (window.LV ? LV.prepareList(EVENTS, today) : EVENTS.slice())
+      .filter(function (e) { return startOfDay(e.date) <= windowEnd; });
 
     if (!subset.length) {
       host.innerHTML = '<p style="color:var(--muted)">No events in the next three months yet. Add them to the Google Sheet and they will show up here automatically.</p>';

@@ -77,7 +77,7 @@
     var href = (ev.link && /^https?:\/\//i.test(ev.link)) ? esc(ev.link) : '#visit';
     var target = href.indexOf('http') === 0 ? ' target="_blank" rel="noopener"' : '';
     var btn = (ev.button && ev.button.trim()) ? esc(ev.button) : 'Details';
-    var meta = [ev.time, ev.location].filter(Boolean).map(esc).join(' &middot; ');
+    var meta = [ev.whenLabel, ev.time, ev.location].filter(Boolean).map(esc).join(' &middot; ');
     return '<div class="event reveal' + (hasImg ? ' has-img' : '') + '">' +
       '<div class="date-chip">' + chip + '</div>' +
       thumb +
@@ -174,7 +174,10 @@
     var list = document.getElementById('events-list');
     if (!list || !window.LV) return;
     LV.fetchEvents().then(function (objs) {
-      if (objs && objs.length) renderEvents(objs, list, 5); // homepage shows at most 5, nearest first
+      if (objs && objs.length) {
+        // each event once, at its next occurrence; nearest 5
+        renderEvents(LV.prepareList(objs, new Date()), list, 5);
+      }
     }).catch(function (err) {
       console.warn('Lakeview: could not load events from sheet -', err.message);
     });
