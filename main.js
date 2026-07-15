@@ -90,7 +90,7 @@
       '</div>';
   }
 
-  function renderEvents(objs, container) {
+  function renderEvents(objs, container, limit) {
     var list = container || document.getElementById('events-list');
     if (!list) return;
     var now = new Date(); now.setHours(0, 0, 0, 0);
@@ -98,10 +98,11 @@
     if (!window.LV_CONFIG || window.LV_CONFIG.hidePastEvents !== false) {
       evs = evs.filter(function (e) { return !(e.date) || e.date >= now; });
     }
-    evs.sort(function (a, b) {
+    evs.sort(function (a, b) {          // nearest date first
       if (!a.date) return 1; if (!b.date) return -1;
       return a.date - b.date;
     });
+    if (limit && limit > 0) evs = evs.slice(0, limit);
     if (!evs.length) {
       list.innerHTML = '<p class="reveal" style="color:var(--muted)">No upcoming events right now - check back soon, or follow us on Facebook for the latest.</p>';
     } else {
@@ -173,7 +174,7 @@
     var list = document.getElementById('events-list');
     if (!list || !window.LV) return;
     LV.fetchEvents().then(function (objs) {
-      if (objs && objs.length) renderEvents(objs, list);
+      if (objs && objs.length) renderEvents(objs, list, 5); // homepage shows at most 5, nearest first
     }).catch(function (err) {
       console.warn('Lakeview: could not load events from sheet -', err.message);
     });
