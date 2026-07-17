@@ -1,0 +1,825 @@
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Lakeview UMC Worship Coordinator</title>
+<style>
+  :root {
+    --ground: #FAF8F4;
+    --surface: #FFFFFF;
+    --surface-2: #F3EFE8;
+    --ink: #241C31;
+    --ink-soft: #5A5167;
+    --ink-faint: #8A8194;
+    --line: #E4DDD2;
+    --line-strong: #D2C9BC;
+    --primary: #4A3B6B;
+    --primary-soft: #6A5793;
+    --primary-wash: #EDE8F3;
+    --accent: #B8863B;
+    --accent-wash: #F6ECD8;
+    --featured-ground: #4A3B6B;
+    --featured-ink: #F7F3EC;
+    --featured-soft: #C9BEDD;
+    --shadow: 0 1px 2px rgba(36,28,49,.06), 0 8px 24px rgba(36,28,49,.06);
+    --shadow-lift: 0 2px 6px rgba(36,28,49,.10), 0 18px 40px rgba(36,28,49,.12);
+    --serif: "Iowan Old Style", "Palatino Linotype", Palatino, "Book Antiqua", Georgia, serif;
+    --sans: ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+    --radius: 14px;
+    --radius-sm: 9px;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root {
+      --ground: #16121D;
+      --surface: #1F1929;
+      --surface-2: #271F34;
+      --ink: #F1EBF7;
+      --ink-soft: #B8AEC8;
+      --ink-faint: #857A97;
+      --line: #322A41;
+      --line-strong: #3F3550;
+      --primary: #B7A2E0;
+      --primary-soft: #C9B9EA;
+      --primary-wash: #2A2138;
+      --accent: #E0B166;
+      --accent-wash: #33281A;
+      --featured-ground: #241B34;
+      --featured-ink: #F1EBF7;
+      --featured-soft: #B0A2CC;
+      --shadow: 0 1px 2px rgba(0,0,0,.4), 0 8px 24px rgba(0,0,0,.35);
+      --shadow-lift: 0 2px 6px rgba(0,0,0,.5), 0 18px 40px rgba(0,0,0,.45);
+    }
+  }
+  :root[data-theme="light"] {
+    --ground: #FAF8F4; --surface: #FFFFFF; --surface-2: #F3EFE8;
+    --ink: #241C31; --ink-soft: #5A5167; --ink-faint: #8A8194;
+    --line: #E4DDD2; --line-strong: #D2C9BC;
+    --primary: #4A3B6B; --primary-soft: #6A5793; --primary-wash: #EDE8F3;
+    --accent: #B8863B; --accent-wash: #F6ECD8;
+    --featured-ground: #4A3B6B; --featured-ink: #F7F3EC; --featured-soft: #C9BEDD;
+    --shadow: 0 1px 2px rgba(36,28,49,.06), 0 8px 24px rgba(36,28,49,.06);
+    --shadow-lift: 0 2px 6px rgba(36,28,49,.10), 0 18px 40px rgba(36,28,49,.12);
+  }
+  :root[data-theme="dark"] {
+    --ground: #16121D; --surface: #1F1929; --surface-2: #271F34;
+    --ink: #F1EBF7; --ink-soft: #B8AEC8; --ink-faint: #857A97;
+    --line: #322A41; --line-strong: #3F3550;
+    --primary: #B7A2E0; --primary-soft: #C9B9EA; --primary-wash: #2A2138;
+    --accent: #E0B166; --accent-wash: #33281A;
+    --featured-ground: #241B34; --featured-ink: #F1EBF7; --featured-soft: #B0A2CC;
+    --shadow: 0 1px 2px rgba(0,0,0,.4), 0 8px 24px rgba(0,0,0,.35);
+    --shadow-lift: 0 2px 6px rgba(0,0,0,.5), 0 18px 40px rgba(0,0,0,.45);
+  }
+
+  * { box-sizing: border-box; }
+  body { margin: 0; }
+  .page {
+    background: var(--ground);
+    color: var(--ink);
+    font-family: var(--sans);
+    line-height: 1.5;
+    min-height: 100vh;
+    -webkit-font-smoothing: antialiased;
+  }
+  .wrap { max-width: 940px; margin: 0 auto; padding: 0 18px 72px; }
+
+  /* Header */
+  .masthead {
+    border-bottom: 1px solid var(--line);
+    background: var(--surface);
+  }
+  .masthead-inner {
+    max-width: 940px; margin: 0 auto; padding: 20px 18px 18px;
+    display: flex; align-items: flex-start; justify-content: space-between; gap: 16px;
+  }
+  .brand-eyebrow {
+    font-size: 11px; letter-spacing: .16em; text-transform: uppercase;
+    color: var(--accent); font-weight: 700; margin: 0 0 4px;
+  }
+  .brand-title {
+    font-family: var(--serif); font-weight: 600; color: var(--ink);
+    font-size: clamp(24px, 6vw, 34px); line-height: 1.08; margin: 0;
+    letter-spacing: -.01em; text-wrap: balance;
+  }
+  .brand-sub { margin: 6px 0 0; color: var(--ink-soft); font-size: 14px; max-width: 46ch; }
+  .seal {
+    flex: none; width: 52px; height: 52px; border-radius: 50%;
+    display: grid; place-items: center; background: var(--primary-wash);
+    border: 1.5px solid var(--primary-soft); color: var(--primary);
+    font-family: var(--serif); font-weight: 600; font-size: 20px;
+  }
+
+  /* Top bar with Home button */
+  .topbar { max-width: 940px; margin: 0 auto; padding: 14px 18px 0; }
+  .home-btn { display: inline-flex; align-items: center; gap: 7px; font-family: var(--sans);
+    font-size: 12.5px; font-weight: 700; letter-spacing: .06em; text-transform: uppercase;
+    color: var(--primary); background: var(--primary-wash); border: 1px solid var(--primary-soft);
+    padding: 8px 14px; border-radius: 999px; text-decoration: none; transition: all .15s ease; }
+  .home-btn:hover { background: var(--primary); color: #fff; }
+  :root[data-theme="dark"] .home-btn:hover { color: #16121D; }
+  .home-btn svg { width: 15px; height: 15px; }
+  .gate-back { display: inline-block; margin-top: 16px; font-size: 13px; color: var(--ink-faint); text-decoration: none; }
+  .gate-back:hover { color: var(--primary); text-decoration: underline; }
+
+  /* Filters */
+  .toolbar {
+    position: sticky; top: 0; z-index: 5;
+    background: color-mix(in srgb, var(--ground) 88%, transparent);
+    backdrop-filter: blur(8px);
+    border-bottom: 1px solid var(--line);
+    margin-bottom: 26px;
+  }
+  .toolbar-inner {
+    max-width: 940px; margin: 0 auto; padding: 12px 18px;
+    display: flex; gap: 8px; overflow-x: auto; scrollbar-width: none;
+  }
+  .toolbar-inner::-webkit-scrollbar { display: none; }
+  .chip {
+    flex: none; font-family: var(--sans); font-size: 13.5px; font-weight: 600;
+    color: var(--ink-soft); background: var(--surface); border: 1px solid var(--line-strong);
+    padding: 7px 14px; border-radius: 999px; cursor: pointer; white-space: nowrap;
+    transition: all .15s ease; display: inline-flex; align-items: center; gap: 7px;
+  }
+  .chip:hover { border-color: var(--primary-soft); color: var(--ink); }
+  .chip[aria-pressed="true"] {
+    background: var(--primary); border-color: var(--primary); color: #fff;
+  }
+  :root[data-theme="dark"] .chip[aria-pressed="true"],
+  .chip[aria-pressed="true"] { color: #fff; }
+  .chip .dot { width: 8px; height: 8px; border-radius: 50%; background: var(--type-color, var(--accent)); }
+
+  .section-label {
+    font-size: 12px; letter-spacing: .14em; text-transform: uppercase;
+    color: var(--ink-faint); font-weight: 700; margin: 0 0 12px; display: flex;
+    align-items: center; gap: 10px;
+  }
+  .section-label::after { content: ""; flex: 1; height: 1px; background: var(--line); }
+
+  /* Featured "This Sunday" */
+  .featured {
+    background: var(--featured-ground); color: var(--featured-ink);
+    border-radius: var(--radius); padding: 24px 22px; margin-bottom: 34px;
+    box-shadow: var(--shadow-lift); position: relative; overflow: hidden;
+  }
+  .featured::before {
+    content: ""; position: absolute; inset: 0;
+    background: radial-gradient(120% 80% at 100% 0%, rgba(184,134,59,.22), transparent 60%);
+    pointer-events: none;
+  }
+  .featured-tag {
+    display: inline-flex; align-items: center; gap: 7px; font-size: 11px; font-weight: 700;
+    letter-spacing: .14em; text-transform: uppercase; color: var(--accent);
+    background: color-mix(in srgb, var(--accent) 16%, transparent); padding: 5px 11px;
+    border-radius: 999px; margin-bottom: 14px; position: relative;
+  }
+  .featured-tag .pulse { width: 7px; height: 7px; border-radius: 50%; background: var(--accent); box-shadow: 0 0 0 0 var(--accent); animation: pulse 2.4s infinite; }
+  @keyframes pulse { 0%{box-shadow:0 0 0 0 color-mix(in srgb,var(--accent) 60%,transparent);} 70%{box-shadow:0 0 0 8px transparent;} 100%{box-shadow:0 0 0 0 transparent;} }
+  @media (prefers-reduced-motion: reduce) { .featured-tag .pulse { animation: none; } }
+  .featured h2 {
+    font-family: var(--serif); font-size: clamp(22px, 5.4vw, 30px); margin: 0 0 4px;
+    font-weight: 600; letter-spacing: -.01em; text-wrap: balance; position: relative;
+  }
+  .featured-when { color: var(--featured-soft); font-size: 15px; margin: 0 0 18px; position: relative; }
+  .featured-when strong { color: var(--featured-ink); font-weight: 600; }
+
+  /* Event card */
+  .cards { display: grid; gap: 18px; }
+  .card {
+    background: var(--surface); border: 1px solid var(--line); border-radius: var(--radius);
+    box-shadow: var(--shadow); overflow: hidden; transition: box-shadow .2s ease, transform .2s ease;
+  }
+  .card:hover { box-shadow: var(--shadow-lift); }
+  .card-head {
+    display: flex; align-items: flex-start; gap: 14px; padding: 18px 20px 14px;
+    border-bottom: 1px solid var(--line);
+  }
+  .datechip {
+    flex: none; text-align: center; width: 58px; border-radius: var(--radius-sm);
+    background: var(--surface-2); border: 1px solid var(--line); overflow: hidden;
+  }
+  .datechip .mo { font-size: 10.5px; font-weight: 800; letter-spacing: .1em; text-transform: uppercase;
+    background: var(--primary); color: #fff; padding: 3px 0; }
+  :root[data-theme="dark"] .datechip .mo { color: #16121D; }
+  .datechip .dy { font-family: var(--serif); font-size: 22px; font-weight: 600; padding: 4px 0 2px; color: var(--ink); }
+  .datechip .wd { font-size: 10px; color: var(--ink-faint); padding-bottom: 4px; font-weight: 600; text-transform: uppercase; letter-spacing: .06em; }
+  .card-headline { flex: 1; min-width: 0; }
+  .type-badge {
+    display: inline-flex; align-items: center; gap: 6px; font-size: 11px; font-weight: 700;
+    letter-spacing: .08em; text-transform: uppercase; padding: 4px 9px; border-radius: 999px;
+    background: var(--badge-wash, var(--surface-2)); color: var(--badge-ink, var(--ink-soft));
+    margin-bottom: 7px;
+  }
+  .type-badge .dot { width: 7px; height: 7px; border-radius: 50%; background: currentColor; }
+  .card-title { font-family: var(--serif); font-size: 20px; font-weight: 600; margin: 0; color: var(--ink); letter-spacing: -.005em; }
+  .card-time { font-size: 13.5px; color: var(--ink-soft); margin: 2px 0 0; }
+  .card-time b { color: var(--ink); font-weight: 600; }
+
+  .card-body { padding: 6px 20px 20px; }
+  .rolegroup { margin-top: 14px; }
+  .rolegroup-label {
+    font-size: 11px; letter-spacing: .12em; text-transform: uppercase; color: var(--accent);
+    font-weight: 700; margin: 0 0 8px;
+  }
+  .roles { display: grid; grid-template-columns: 1fr; gap: 1px; background: var(--line);
+    border: 1px solid var(--line); border-radius: var(--radius-sm); overflow: hidden; }
+  @media (min-width: 560px) { .roles { grid-template-columns: 1fr 1fr; } }
+  .role {
+    background: var(--surface); padding: 9px 12px; display: flex; flex-direction: column; gap: 1px;
+  }
+  .role .r-label { font-size: 11.5px; color: var(--ink-faint); font-weight: 600; letter-spacing: .02em; }
+  .role .r-name { font-size: 14.5px; color: var(--ink); font-weight: 500; }
+  .role .r-name.empty { color: var(--ink-faint); font-weight: 400; font-style: italic; }
+
+  /* Order of Worship (flow) */
+  .flow { list-style: none; margin: 0; padding: 0; position: relative; }
+  .flow::before {
+    content: ""; position: absolute; left: 13px; top: 12px; bottom: 12px; width: 2px;
+    background: linear-gradient(var(--line-strong), var(--line)); border-radius: 2px;
+  }
+  .flow-item {
+    display: grid; grid-template-columns: 28px 1fr; align-items: baseline; gap: 12px;
+    padding: 6px 0; position: relative;
+  }
+  .flow-num {
+    grid-column: 1; z-index: 1; width: 28px; height: 28px; border-radius: 50%;
+    display: grid; place-items: center; background: var(--surface);
+    border: 2px solid var(--line-strong); color: var(--primary);
+    font-family: var(--serif); font-size: 12.5px; font-weight: 600;
+  }
+  .flow-item.is-sermon .flow-num { background: var(--primary); border-color: var(--primary); color: #fff; }
+  :root[data-theme="dark"] .flow-item.is-sermon .flow-num { color: #16121D; }
+  .flow-body { display: flex; flex-wrap: wrap; align-items: baseline; gap: 4px 10px; padding-top: 3px; }
+  .flow-part { font-size: 14.5px; color: var(--ink); font-weight: 600; }
+  .flow-item.is-sermon .flow-part { color: var(--primary); }
+  .flow-who { font-size: 13px; color: var(--ink-soft); }
+  .flow-who::before { content: "· "; color: var(--ink-faint); }
+  .flow-who.empty { color: var(--ink-faint); font-style: italic; }
+  .flow-time { margin-left: auto; font-size: 11.5px; font-weight: 700; color: var(--primary);
+    background: var(--primary-wash); padding: 2px 8px; border-radius: 999px;
+    font-variant-numeric: tabular-nums; white-space: nowrap; }
+
+  .style-pill {
+    display: inline-flex; align-items: center; gap: 5px; font-size: 11px; font-weight: 700;
+    letter-spacing: .06em; text-transform: uppercase; padding: 3px 9px; border-radius: 999px;
+    border: 1px solid var(--line-strong); color: var(--ink-soft); background: var(--surface-2);
+    margin-left: 7px; vertical-align: middle;
+  }
+
+  .detail-row { margin-top: 14px; }
+  .detail-row .rolegroup-label { color: var(--ink-faint); }
+  .songs { list-style: none; margin: 0; padding: 0; display: grid; gap: 6px; }
+  .song {
+    display: flex; align-items: baseline; gap: 10px; font-size: 14.5px; color: var(--ink);
+    padding: 8px 12px; background: var(--surface-2); border-radius: var(--radius-sm);
+  }
+  .song .num { font-family: var(--serif); font-size: 13px; color: var(--accent); font-weight: 600; min-width: 14px; }
+  .song .key { margin-left: auto; font-size: 11.5px; font-weight: 700; color: var(--primary);
+    background: var(--primary-wash); padding: 2px 8px; border-radius: 999px; letter-spacing: .03em; }
+  .scripture {
+    font-family: var(--serif); font-size: 15px; color: var(--ink); font-style: italic;
+    padding: 10px 14px; border-left: 3px solid var(--accent); background: var(--accent-wash);
+    border-radius: 0 var(--radius-sm) var(--radius-sm) 0;
+  }
+  .note { font-size: 14px; color: var(--ink-soft); padding: 10px 12px; background: var(--surface-2); border-radius: var(--radius-sm); }
+
+  .empty-state { text-align: center; padding: 48px 20px; color: var(--ink-faint); }
+  .empty-state .big { font-family: var(--serif); font-size: 20px; color: var(--ink-soft); margin: 0 0 4px; }
+
+  .foot {
+    margin-top: 44px; padding-top: 20px; border-top: 1px solid var(--line);
+    font-size: 12.5px; color: var(--ink-faint); text-align: center; line-height: 1.7;
+  }
+  .foot .brandline { color: var(--ink-soft); font-weight: 600; }
+
+  /* Access gate */
+  .page { display: none; }
+  html.unlocked .page { display: block; }
+  html.unlocked #gate { display: none; }
+  #gate { position: fixed; inset: 0; z-index: 100; display: grid; place-items: center;
+    background: var(--ground); color: var(--ink); font-family: var(--sans); padding: 24px; }
+  .gate-card { width: 100%; max-width: 360px; background: var(--surface);
+    border: 1px solid var(--line); border-radius: var(--radius); box-shadow: var(--shadow-lift);
+    padding: 32px 26px; text-align: center; }
+  .gate-lock { width: 52px; height: 52px; margin: 0 auto 16px; border-radius: 50%;
+    background: var(--primary-wash); border: 1.5px solid var(--primary-soft); color: var(--primary);
+    display: grid; place-items: center; }
+  .gate-eyebrow { font-size: 11px; letter-spacing: .16em; text-transform: uppercase;
+    color: var(--accent); font-weight: 700; margin: 0 0 6px; }
+  .gate-title { font-family: var(--serif); font-size: 23px; font-weight: 600; margin: 0 0 6px; color: var(--ink); }
+  .gate-sub { font-size: 14px; color: var(--ink-soft); margin: 0 0 20px; line-height: 1.5; }
+  .gate-form { display: flex; flex-direction: column; gap: 10px; }
+  .gate-input { font-family: var(--sans); font-size: 16px; padding: 12px 14px; border-radius: var(--radius-sm);
+    border: 1px solid var(--line-strong); background: var(--ground); color: var(--ink);
+    text-align: center; letter-spacing: .04em; }
+  .gate-input:focus { outline: 2px solid var(--primary-soft); outline-offset: 1px; border-color: var(--primary); }
+  .gate-btn { font-family: var(--sans); font-size: 15px; font-weight: 700; padding: 12px 14px;
+    border-radius: var(--radius-sm); border: none; background: #4A3B6B; color: #fff; cursor: pointer;
+    transition: background .15s ease; }
+  .gate-btn:hover { background: #5c4b82; }
+  .gate-error { font-size: 13px; color: #C0526A; min-height: 18px; margin: 2px 0 0; font-weight: 500; }
+</style>
+
+<div class="page">
+  <div class="topbar">
+    <a class="home-btn" href="/">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 11.5 12 4l9 7.5"></path><path d="M5 10v10h14V10"></path></svg>
+      Home
+    </a>
+  </div>
+  <header class="masthead">
+    <div class="masthead-inner">
+      <div>
+        <p class="brand-eyebrow">Lakeview UMC · Brgy. Halang, Lipa City</p>
+        <h1 class="brand-title">Worship &amp; Event Coordinator</h1>
+        <p class="brand-sub">The order of worship, who's assigned, and the songs - so every team is ready before Sunday.</p>
+      </div>
+      <div class="seal" aria-hidden="true">L</div>
+    </div>
+  </header>
+
+  <nav class="toolbar" aria-label="Filter by event type">
+    <div class="toolbar-inner" id="filters"></div>
+  </nav>
+
+  <main class="wrap">
+    <section id="featured-slot"></section>
+    <section>
+      <p class="section-label" id="list-label">Upcoming Services</p>
+      <div class="cards" id="cards"></div>
+    </section>
+    <footer class="foot">
+      <div class="brandline">Lakeview UMC · Worship Coordinator</div>
+      <div>This page updates automatically from a Google Sheet. Draft preview - showing sample data for now.</div>
+    </footer>
+  </main>
+</div>
+
+<div id="gate">
+  <div class="gate-card">
+    <div class="gate-lock" aria-hidden="true">
+      <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="10.5" width="16" height="10" rx="2"></rect><path d="M8 10.5V7a4 4 0 0 1 8 0v3.5"></path></svg>
+    </div>
+    <p class="gate-eyebrow">Lakeview UMC</p>
+    <h1 class="gate-title">Worship Schedule</h1>
+    <p class="gate-sub">This page is for our serving teams. Please enter the access code to continue.</p>
+    <form class="gate-form" id="gate-form">
+      <input class="gate-input" id="gate-input" type="password" inputmode="text" autocomplete="off" autocapitalize="off" spellcheck="false" placeholder="Access code" aria-label="Access code">
+      <button class="gate-btn" type="submit">Enter</button>
+      <p class="gate-error" id="gate-error" role="alert"></p>
+    </form>
+    <a class="gate-back" href="/">&larr; Back to thelakeviewumc.com</a>
+  </div>
+</div>
+<script>if(localStorage.getItem("lvumc_wc_unlocked")==="1"){document.documentElement.classList.add("unlocked");}</script>
+
+<script>
+/* ============================================================
+   SAMPLE DATA - draft preview only.
+   In the live version, this comes from your Google Sheet.
+   NOTE: each event has its own set of "roles" (flexible = scalable).
+   ============================================================ */
+const TODAY = new Date(); // live: uses the real current date
+
+const EVENT_TYPES = {
+  contemporary: { label: "Contemporary", color: "#4A3B6B", wash: "#EDE8F3" },
+  traditional:  { label: "Traditional",  color: "#3C4E6B", wash: "#E7EAF2" },
+  youth:   { label: "Youth Connect",  color: "#2E7D6B", wash: "#DCF0EA" },
+  prayer:  { label: "Prayer Meeting", color: "#B8863B", wash: "#F6ECD8" },
+  special: { label: "Special Service", color: "#A8465F", wash: "#F7E1E7" },
+};
+const WORSHIP_TYPES = ["contemporary", "traditional"];
+
+// ============================================================
+// DATA SOURCE
+// To go live: publish your Google Sheet as CSV and paste the URL here.
+//   Google Sheet -> File -> Share -> Publish to web -> choose the tab,
+//   pick "Comma-separated values (.csv)" -> Publish -> copy the link.
+// Leave it blank to use the built-in sample grid below.
+const SHEET_CSV_URL = "https://docs.google.com/spreadsheets/d/1Xe8ERT4hDJEoFLefh6s053wWTHM7rkwfPhPjCpfQhys/gviz/tq?tqx=out:csv&gid=1149711042";
+
+// Fixed order-of-worship templates per service style. The service order
+// rarely changes; the weekly people come from the sheet. A step with a
+// `role` shows whoever is assigned that week; `who` is a fixed label.
+const LITURGY = {
+  contemporary: [
+    { part: "Processional", who: "Worship Team" },
+    { part: "Announcements", role: "Media / Slides" },
+    { part: "Praise & Worship", who: "Worship Team" },
+    { part: "Children's Prayer", who: "Sunday School Teacher" },
+    { part: "Testimony", who: "" },
+    { part: "Message", role: "Preacher / Speaker", sermon: true },
+    { part: "Altar Call / Worship Response", who: "Pastor & Worship Team" },
+    { part: "Offering", who: "Offering Leader & Ushers" },
+    { part: "Closing", role: "Preacher / Speaker" },
+  ],
+  traditional: [
+    { part: "Processional", who: "Pianist" },
+    { part: "Introit", who: "Liturgist" },
+    { part: "Call to Worship", role: "Liturgist" },
+    { part: "Opening Hymn", who: "Congregation" },
+    { part: "Invocation", who: "Liturgist" },
+    { part: "Responsive Reading", who: "Liturgist & Congregation" },
+    { part: "Announcements", role: "Media / Slides" },
+    { part: "Praise Segment", who: "Worship Team" },
+    { part: "Children's Prayer", who: "Sunday School Teacher" },
+    { part: "Testimony", who: "" },
+    { part: "Scripture Readings", role: "Bible Reader" },
+    { part: "Sermon", role: "Preacher / Speaker", sermon: true },
+    { part: "Offering", role: "Ushers" },
+    { part: "Holy Communion", role: "Communion Stewards" },
+    { part: "Closing Hymn", who: "Congregation" },
+    { part: "Benediction", role: "Preacher / Speaker" },
+  ],
+  youth: [
+    { part: "Registration", who: "Registration / Hosts", time: "5:00 PM" },
+    { part: "Welcome & Opening", who: "Youth Host", time: "5:30 PM" },
+    { part: "Small Group Discussions", who: "Small Group Facilitators", time: "5:40 PM" },
+    { part: "Praise & Worship", who: "Worship Team", time: "6:00 PM" },
+    { part: "Message", role: "Preacher / Speaker", sermon: true, time: "6:20 PM" },
+    { part: "Response / Altar Call", who: "Speaker & Worship Team", time: "6:55 PM" },
+    { part: "Food & Fellowship", who: "Food Coordinators", time: "7:15 PM" },
+  ],
+  prayer: [
+    { part: "Praise & Worship", who: "Worship Team" },
+    { part: "Opening Prayer", who: "Facilitator" },
+    { part: "Message", role: "Preacher / Speaker", sermon: true },
+    { part: "Prayer Moment", who: "Everyone" },
+    { part: "Closing", who: "Facilitator" },
+  ],
+};
+
+// Any "## Section" in the sheet becomes a role group automatically, EXCEPT
+// these special ones handled elsewhere. Add new sections in the sheet freely.
+const SPECIAL_SECTIONS = ["Songs", "Connect Group Leaders", "Connect Groups", "Details"];
+
+// Standing note shown per event type when the sheet's Notes cell is blank.
+const DEFAULT_NOTES = {
+  youth: "All involved committees and teams: please arrive 2 hours before the event for setup and preparation.",
+};
+
+// Built-in sample schedule - identical wide-grid format to the Google Sheet.
+// Used when SHEET_CSV_URL is blank or the sheet cannot be reached.
+const EMBEDDED_CSV = `ROLE / ITEM,Jul-19-2026,Aug-02-2026,Jul-18-2026
+Service Type,Contemporary,Traditional,Youth Connect
+Time,9:00 AM,9:00 AM,5:00 PM
+Title,Sunday Worship Service,Sunday Worship Service,Youth Connect
+## Leadership,,,
+Preacher / Speaker,Rev. Jesus Villamin,,Sis. Cristine Angelique Villamin
+Worship Leader,Sis. Reign Joyce Olores,,Sis. Reign Joyce Olores
+Liturgist,,Ate Grace Lim,
+Bible Reader,,Kuya Ramon Silva,
+Ushers,"Kuya Ramil Bautista, Ate Divine Cruz","Kuya Ramil Bautista, Ate Divine Cruz",
+Offering Leader,Kuya Ferdie Lopez,,
+Communion Stewards,,Deacon Board,
+## Music Team,,,
+Keyboard,Kuya Jayvee,Kuya Jayvee,Kuya Jayvee
+Guitar,"Vhany, Clarence",,"Vhany, Clarence"
+Drums,Vanjeil,,Vanjeil
+Bass,Vhejel,,Vhejel
+Lead Vocals,Kuya Jayvee,,Reign Joyce
+Backup Vocals,"Reign, Rezy, KJoel, Precious, Tabby, Mhay, Lean",,"Tabby, Precious, Axl, Rezy, Mhay, Lean"
+## Welcoming Committee,,,
+Head Greeter,Rezy,Rezy,Rezy
+Greeters,"Zhine, Bhelay","Zhine, Bhelay","Zhine, Bhelay"
+Welcome Table (First-Timers),Vhejel,Vhejel,Vhejel
+## Kids Sunday School,,,
+Nursery,Ate Jenny Ramos,Ate Jenny Ramos,
+Middle,Ate Karen Lim,Ate Karen Lim,
+Younger,Kuya Dave Santos,Kuya Dave Santos,
+## Tech & Support,,,
+Sound / AV,"JayR, Daeniel, El Josh",,JayR
+Media / Slides,Axl Von,,Axl Von
+Livestream,Mikee,,Mikee
+Photo / Documentation,Milliscent,Milliscent,Milliscent
+## Connect Group Leaders,,,
+Youth Boys,"Kuya Joel, Kuya Vinz",,
+Youth Girls,"Ate Kot, Ate Tabby",,
+Young Adult Boys,Kuya Mark Villanueva,Kuya Mark Villanueva,
+Young Adult Girls,Ate Rica Flores,Ate Rica Flores,
+WSCS (Women),Ate Marites Bautista,Ate Marites Bautista,
+UMM (Men),Kuya Nico Ramos,Kuya Nico Ramos,
+## Songs,,,
+Song 1,"10,000 Reasons (G)","Holy, Holy, Holy (D)",
+Song 2,Great Are You Lord (A),Great Is Thy Faithfulness (Eb),
+Song 3,Way Maker (E),Doxology (G),
+Song 4,Doxology (G),,
+## Details,,,
+Scripture,"Psalm 100 - Make a joyful noise unto the Lord, all ye lands.","Psalm 95:6 - O come, let us worship and bow down before the Lord our Maker.",
+Offering Verse,"2 Corinthians 9:7 - Every man according as he purposeth in his heart, so let him give; for God loveth a cheerful giver.",,
+Notes,"Fellowship snacks after the service. First-time guests, please visit the Welcome Table.",Communion Sunday - prepare the elements before 8:30 AM. Choir call time 8:15 AM.,
+## Small Groups,,,
+Facilitator,,,MYAF Leaders`;
+
+let EVENTS = [];
+
+/* ============================================================
+   RENDERING
+   ============================================================ */
+const MONTHS = ["JAN","FEB","MAR","APR","MAY","JUN","JUL","AUG","SEP","OCT","NOV","DEC"];
+const WEEKDAYS = ["Sun","Mon","Tue","Wed","Thu","Fri","Sat"];
+const FULLDAYS = ["Sunday","Monday","Tuesday","Wednesday","Thursday","Friday","Saturday"];
+const FULLMONTHS = ["January","February","March","April","May","June","July","August","September","October","November","December"];
+
+function parseDate(s){ const [y,m,d]=s.split("-").map(Number); return new Date(y,m-1,d); }
+function fmtLong(dt){ return `${FULLDAYS[dt.getDay()]}, ${FULLMONTHS[dt.getMonth()]} ${dt.getDate()}, ${dt.getFullYear()}`; }
+
+let activeFilter = "all";
+
+function upcoming(){
+  return EVENTS
+    .map(e => ({...e, _dt: parseDate(e.date)}))
+    .filter(e => e._dt >= new Date(TODAY.getFullYear(),TODAY.getMonth(),TODAY.getDate()))
+    .sort((a,b) => a._dt - b._dt);
+}
+
+function nextSunday(list){
+  return list.find(e => WORSHIP_TYPES.includes(e.type)) || null;
+}
+
+function rolesMarkup(groups){
+  return groups.map(g => `
+    <div class="rolegroup">
+      <p class="rolegroup-label">${g.label}</p>
+      <div class="roles">
+        ${g.roles.map(role => `
+          <div class="role">
+            <span class="r-label">${role.r}</span>
+            <span class="r-name${role.n ? "" : " empty"}">${role.n || "Volunteer needed"}</span>
+          </div>`).join("")}
+      </div>
+    </div>`).join("");
+}
+
+function songsMarkup(songs){
+  if(!songs || !songs.length) return "";
+  return `<div class="detail-row"><p class="rolegroup-label">Song List</p>
+    <ul class="songs">${songs.map((s,i)=>`
+      <li class="song"><span class="num">${i+1}</span><span>${s.t}</span>${s.key?`<span class="key">Key of ${s.key}</span>`:""}</li>`).join("")}
+    </ul></div>`;
+}
+
+function flowMarkup(flow, type){
+  if(!flow || !flow.length) return "";
+  const label = (type === "contemporary" || type === "traditional") ? "Order of Worship" : "Program Flow";
+  return `<div class="rolegroup"><p class="rolegroup-label">${label}</p>
+    <ol class="flow">${flow.map((f,i)=>`
+      <li class="flow-item${f.sermon ? " is-sermon" : ""}">
+        <span class="flow-num">${i+1}</span>
+        <span class="flow-body">
+          <span class="flow-part">${f.part}</span>
+          ${f.who ? `<span class="flow-who">${f.who}</span>` : `<span class="flow-who empty">unassigned</span>`}
+          ${f.time ? `<span class="flow-time">${f.time}</span>` : ""}
+        </span>
+      </li>`).join("")}
+    </ol></div>`;
+}
+
+function connectMarkup(connect){
+  if(!connect || !connect.length) return "";
+  return `<div class="rolegroup" style="margin-top:18px"><p class="rolegroup-label">Connect Group Leaders</p>
+    <div class="roles">${connect.map(role => `
+      <div class="role">
+        <span class="r-label">${role.r}</span>
+        <span class="r-name${role.n ? "" : " empty"}">${role.n || "Volunteer needed"}</span>
+      </div>`).join("")}
+    </div></div>`;
+}
+
+function extrasMarkup(e){
+  let html = "";
+  if(e.scripture) html += `<div class="detail-row"><p class="rolegroup-label">Scripture · Worship Team</p><div class="scripture">${e.scripture}</div></div>`;
+  if(e.offeringVerse) html += `<div class="detail-row"><p class="rolegroup-label">Verse Guide · Offering Leader</p><div class="scripture">${e.offeringVerse}</div></div>`;
+  html += songsMarkup(e.songs);
+  html += connectMarkup(e.connect);
+  if(e.note) html += `<div class="detail-row"><p class="rolegroup-label">Notes</p><div class="note">${e.note}</div></div>`;
+  return html;
+}
+
+function cardMarkup(e){
+  const t = EVENT_TYPES[e.type];
+  const dt = e._dt;
+  return `
+  <article class="card" data-type="${e.type}">
+    <div class="card-head">
+      <div class="datechip">
+        <div class="mo" style="background:${t.color}">${MONTHS[dt.getMonth()]}</div>
+        <div class="dy">${dt.getDate()}</div>
+        <div class="wd">${WEEKDAYS[dt.getDay()]}</div>
+      </div>
+      <div class="card-headline">
+        <span class="type-badge" style="--badge-ink:${t.color};--badge-wash:${t.wash}"><span class="dot"></span>${t.label}</span>
+        <h3 class="card-title">${e.title}${e.style ? `<span class="style-pill">${e.style}</span>` : ""}</h3>
+        <p class="card-time"><b>${e.time}</b> · ${fmtLong(dt)}</p>
+      </div>
+    </div>
+    <div class="card-body">
+      ${flowMarkup(e.flow, e.type)}
+      ${rolesMarkup(e.groups)}
+      ${extrasMarkup(e)}
+    </div>
+  </article>`;
+}
+
+function renderFeatured(list){
+  const slot = document.getElementById("featured-slot");
+  const ns = nextSunday(list);
+  if(!ns || activeFilter !== "all"){ slot.innerHTML = ""; return; }
+  slot.innerHTML = `
+    <div class="featured">
+      <span class="featured-tag"><span class="pulse"></span>This Sunday</span>
+      <h2>${ns.title}</h2>
+      <p class="featured-when"><strong>${ns.time}</strong> · ${fmtLong(ns._dt)}</p>
+    </div>`;
+}
+
+function renderCards(){
+  const list = upcoming();
+  renderFeatured(list);
+  const filtered = activeFilter === "all" ? list : list.filter(e => e.type === activeFilter);
+  const el = document.getElementById("cards");
+  const label = document.getElementById("list-label");
+  label.textContent = activeFilter === "all" ? "Upcoming Services" : EVENT_TYPES[activeFilter].label;
+  if(!filtered.length){
+    el.innerHTML = `<div class="empty-state"><p class="big">Nothing scheduled yet</p><p>No events in this category yet.</p></div>`;
+    return;
+  }
+  el.innerHTML = filtered.map(cardMarkup).join("");
+}
+
+function renderFilters(){
+  const el = document.getElementById("filters");
+  const present = Object.keys(EVENT_TYPES).filter(t => EVENTS.some(e => e.type === t));
+  const chips = [["all","All", null], ...present.map(k => [k, EVENT_TYPES[k].label, EVENT_TYPES[k].color])];
+  el.innerHTML = chips.map(([k,lbl,color])=>`
+    <button class="chip" data-filter="${k}" aria-pressed="${k===activeFilter}" ${color?`style="--type-color:${color}"`:""}>
+      ${color?`<span class="dot"></span>`:""}${lbl}
+    </button>`).join("");
+  el.querySelectorAll(".chip").forEach(btn=>{
+    btn.addEventListener("click",()=>{
+      activeFilter = btn.dataset.filter;
+      el.querySelectorAll(".chip").forEach(b=>b.setAttribute("aria-pressed", b.dataset.filter===activeFilter));
+      renderCards();
+    });
+  });
+}
+
+// ============================================================
+//  CSV PIPELINE - turns the wide grid into event objects
+// ============================================================
+function parseCSV(text){
+  const rows = [];
+  let row = [], field = "", inQ = false;
+  text = text.replace(/\r\n/g, "\n").replace(/\r/g, "\n");
+  for (let i = 0; i < text.length; i++){
+    const c = text[i];
+    if (inQ){
+      if (c === '"'){ if (text[i+1] === '"'){ field += '"'; i++; } else inQ = false; }
+      else field += c;
+    } else {
+      if (c === '"') inQ = true;
+      else if (c === ","){ row.push(field); field = ""; }
+      else if (c === "\n"){ row.push(field); rows.push(row); row = []; field = ""; }
+      else field += c;
+    }
+  }
+  if (field.length || row.length){ row.push(field); rows.push(row); }
+  return rows;
+}
+
+function mapType(v){
+  const s = (v || "").trim().toLowerCase();
+  if (s.startsWith("contemp")) return "contemporary";
+  if (s.startsWith("trad")) return "traditional";
+  if (s.startsWith("youth")) return "youth";
+  if (s.startsWith("prayer")) return "prayer";
+  if (s.startsWith("special")) return "special";
+  return s;
+}
+
+function parseSong(v){
+  const m = v.match(/^(.*?)\s*\(([^()]*)\)\s*$/);
+  return m ? { t: m[1].trim(), key: m[2].trim() } : { t: v.trim(), key: "" };
+}
+
+// "" -> hidden; "TBD"/"?" -> open slot; else -> assigned name
+function cellState(v){
+  const s = (v || "").trim();
+  if (s === "") return { show: false, name: null };
+  if (/^(tbd|\?)$/i.test(s)) return { show: true, name: "" };
+  return { show: true, name: s };
+}
+
+const MONTH_IDX = { jan:0, feb:1, mar:2, apr:3, may:4, jun:5, jul:6, aug:7, sep:8, sept:8, oct:9, nov:10, dec:11,
+  january:0, february:1, march:2, april:3, june:5, july:6, august:7, september:8, october:9, november:10, december:11 };
+
+// Accepts ISO (2026-07-19), "Jul-19-2026", "Jul 19, 2026", "July 19 2026", "7/19/2026" -> ISO string
+function normalizeDate(s){
+  s = (s || "").trim();
+  if (!s) return s;
+  let y, m, d, mm;
+  if ((mm = s.match(/^(\d{4})-(\d{1,2})-(\d{1,2})$/))){ y = +mm[1]; m = +mm[2]; d = +mm[3]; }
+  else if ((mm = s.match(/^([A-Za-z]{3,9})[-.\s]+(\d{1,2})[-,.\s]+(\d{4})$/))){
+    const mi = MONTH_IDX[mm[1].toLowerCase()]; if (mi === undefined) return s; m = mi + 1; d = +mm[2]; y = +mm[3];
+  }
+  else if ((mm = s.match(/^(\d{1,2})[\/-](\d{1,2})[\/-](\d{4})$/))){ m = +mm[1]; d = +mm[2]; y = +mm[3]; }
+  else { const dt = new Date(s); if (isNaN(dt)) return s; y = dt.getFullYear(); m = dt.getMonth()+1; d = dt.getDate(); }
+  return `${y}-${String(m).padStart(2,"0")}-${String(d).padStart(2,"0")}`;
+}
+
+function defaultTitle(t){
+  return ({ contemporary: "Sunday Worship Service", traditional: "Sunday Worship Service",
+    youth: "Youth Connect Night", prayer: "Midweek Prayer Meeting", special: "Special Service" })[t] || "Service";
+}
+
+function buildEvents(csv){
+  const rows = parseCSV(csv).filter(r => r.some(x => (x || "").trim() !== ""));
+  if (!rows.length) return [];
+  const header = rows[0];
+  const events = [];
+  for (let c = 1; c < header.length; c++){
+    if (!(header[c] || "").trim()) continue;
+    const ev = { date: normalizeDate(header[c]), groups: [], connect: [], songs: [], _roles: {} };
+    let section = null, group = null;
+    for (let r = 1; r < rows.length; r++){
+      const key = (rows[r][0] || "").trim();
+      const raw = rows[r][c] !== undefined ? rows[r][c] : "";
+      if (!key) continue;
+      if (key.startsWith("##")){
+        section = key.replace(/^#+/, "").trim();
+        group = null;
+        if (!SPECIAL_SECTIONS.includes(section)){ group = { label: section, roles: [] }; ev.groups.push(group); }
+        continue;
+      }
+      const lk = key.toLowerCase();
+      if (lk === "service type"){ ev.type = mapType(raw); continue; }
+      if (lk === "time"){ ev.time = raw.trim(); continue; }
+      if (lk === "title"){ if (raw.trim()) ev.title = raw.trim(); continue; }
+      if (lk === "scripture"){ if (raw.trim()) ev.scripture = raw.trim(); continue; }
+      if (lk === "offering verse"){ if (raw.trim()) ev.offeringVerse = raw.trim(); continue; }
+      if (lk === "notes" || lk === "note"){ if (raw.trim()) ev.note = raw.trim(); continue; }
+      if (section === "Songs"){ if (raw.trim()) ev.songs.push(parseSong(raw.trim())); continue; }
+      if (section === "Connect Group Leaders" || section === "Connect Groups"){
+        const st = cellState(raw); if (st.show) ev.connect.push({ r: key, n: st.name }); continue;
+      }
+      if (group){
+        const st = cellState(raw);
+        if (st.show){ ev._roles[key] = st.name || ""; group.roles.push({ r: key, n: st.name }); }
+        continue;
+      }
+    }
+    if (!ev.type) continue;
+    if (!ev.title) ev.title = defaultTitle(ev.type);
+    if (!ev.note && DEFAULT_NOTES[ev.type]) ev.note = DEFAULT_NOTES[ev.type];
+    if (LITURGY[ev.type]){
+      ev.flow = LITURGY[ev.type].map(s => ({
+        part: s.part,
+        who: (s.who !== undefined) ? s.who : (ev._roles[s.role] || ""),
+        sermon: !!s.sermon,
+        time: s.time,
+      }));
+    }
+    ev.groups = ev.groups.filter(g => g.roles.length);
+    delete ev._roles;
+    events.push(ev);
+  }
+  return events;
+}
+
+async function init(){
+  let csv = EMBEDDED_CSV;
+  if (SHEET_CSV_URL){
+    try {
+      const res = await fetch(SHEET_CSV_URL, { cache: "no-store" });
+      if (res.ok) csv = await res.text();
+    } catch (e) { /* offline / blocked -> use embedded sample */ }
+  }
+  EVENTS = buildEvents(csv);
+  renderFilters();
+  renderCards();
+}
+
+// ============================================================
+//  ACCESS GATE - simple passcode (deters casual/public access)
+// ============================================================
+const PASSCODE = "Rock4Jesus";          // <-- change this to set the access code
+const GATE_KEY = "lvumc_wc_unlocked";
+function reveal(){ document.documentElement.classList.add("unlocked"); init(); }
+
+if (localStorage.getItem(GATE_KEY) === "1"){
+  init();                                // already unlocked on this device
+} else {
+  const gForm = document.getElementById("gate-form");
+  const gInput = document.getElementById("gate-input");
+  const gErr = document.getElementById("gate-error");
+  gForm.addEventListener("submit", (e) => {
+    e.preventDefault();
+    if (gInput.value.trim().toLowerCase() === PASSCODE.toLowerCase()){
+      try { localStorage.setItem(GATE_KEY, "1"); } catch (_) {}
+      gErr.textContent = "";
+      reveal();
+    } else {
+      gErr.textContent = "Incorrect code. Please try again.";
+      gInput.select();
+    }
+  });
+  gInput.focus();
+}
+</script>
