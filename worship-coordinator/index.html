@@ -107,8 +107,9 @@
     font-family: var(--serif); font-weight: 600; font-size: 20px;
   }
 
-  /* Top bar with Home button */
-  .topbar { max-width: 940px; margin: 0 auto; padding: 14px 18px 0; }
+  /* Top bar with Home + Print buttons */
+  .topbar { max-width: 940px; margin: 0 auto; padding: 14px 18px 0;
+    display: flex; align-items: center; justify-content: space-between; gap: 12px; }
   .home-btn { display: inline-flex; align-items: center; gap: 7px; font-family: var(--sans);
     font-size: 12.5px; font-weight: 700; letter-spacing: .06em; text-transform: uppercase;
     color: var(--primary); background: var(--primary-wash); border: 1px solid var(--primary-soft);
@@ -118,6 +119,27 @@
   .home-btn svg { width: 15px; height: 15px; }
   .gate-back { display: inline-block; margin-top: 16px; font-size: 13px; color: var(--ink-faint); text-decoration: none; }
   .gate-back:hover { color: var(--primary); text-decoration: underline; }
+
+  .print-btn { display: inline-flex; align-items: center; gap: 7px; font-family: var(--sans);
+    font-size: 12.5px; font-weight: 700; letter-spacing: .06em; text-transform: uppercase;
+    color: var(--accent); background: var(--accent-wash); border: 1px solid var(--accent);
+    padding: 8px 14px; border-radius: 999px; cursor: pointer; transition: all .15s ease; }
+  .print-btn:hover { background: var(--accent); color: #fff; }
+  :root[data-theme="dark"] .print-btn:hover { color: #16121D; }
+  .print-btn svg { width: 15px; height: 15px; }
+
+  /* Print / Save as PDF - clean output of the current view */
+  @media print {
+    .topbar, .toolbar, .foot, #gate, .featured { display: none !important; }
+    html.unlocked .page { display: block !important; }
+    body, .page, .masthead { background: #fff !important; }
+    .masthead { border-bottom: 1px solid #ddd; }
+    .section-label { margin-top: 4px; }
+    .card { box-shadow: none !important; border: 1px solid #ccc; break-inside: avoid; page-break-inside: avoid; }
+    .card:hover { box-shadow: none !important; }
+    * { -webkit-print-color-adjust: exact !important; print-color-adjust: exact !important; }
+    @page { margin: 12mm; }
+  }
 
   /* Filters */
   .toolbar {
@@ -222,8 +244,12 @@
     border: 1px solid var(--line); border-radius: var(--radius-sm); overflow: hidden; }
   @media (min-width: 560px) { .roles { grid-template-columns: 1fr 1fr; } }
   .role {
-    background: var(--surface); padding: 9px 12px; display: flex; flex-direction: column; gap: 1px;
+    background: var(--surface); padding: 9px 12px; display: grid;
+    grid-template-columns: 24px 1fr; gap: 11px; align-items: center;
   }
+  .role-ic { color: var(--primary); display: grid; place-items: center; }
+  .role-ic svg { width: 20px; height: 20px; }
+  .role-txt { display: flex; flex-direction: column; gap: 1px; min-width: 0; }
   .role .r-label { font-size: 11.5px; color: var(--ink-faint); font-weight: 600; letter-spacing: .02em; }
   .role .r-name { font-size: 14.5px; color: var(--ink); font-weight: 500; }
   .role .r-name.empty { color: var(--ink-faint); font-weight: 400; font-style: italic; }
@@ -323,6 +349,10 @@
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 11.5 12 4l9 7.5"></path><path d="M5 10v10h14V10"></path></svg>
       Home
     </a>
+    <button class="print-btn" type="button" onclick="window.print()" title="Print or save the current view as PDF">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 6 2 18 2 18 9"></polyline><path d="M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2"></path><rect x="6" y="14" width="12" height="8"></rect></svg>
+      Print / Save PDF
+    </button>
   </div>
   <header class="masthead">
     <div class="masthead-inner">
@@ -534,16 +564,69 @@ function nextSunday(list){
   return list.find(e => WORSHIP_TYPES.includes(e.type)) || null;
 }
 
+// ---- Role icons (inline SVG, brand-colored via CSS) ----
+const ICON_SVG = {
+  keyboard: '<rect x="2" y="6" width="20" height="12" rx="2"/><path d="M7 6v8M12 6v8M17 6v8"/>',
+  guitar:   '<circle cx="8" cy="16" r="5"/><path d="M11.6 12.4 19 5"/><path d="M17 3l4 4"/>',
+  drums:    '<ellipse cx="12" cy="8.5" rx="8" ry="3"/><path d="M4 8.5v6c0 1.7 3.6 3 8 3s8-1.3 8-3v-6"/><path d="M6 17 4 21M18 17l2 4"/>',
+  vocals:   '<rect x="9" y="2" width="6" height="12" rx="3"/><path d="M5 10a7 7 0 0 0 14 0"/><path d="M12 17v4"/><path d="M8 21h8"/>',
+  music:    '<path d="M9 18V5l12-2v13"/><circle cx="6" cy="18" r="3"/><circle cx="18" cy="16" r="3"/>',
+  book:     '<path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/>',
+  bookOpen: '<path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/>',
+  mega:     '<path d="m3 11 18-5v12L3 14v-3z"/><path d="M11.6 16.8a3 3 0 1 1-5.8-1.6"/>',
+  cup:      '<path d="M6 2h12l-1 7a5 5 0 0 1-10 0L6 2z"/><path d="M12 14v6"/><path d="M8 22h8"/>',
+  users:    '<path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/>',
+  user:     '<path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/>',
+  volume:   '<polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"/><path d="M15.5 8.5a5 5 0 0 1 0 7"/><path d="M19 5a10 10 0 0 1 0 14"/>',
+  monitor:  '<rect x="2" y="3" width="20" height="14" rx="2"/><path d="M8 21h8M12 17v4"/>',
+  video:    '<path d="m23 7-7 5 7 5V7z"/><rect x="1" y="5" width="15" height="14" rx="2"/>',
+  camera:   '<path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"/><circle cx="12" cy="13" r="4"/>',
+  gift:     '<polyline points="20 12 20 22 4 22 4 12"/><rect x="2" y="7" width="20" height="5"/><line x1="12" y1="22" x2="12" y2="7"/><path d="M12 7H7.5a2.5 2.5 0 0 1 0-5C11 2 12 7 12 7z"/><path d="M12 7h4.5a2.5 2.5 0 0 0 0-5C13 2 12 7 12 7z"/>',
+  smile:    '<circle cx="12" cy="12" r="10"/><path d="M8 14s1.5 2 4 2 4-2 4-2"/><line x1="9" y1="9" x2="9.01" y2="9"/><line x1="15" y1="9" x2="15.01" y2="9"/>',
+};
+function icon(k){ return `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round">${ICON_SVG[k] || ICON_SVG.user}</svg>`; }
+
+function roleIcon(label){
+  const s = (label || "").toLowerCase();
+  const has = (...w) => w.some(x => s.includes(x));
+  if (has("keyboard","piano","keys")) return icon("keyboard");
+  if (has("guitar")) return icon("guitar");
+  if (has("drum","percussion","cajon")) return icon("drums");
+  if (has("bass")) return icon("music");
+  if (has("vocal","singer","choir")) return icon("vocals");
+  if (has("sound","audio")) return icon("volume");
+  if (has("media","slide","projector")) return icon("monitor");
+  if (has("livestream","stream")) return icon("video");
+  if (has("photo","documentation","camera")) return icon("camera");
+  if (has("worship leader","song leader")) return icon("music");
+  if (has("preacher","speaker","sermon","message","pastor")) return icon("mega");
+  if (has("liturgist","bible","scripture","reader","reading")) return icon("book");
+  if (has("communion","steward")) return icon("cup");
+  if (has("offering","food","snack","fellowship")) return icon("gift");
+  if (has("usher")) return icon("users");
+  if (has("greeter","welcome","hospitality","first-timer")) return icon("smile");
+  if (has("nursery","younger","middle","child","sunday school","kids")) return icon("bookOpen");
+  if (has("host","emcee","registration","games")) return icon("mega");
+  if (has("facilitator","small group","youth","young adult","women","wscs","men","umm","connect","group","team")) return icon("users");
+  return icon("user");
+}
+
+function roleCell(role){
+  return `<div class="role">
+    <span class="role-ic" aria-hidden="true">${roleIcon(role.r)}</span>
+    <span class="role-txt">
+      <span class="r-label">${role.r}</span>
+      <span class="r-name${role.n ? "" : " empty"}">${role.n || "Volunteer needed"}</span>
+    </span>
+  </div>`;
+}
+
 function rolesMarkup(groups){
   return groups.map(g => `
     <div class="rolegroup">
       <p class="rolegroup-label">${g.label}</p>
       <div class="roles">
-        ${g.roles.map(role => `
-          <div class="role">
-            <span class="r-label">${role.r}</span>
-            <span class="r-name${role.n ? "" : " empty"}">${role.n || "Volunteer needed"}</span>
-          </div>`).join("")}
+        ${g.roles.map(roleCell).join("")}
       </div>
     </div>`).join("");
 }
@@ -575,12 +658,7 @@ function flowMarkup(flow, type){
 function connectMarkup(connect){
   if(!connect || !connect.length) return "";
   return `<div class="rolegroup" style="margin-top:18px"><p class="rolegroup-label">Connect Group Leaders</p>
-    <div class="roles">${connect.map(role => `
-      <div class="role">
-        <span class="r-label">${role.r}</span>
-        <span class="r-name${role.n ? "" : " empty"}">${role.n || "Volunteer needed"}</span>
-      </div>`).join("")}
-    </div></div>`;
+    <div class="roles">${connect.map(roleCell).join("")}</div></div>`;
 }
 
 function extrasMarkup(e){
