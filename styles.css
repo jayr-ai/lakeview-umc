@@ -114,6 +114,11 @@ html.js .reveal.in{opacity:1;transform:none;filter:none}
    display:flex;flex-direction:column;gap:2px;z-index:60;
    opacity:0;visibility:hidden;transition:opacity .22s var(--ease),transform .22s var(--ease)}
 .nav-item:hover .dd,.nav-item:focus-within .dd{opacity:1;visibility:visible;transform:translateX(-50%) translateY(7px)}
+/* invisible hover bridge over the 10px gap so the dropdown stays open while moving the mouse into it */
+@media(min-width:861px){
+  .nav-item:hover::after,.nav-item:focus-within::after{content:"";position:absolute;top:100%;left:50%;
+    transform:translateX(-50%);width:240px;max-width:80vw;height:16px}
+}
 .dd a{padding:10px 14px;border-radius:9px;font-size:.92rem;white-space:nowrap;display:flex;flex-direction:column}
 .dd a small{color:var(--muted);font-size:.78rem;font-weight:400}
 .dd a:hover{background:var(--band);color:var(--flame)}
