@@ -21,6 +21,33 @@
     });
   }
 
+  /* ---------- night mode toggle ---------- */
+  (function () {
+    var btn = document.getElementById('theme-toggle');
+    if (!btn) return;
+    var MOON = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.8A9 9 0 1 1 11.2 3 7 7 0 0 0 21 12.8z"/></svg>';
+    var SUN = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M2 12h2M20 12h2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M19.1 4.9l-1.4 1.4M6.3 17.7l-1.4 1.4"/></svg>';
+    function effective() {
+      var a = document.documentElement.getAttribute('data-theme');
+      return a || (window.matchMedia && matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
+    }
+    function paint() {
+      var dark = effective() === 'dark';
+      btn.innerHTML = dark ? SUN : MOON;
+      btn.setAttribute('aria-label', dark ? 'Switch to day mode' : 'Switch to night mode');
+      btn.setAttribute('title', dark ? 'Day mode' : 'Night mode');
+      var logo = document.querySelector('.brand img.mark');
+      if (logo) logo.src = dark ? 'images/umc-logo-white.png' : 'images/umc-logo.png';
+    }
+    paint();
+    btn.addEventListener('click', function () {
+      var next = effective() === 'dark' ? 'light' : 'dark';
+      document.documentElement.setAttribute('data-theme', next);
+      try { localStorage.setItem('lv-theme', next); } catch (e) { }
+      paint();
+    });
+  })();
+
   /* ---------- motion helpers ---------- */
   var reduce = window.matchMedia && matchMedia('(prefers-reduced-motion: reduce)').matches;
   var io = null;

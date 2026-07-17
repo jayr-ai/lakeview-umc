@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
   <meta charset="utf-8">
-  <script>document.documentElement.className += ' js';</script>
+  <script>document.documentElement.className += ' js'; try{var t=localStorage.getItem('lv-theme'); if(t) document.documentElement.setAttribute('data-theme', t);}catch(e){}</script>
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Lakeview Women | Lakeview United Methodist Church</title>
   <meta name="description" content="Lakeview Women at Lakeview United Methodist Church, Lipa City, Batangas.">
@@ -41,6 +41,7 @@
         <a href="index.html#give">Give</a>
       </nav>
       <div class="nav-cta">
+        <button class="theme-toggle" id="theme-toggle" aria-label="Switch to night mode"></button>
         <a href="index.html#visit" class="btn btn-primary">Plan a Visit</a>
         <button class="menu-btn" aria-label="Menu">&#9776;</button>
       </div>

@@ -10,12 +10,18 @@
   --wrap:1120px;
   --ease:cubic-bezier(.16,.68,.32,1);
 }
+/* Night mode: follows the system setting, unless the user forces a mode via the toggle */
 @media (prefers-color-scheme:dark){
-  :root{
+  :root:not([data-theme="light"]){
     --ink:#EAF1FB; --muted:#9FB2CC; --paper:#091A31; --card:#12294A;
     --line:#20406E; --band:#0D2247; --sand:#1B2E4E; --sand-deep:#152743;
     --lake-300:#5FA6E6; --flame:#F1734A; --gold:#E0B255;
   }
+}
+:root[data-theme="dark"]{
+  --ink:#EAF1FB; --muted:#9FB2CC; --paper:#091A31; --card:#12294A;
+  --line:#20406E; --band:#0D2247; --sand:#1B2E4E; --sand-deep:#152743;
+  --lake-300:#5FA6E6; --flame:#F1734A; --gold:#E0B255;
 }
 html,body{margin:0;padding:0}
 *{box-sizing:border-box}
@@ -80,6 +86,13 @@ html.js .reveal.in{opacity:1;transform:none;filter:none}
 .nav-links>a:hover::after{right:0}
 .nav-cta{display:flex;gap:.6rem;align-items:center}
 .menu-btn{display:none;background:none;border:0;color:inherit;font-size:1.6rem;cursor:pointer;line-height:1}
+.theme-toggle{width:40px;height:40px;flex:none;border-radius:50%;border:1px solid var(--line);
+  background:var(--card);color:var(--ink);cursor:pointer;display:grid;place-items:center;
+  transition:background .2s,border-color .2s,transform .15s}
+.theme-toggle:hover{background:var(--band)}
+.theme-toggle:active{transform:scale(.92)}
+.theme-toggle svg{width:19px;height:19px}
+@media(max-width:420px){.theme-toggle{width:36px;height:36px}}
 
 /* NAV dropdown */
 .nav-item{position:relative;display:flex;align-items:center}
