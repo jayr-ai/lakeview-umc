@@ -11,15 +11,15 @@
   }
 
   /* mobile: tap "Ministries" to expand/collapse its submenu instead of navigating */
-  var ministriesToggle = document.querySelector('.nav-item > a');
-  if (ministriesToggle) {
-    ministriesToggle.addEventListener('click', function (e) {
+  var navToggles = document.querySelectorAll('.nav-item > a');
+  navToggles.forEach(function (t) {
+    t.addEventListener('click', function (e) {
       if (window.matchMedia('(max-width: 860px)').matches) {
         e.preventDefault();
-        ministriesToggle.parentElement.classList.toggle('open');
+        t.parentElement.classList.toggle('open');
       }
     });
-  }
+  });
 
   /* ---------- night mode toggle ---------- */
   (function () {
