@@ -76,7 +76,7 @@ html.js .reveal.in{opacity:1;transform:none;filter:none}
 .nav .wrap{display:flex;align-items:center;justify-content:space-between;height:74px;
      transition:height .3s var(--ease)}
 .nav.scrolled .wrap{height:60px}
-.brand{display:flex;align-items:center;gap:.7rem;font-family:var(--serif);font-size:1.15rem;font-weight:600}
+.brand{display:flex;align-items:center;gap:.7rem;font-family:var(--serif);font-size:1.15rem;font-weight:600;white-space:nowrap}
 .mark{width:auto;height:34px;flex:none}
 .nav-links{display:flex;gap:1.8rem;align-items:center;font-size:.93rem;font-weight:500}
 .nav-links>a,.nav-item>a{position:relative}
@@ -93,6 +93,15 @@ html.js .reveal.in{opacity:1;transform:none;filter:none}
 .theme-toggle:active{transform:scale(.92)}
 .theme-toggle svg{width:19px;height:19px}
 @media(max-width:420px){.theme-toggle{width:36px;height:36px}}
+/* compact mobile top bar: brand on one line, small tidy CTA with spacing */
+@media(max-width:560px){
+  .nav .wrap{padding-left:16px;padding-right:16px}
+  .brand{font-size:1rem;gap:.5rem}
+  .nav-cta{gap:.45rem}
+  .nav-cta .btn-primary{padding:.5rem .95rem;font-size:.82rem;white-space:nowrap}
+  .theme-toggle{width:36px;height:36px}
+  .menu-btn{font-size:1.45rem}
+}
 
 /* NAV dropdown */
 .nav-item{position:relative;display:flex;align-items:center}
