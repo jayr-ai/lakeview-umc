@@ -958,8 +958,16 @@ async function renderCardImage(card){
   clone.style.margin = "0";
   wrap.appendChild(clone);
   document.body.appendChild(wrap);
-  try { return await html2canvas(wrap, { backgroundColor: ground, scale: 2, logging: false, useCORS: true }); }
-  finally { wrap.remove(); }
+  try {
+    // Use the highest resolution the device can safely render, without exceeding
+    // canvas limits (per-side and total-area caps, conservative for mobile Safari).
+    const w = wrap.offsetWidth || 680;
+    const h = wrap.offsetHeight || 1000;
+    const MAX_SIDE = 8192, MAX_AREA = 16000000, TARGET = 4;
+    let scale = Math.min(TARGET, MAX_SIDE / w, MAX_SIDE / h, Math.sqrt(MAX_AREA / (w * h)));
+    if (!isFinite(scale) || scale < 1.5) scale = 1.5;
+    return await html2canvas(wrap, { backgroundColor: ground, scale: scale, logging: false, useCORS: true });
+  } finally { wrap.remove(); }
 }
 
 async function savePNGCard(btn){
