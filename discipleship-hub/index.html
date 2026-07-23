@@ -1,0 +1,290 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Lakeview Discipleship Hub</title>
+<style>
+  :root{
+    --navy:#14243D; --navy-2:#0E2E57; --coral:#EE5A2A; --coral-soft:#FCEBE3;
+    --slate:#566B86; --teal:#B9D2D4; --cream:#F5F0E3;
+    --bg:#f5f3ee; --panel:#ffffff; --ink:#14243D; --muted:#566B86; --line:#e6e2d9;
+    --radius:8px;
+  }
+  *{box-sizing:border-box}
+  body{margin:0;font-family:"Avenir Next","Segoe UI",system-ui,-apple-system,Helvetica,Arial,sans-serif;background:var(--bg);color:var(--ink);line-height:1.55}
+  .app{display:flex;min-height:100vh}
+  .side{width:214px;flex:none;background:var(--navy);color:rgba(255,255,255,.78);padding:18px 12px;position:sticky;top:0;height:100vh;overflow:auto}
+  .brand{font-weight:700;font-size:15px;color:#fff;padding:4px 8px 14px;letter-spacing:.2px}
+  .brand small{display:block;font-weight:400;font-size:11px;color:var(--teal);margin-top:3px}
+  .nav-h{font-size:11px;text-transform:uppercase;letter-spacing:.08em;color:rgba(185,210,212,.7);margin:14px 8px 6px}
+  .month{display:block;width:100%;text-align:left;background:none;border:none;color:rgba(255,255,255,.8);padding:8px 10px;border-radius:8px;cursor:pointer;font-size:13.5px}
+  .month:hover{background:rgba(255,255,255,.09);color:#fff}
+  .month.active{background:var(--coral);color:#fff;font-weight:600}
+  .main{flex:1;padding:26px 30px 60px;max-width:900px}
+  .series{font-size:23px;font-weight:700;margin:0;color:var(--navy)}
+  .series-arc{color:var(--muted);font-size:14px;margin:5px 0 0}
+  .month-tag{display:inline-block;font-size:12px;color:var(--coral);background:var(--coral-soft);padding:2px 10px;border-radius:999px;margin-bottom:8px;font-weight:600}
+  .weeks{display:flex;gap:6px;margin:22px 0 18px;flex-wrap:wrap}
+  .wk{border:1px solid var(--line);background:var(--panel);color:var(--ink);padding:8px 16px;border-radius:999px;cursor:pointer;font-size:13.5px;font-weight:500}
+  .wk:hover{border-color:var(--coral)}
+  .wk.active{background:var(--coral);color:#fff;border-color:var(--coral)}
+  .card{border:1px solid var(--line);background:var(--panel);border-radius:12px;margin-bottom:12px;overflow:hidden}
+  .card-h{display:flex;align-items:center;gap:10px;padding:14px 16px;cursor:pointer;user-select:none}
+  .card-h .ic{font-size:18px}
+  .card-h .t{font-weight:600;font-size:14.5px;flex:1;color:var(--navy)}
+  .card-h .cx{color:var(--muted);font-size:18px;transition:transform .18s}
+  .card.collapsed .cx{transform:rotate(-90deg)}
+  .card.collapsed .card-b{display:none}
+  .card-b{padding:2px 20px 18px;border-top:1px solid var(--line)}
+  .pngbtn{font-size:11px;color:var(--coral);background:transparent;border:1px solid var(--coral);padding:3px 10px;border-radius:999px;cursor:pointer;white-space:nowrap;font-weight:600}
+  .pngbtn:hover{background:var(--coral);color:#fff}
+  .empty{color:var(--muted);font-size:13.5px;padding:10px 0}
+  .tag-empty{font-size:10.5px;color:var(--muted);background:#efece4;border:1px solid var(--line);padding:1px 8px;border-radius:999px;text-transform:uppercase;letter-spacing:.04em}
+  .md h2{font-size:19px;margin:14px 0 6px;color:var(--navy)}
+  .md h3{font-size:16px;margin:14px 0 4px;color:var(--navy)}
+  .md h4{font-size:14.5px;margin:12px 0 3px;color:var(--navy)}
+  .md p{margin:7px 0}
+  .md ul,.md ol{margin:6px 0;padding-left:22px}
+  .md li{margin:3px 0}
+  .md blockquote{margin:8px 0;padding:6px 14px;border-left:3px solid var(--coral);background:var(--coral-soft);border-radius:0 8px 8px 0;color:#5a3b30}
+  .md hr{border:none;border-top:1px solid var(--line);margin:14px 0}
+  .tw{overflow-x:auto}
+  .series-table table{table-layout:fixed}
+  .series-table td,.series-table th{overflow-wrap:break-word;word-break:break-word}
+  .series-table th:nth-child(1),.series-table td:nth-child(1){width:8%}
+  .series-table th:nth-child(2),.series-table td:nth-child(2){width:13%}
+  .series-table th:nth-child(3),.series-table td:nth-child(3){width:11%}
+  .series-table th:nth-child(4),.series-table td:nth-child(4){width:11%}
+  .series-table th:nth-child(5),.series-table td:nth-child(5){width:24%}
+  .series-table th:nth-child(6),.series-table td:nth-child(6){width:33%}
+  .md table{border-collapse:collapse;width:100%;font-size:13.5px;margin:8px 0}
+  .md th,.md td{border:1px solid var(--line);padding:6px 9px;text-align:left;vertical-align:top}
+  .md th{background:#faf7f1;font-weight:600;color:var(--navy)}
+  .md code{background:#f1ede4;padding:1px 5px;border-radius:5px;font-size:12.5px}
+  .exp-foot{margin-top:14px;padding-top:10px;border-top:1px solid var(--line);font-size:11.5px;color:var(--muted)}
+  .foot{color:var(--muted);font-size:12px;margin-top:26px}
+  .msg{color:var(--muted);font-size:14px;padding:20px 0}
+  @media (max-width:760px){
+    .app{flex-direction:column}
+    .side{width:auto;height:auto;position:sticky;top:0;z-index:5;padding:12px 14px}
+    .nav-h{display:none}
+    #months{display:flex;gap:8px;overflow-x:auto;padding-bottom:2px;-webkit-overflow-scrolling:touch}
+    .month{width:auto;flex:0 0 auto;white-space:nowrap;padding:7px 14px;border:1px solid rgba(255,255,255,.16)}
+    .main{padding:16px 15px 48px;max-width:100%}
+    .series{font-size:20px}
+    .card-b{padding:2px 15px 16px}
+  }
+</style>
+</head>
+<body>
+<div class="app">
+  <aside class="side">
+    <div class="brand">Lakeview Discipleship Hub<small>LANDASIN - one theme, whole month</small></div>
+    <div class="nav-h">Month</div>
+    <div id="months"></div>
+  </aside>
+  <main class="main" id="main"><div class="msg">Loading...</div></main>
+</div>
+
+<script>
+const RES = [
+  {key:'sermon', ic:'📖', label:'Sermon Series'},
+  {key:'setlist', ic:'🎵', label:'Praise & Worship Setlist'},
+  {key:'connectGroup', ic:'👥', label:'Connect Group Guide'},
+  {key:'prayerTue', ic:'🙏', label:'Prayer Meeting - Tuesday'},
+  {key:'prayerThu', ic:'🙏', label:'Prayer Meeting - Thursday'},
+  {key:'familyConnect', ic:'🏡', label:'Family Connect'}
+];
+
+let monthsList = [];
+let cache = {};
+let state = { month: null, week: 1 };
+
+function esc(s){ return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;'); }
+function inline(s){
+  s = esc(s);
+  s = s.replace(/\*\*([^*]+)\*\*/g,'<strong>$1</strong>');
+  s = s.replace(/\*([^*]+)\*/g,'<em>$1</em>');
+  s = s.replace(/`([^`]+)`/g,'<code>$1</code>');
+  return s;
+}
+function md(src){
+  if(!src) return '';
+  const lines = src.split('\n');
+  let html = '', i = 0;
+  while(i < lines.length){
+    let ln = lines[i];
+    if(/^\s*$/.test(ln)){ i++; continue; }
+    if(/^\|/.test(ln)){
+      let tbl = []; while(i < lines.length && /^\|/.test(lines[i])){ tbl.push(lines[i]); i++; }
+      const rows = tbl.filter(r => !/^\|[\s|:-]+\|?\s*$/.test(r));
+      html += '<div class="tw"><table>';
+      rows.forEach((r, ri) => {
+        const cells = r.split('|').slice(1,-1).map(c => c.trim());
+        const tag = ri===0 ? 'th' : 'td';
+        html += '<tr>' + cells.map(c => '<'+tag+'>'+inline(c).replace(/&lt;br\s*\/?&gt;/gi,'<br>')+'</'+tag+'>').join('') + '</tr>';
+      });
+      html += '</table></div>'; continue;
+    }
+    let m;
+    if(m = ln.match(/^(#{1,4})\s+(.*)$/)){ const lv = Math.min(m[1].length+1,4); html += '<h'+lv+'>'+inline(m[2])+'</h'+lv+'>'; i++; continue; }
+    if(/^>\s?/.test(ln)){ html += '<blockquote>'+inline(ln.replace(/^>\s?/,''))+'</blockquote>'; i++; continue; }
+    if(/^---\s*$/.test(ln)){ html += '<hr>'; i++; continue; }
+    if(/^\s*[-*]\s+/.test(ln) || /^\s*\d+\.\s+/.test(ln)){
+      const ordered = /^\s*\d+\./.test(ln);
+      html += ordered ? '<ol>' : '<ul>';
+      while(i < lines.length && (/^\s*[-*]\s+/.test(lines[i]) || /^\s*\d+\.\s+/.test(lines[i]))){
+        const indent = lines[i].match(/^\s*/)[0].length;
+        let txt = lines[i].replace(/^\s*(?:[-*]|\d+\.)\s+/,'');
+        html += '<li'+(indent>=2?' style="list-style:circle"':'')+'>'+inline(txt)+'</li>';
+        i++;
+      }
+      html += ordered ? '</ol>' : '</ul>'; continue;
+    }
+    html += '<p>'+inline(ln)+'</p>'; i++;
+  }
+  return html;
+}
+
+function renderMonths(){
+  const el = document.getElementById('months');
+  el.innerHTML = monthsList.map(m =>
+    '<button class="month'+(m.key===state.month?' active':'')+'" data-m="'+m.key+'">'+esc(m.label)+'</button>'
+  ).join('');
+  el.querySelectorAll('.month').forEach(b => b.onclick = () => loadMonth(b.dataset.m));
+}
+
+function cardHead(ic,label,has){
+  return '<div class="card-h" data-toggle="1"><span class="ic">'+ic+'</span><span class="t">'+esc(label)+'</span>'
+    + (has===false?'<span class="tag-empty">empty</span>':'')
+    + (has!==false?'<button class="pngbtn no-export" data-png="1">Save PNG</button>':'')
+    + '<span class="cx no-export">⌄</span></div>';
+}
+function card(res, content){
+  const has = !!content;
+  const body = has ? '<div class="md">'+md(content)+'</div>' : '<div class="empty">Not generated yet - it fills in when the month is generated.</div>';
+  return '<div class="card collapsed" data-label="'+esc(res.label)+'" data-scope="week">'
+    + cardHead(res.ic, res.label, has)
+    + '<div class="card-b">'+body+'</div></div>';
+}
+
+function sanitize(s){ return s.replace(/[^a-z0-9]+/gi,'-').replace(/^-+|-+$/g,''); }
+
+function exportCard(cardEl, footerText, fileName, W, scale){
+  W = W || 680; scale = scale || 3;
+  const css = [...document.querySelectorAll('style')].map(s => s.textContent).join('\n');
+  const clone = cardEl.cloneNode(true);
+  clone.classList.remove('collapsed');
+  clone.querySelectorAll('.no-export').forEach(n => n.remove());
+  clone.style.margin = '0';
+  const foot = document.createElement('div');
+  foot.className = 'exp-foot';
+  foot.textContent = footerText;
+  (clone.querySelector('.card-b') || clone).appendChild(foot);
+  const inner = document.createElement('div');
+  inner.style.cssText = 'width:'+W+'px;background:#fff;padding:16px';
+  inner.appendChild(clone);
+  const meas = document.createElement('div');
+  meas.style.cssText = 'position:fixed;left:-99999px;top:0';
+  meas.appendChild(inner);
+  document.body.appendChild(meas);
+  const H = Math.ceil(inner.getBoundingClientRect().height);
+  const htmlStr = new XMLSerializer().serializeToString(inner);
+  document.body.removeChild(meas);
+  const svg = '<svg xmlns="http://www.w3.org/2000/svg" width="'+W+'" height="'+H+'"><foreignObject width="100%" height="100%"><div xmlns="http://www.w3.org/1999/xhtml"><style>'+css+'</style>'+htmlStr+'</div></foreignObject></svg>';
+  const img = new Image();
+  img.onload = () => {
+    try{
+      const c = document.createElement('canvas');
+      c.width = W * scale; c.height = H * scale;
+      const x = c.getContext('2d');
+      x.fillStyle = '#fff'; x.fillRect(0, 0, c.width, c.height);
+      x.drawImage(img, 0, 0, c.width, c.height);
+      const trigger = (href, revoke) => {
+        const a = document.createElement('a');
+        a.download = fileName; a.href = href;
+        document.body.appendChild(a); a.click(); a.remove();
+        if(revoke) setTimeout(() => URL.revokeObjectURL(href), 5000);
+      };
+      if(c.toBlob){
+        c.toBlob(bl => { bl ? trigger(URL.createObjectURL(bl), true) : trigger(c.toDataURL('image/png')); }, 'image/png');
+      } else { trigger(c.toDataURL('image/png')); }
+    }catch(err){ alert('Could not save the PNG - your browser blocked the export (' + err.message + ').'); }
+  };
+  img.onerror = () => alert('Could not render the PNG. Please open the hub in Chrome or Safari on a computer.');
+  img.src = 'data:image/svg+xml;base64,' + btoa(unescape(encodeURIComponent(svg)));
+}
+
+function render(){
+  renderMonths();
+  const M = cache[state.month];
+  if(!M){ return; }
+  const wk = (M.weeks && M.weeks[String(state.week)]) || {};
+  let h = '';
+  h += '<div class="month-tag">'+esc(M.label)+'</div>';
+  if(M.seriesTitle){
+    h += '<h1 class="series">'+esc(M.seriesTitle)+'</h1>';
+    if(M.seriesArc) h += '<p class="series-arc">'+esc(M.seriesArc)+'</p>';
+  } else {
+    h += '<h1 class="series">No series yet</h1><p class="series-arc">Give the monthly theme and generate the month to populate this.</p>';
+  }
+  if(M.seriesOverview){
+    h += '<div class="card" data-label="Sermon Series" data-scope="month" data-exportw="1080" style="margin-top:16px">'
+      + cardHead('📅', M.seriesOverview.title, true)
+      + '<div class="card-b"><div class="md series-table">'+md(M.seriesOverview.md)+'</div></div></div>';
+  }
+  if(M.youthConnect){
+    h += '<div class="card collapsed" data-label="Youth Connect" data-scope="month" style="margin-top:12px">'
+      + cardHead('🔥', M.youthConnect.title, true)
+      + '<div class="card-b"><div class="md">'+md(M.youthConnect.md)+'</div></div></div>';
+  }
+  h += '<div class="weeks">'+[1,2,3,4].map(w => '<button class="wk'+(w===state.week?' active':'')+'" data-w="'+w+'">Week '+w+'</button>').join('')+'</div>';
+  h += RES.map(r => card(r, wk[r.key])).join('');
+  h += '<div class="foot">Generate the whole month at once (a week before it starts). Empty cards fill in when the month is generated. Tap "Save PNG" on any card to share it.</div>';
+  const main = document.getElementById('main');
+  main.innerHTML = h;
+  main.querySelectorAll('.wk').forEach(b => b.onclick = () => { state.week = +b.dataset.w; render(); });
+  main.querySelectorAll('[data-toggle]').forEach(hd => hd.onclick = () => hd.parentElement.classList.toggle('collapsed'));
+  main.querySelectorAll('.pngbtn').forEach(btn => btn.onclick = (e) => {
+    e.stopPropagation();
+    const cd = btn.closest('.card');
+    const title = cd.dataset.label;
+    const isMonth = cd.dataset.scope === 'month';
+    const ctx = isMonth ? '' : ('Week ' + state.week);
+    const footer = 'Lakeview UMC   ·   ' + M.label + (ctx ? '   ·   ' + ctx : '');
+    const fname = sanitize(title + ' ' + M.label + (ctx ? ' ' + ctx : '')) + '.png';
+    const ew = parseInt(cd.dataset.exportw) || 680;
+    exportCard(cd, footer, fname, ew, 3);
+  });
+}
+
+async function loadMonth(key){
+  state.month = key; state.week = 1;
+  if(!cache[key]){
+    try{
+      const r = await fetch('data/'+key+'.json', {cache:'no-store'});
+      cache[key] = await r.json();
+    }catch(e){
+      document.getElementById('main').innerHTML = '<div class="msg">Could not load '+esc(key)+'. If you opened this file directly, run it through a web server (or GitHub Pages) - browsers block loading data files from file://.</div>';
+      renderMonths(); return;
+    }
+  }
+  render();
+}
+
+async function boot(){
+  try{
+    const r = await fetch('data/index.json', {cache:'no-store'});
+    const idx = await r.json();
+    monthsList = idx.months || [];
+  }catch(e){
+    document.getElementById('main').innerHTML = '<div class="msg">Could not load the month index. Serve this over a web server or GitHub Pages - opening the HTML directly from disk blocks data loading.</div>';
+    return;
+  }
+  if(monthsList.length) loadMonth(monthsList[0].key);
+}
+boot();
+</script>
+</body>
+</html>
