@@ -2,13 +2,10 @@
   "label": "July 2026",
   "seriesTitle": "On Our Knees",
   "seriesArc": "A praying church is a growing church.",
-  "youthConnect": {
-    "title": "Youth Connect - Back2Basic (4th Saturday)",
-    "md": "## Back2Basic\n📝 **Tagline:** Balik tayo sa basics: Faith. Prayer. Word. Jesus.\n🎯 **Focus:** Relationship with Jesus, spiritual foundations\n🔑 **Verse:** Hebrews 6:1\n💡 **Big Idea:** Bago ang lahat, balikan natin ang pinaka-importante - ang relationship natin kay Jesus.\n\n### 🕒 Program Flow (4th Saturday, starts 5:00 PM)\n| Time | Segment |\n|---|---|\n| 5:00 - 5:30 | Arrival / Registration (name tags, team assignment Red/Blue/Green/Yellow) |\n| 5:30 - 6:00 | Welcome & Hype Up (shoutout first-timers, intro the theme) |\n| 6:00 - 6:20 | Group Dynamics / Game: Bible Drill Showdown |\n| 6:20 - 6:35 | Praise & Worship (2 upbeat + 1 worship) |\n| 6:35 - 7:15 | THE WORD: Back2Basic |\n| 7:15 - 7:30 | Altar Call / Closing Prayer / Pastor's Blessing |\n| 7:30 onward | Food & Fellowship |\n\n### 🎮 Group Dynamics Game: Bible Drill Showdown\n🧠 **Objective:** Get the youth familiar with using their Bible, build team spirit, and make God's Word fun.\n📦 **Materials:** 1 Bible or Bible app per team, verse reference list, optional buzzer, whiteboard for scores, markers, small prizes.\n👥 **Team Setup:** 4 teams (Red/Blue/Green/Yellow), 4-6 members each, a rotating team captain.\n🕹 **How to Play:**\n- One player per team steps up each round (rotate every round).\n- Host announces a verse reference (e.g. John 3:16).\n- Players race to find it; first to stand and read it aloud word-for-word earns 1 point.\n- Bonus: \"What does this verse mean to you?\" - best one-liner gets an extra point.\n- Everyone uses the same version (NIV or ESV) for consistency.\n📖 **Sample Verses (8-10 rounds):** John 3:16 · Romans 10:9 · Psalm 119:105 · Matthew 6:33 · Hebrews 11:1 · Philippians 4:13 · 2 Timothy 3:16 · Ephesians 2:8-9 · James 1:22 · Isaiah 40:8\n🏁 **Ending:** Highest points wins, award prizes, group photo.\n📣 **Host Lines:** \"Ready your Bibles - physical or digital - and your reflexes!\" · \"This is a race to the Word of God!\" · \"Let's see who's the fastest in faith tonight!\"\n\n### 🎤 THE WORD: Back2Basic (Hebrews 6:1)\n**Intro Hook:** \"Kahit ang pinakamagaling na player, bumabalik pa rin sa basics - dribbling, passing, shooting. Bakit? Kasi doon nakasalalay ang lahat. Ganun din sa faith natin - minsan sa dami ng 'advanced' na hinahabol natin, nakakalimutan natin ang pinaka-basic.\"\n\n**Main Points:**\n1. **Faith is the foundation** - Hebrews 11:1. Parang wifi password: kung mali ang connection sa simula, walang gagana. *Youth app:* Hindi mo kailangang intindihin ang lahat bago ka maniwala - faith is where it starts.\n2. **Prayer and the Word keep you alive** - Matthew 4:4. *Youth app:* Parang daily charge ng phone - skip mo ng ilang araw, low bat ka na. Araw-araw na prayer at Word ang nagpapa-connect sa'yo kay God.\n3. **It's about Jesus, not religion** - John 15:5. *Youth app:* Hindi checklist ng \"good Christian\" - hindi rules, kundi relationship. Ang tanong: kilala mo ba talaga si Jesus, o alam mo lang ang tungkol sa Kanya?\n\n**🕊 Gospel Landing (always):** Pero bago ang lahat ng basics na ito, may pinaka-una: kailangan mong makilala mismo si Jesus. Tayong lahat ay nagkasala at nalayo sa Diyos - pero dahil sa pag-ibig Niya, namatay si Jesus sa krus para sa'tin at nabuhay muli. Ang sinumang lumapit at magtiwala sa Kanya ay binibigyan ng bagong simula. Kahit sino, kahit ngayong gabi.\n\n### 🙏 Altar Call / Closing Prayer / Pastor's Blessing (7:15 - 7:30)\nDim the lights, reflective worship. Invitation to respond: first-timers to receive Jesus for the first time, believers to come back to the basics of their walk. Ask them to come forward or raise a hand; lead a simple prayer of salvation. Pray over those who responded, then the Pastor's prayer of blessing over all the youth.\n\n### 🎶 Suggested Songs\n- Upbeat: The Anthem · This Is Amazing Grace\n- Worship: Build My Life\n- Response: O Come to the Altar · Lord I Need You\n\n### 💬 Small Group Reflection (for facilitators, if time)\n1. Sa tatlong basics - Faith, Word, Prayer - alin ang pinaka-nakalimutan o napabayaan mo lately? Bakit?\n2. Anong practical step ang pwede mong simulan ngayong week para makabalik sa basics ng relationship mo kay Jesus?\n3. Meron ka bang kilala na kailangan ding marinig ang tungkol kay Jesus? Paano mo siya ma-iimbitahan o maipagpe-pray this week?"
-  },
+  "youthConnect": null,
   "weeks": {
     "1": {
-      "sermon": "### Week 1 - Why We Pray\n**Speaker:** Ptr. Jess\n\n- **Verse:** Matthew 6:9-13\n- **Focus:** The purpose of prayer\n- **Big Idea:** Prayer is our relationship with the Father, not just a religious routine.\n- **3 Main Points:**\n  1. Prayer begins with God\n  2. Prayer aligns our hearts\n  3. Prayer deepens our relationship",
+      "sermon": null,
       "setlist": null,
       "connectGroup": null,
       "prayerTue": null,
@@ -16,7 +13,7 @@
       "familyConnect": null
     },
     "2": {
-      "sermon": "### Week 2 - Pray with Faith\n**Speaker:** Jayvee\n\n- **Verse:** Mark 11:22-24\n- **Focus:** Faith-filled prayer\n- **Big Idea:** Faith gives us confidence to trust God in every prayer.\n- **3 Main Points:**\n  1. Believe God hears you\n  2. Pray with confidence\n  3. Trust God's perfect timing",
+      "sermon": null,
       "setlist": null,
       "connectGroup": null,
       "prayerTue": null,
@@ -24,7 +21,7 @@
       "familyConnect": null
     },
     "3": {
-      "sermon": "### Week 3 - United in Prayer\n**Speaker:** Maam Naomie\n\n- **Verse:** Acts 2:42\n- **Focus:** Corporate prayer\n- **Big Idea:** When God's people pray together, God moves powerfully among them.\n- **3 Main Points:**\n  1. Prayer builds unity\n  2. Prayer strengthens the church\n  3. Prayer prepares us for God's work",
+      "sermon": null,
       "setlist": null,
       "connectGroup": null,
       "prayerTue": null,
@@ -32,12 +29,12 @@
       "familyConnect": null
     },
     "4": {
-      "sermon": "### Week 4 - A Lifestyle of Prayer\n**Speaker:** Ptr. Jess\n\n- **Verse:** 1 Thessalonians 5:16-18\n- **Focus:** Consistent prayer\n- **Big Idea:** Prayer is not just an event, it is a daily way of life.\n- **3 Main Points:**\n  1. Pray continually\n  2. Give thanks always\n  3. Depend on God daily",
+      "sermon": null,
       "setlist": null,
-      "connectGroup": null,
-      "prayerTue": null,
-      "prayerThu": null,
-      "familyConnect": null
+      "connectGroup": "# 📘 Connect Group Guide - A Lifestyle of Prayer\n\n📖 **Main Verse:** 1 Thessalonians 5:16-18\n> \"Rejoice always, pray continually, give thanks in all circumstances; for this is God's will for you in Christ Jesus.\"\n\n💡 **Big Idea:** Ang panalangin ay hindi isang \"event\" - ito ay paraan ng pamumuhay.\n\n🙌 **Icebreaker - \"Natural na Gawi\"**\nAno ang isang bagay na ginagawa mo nang tuloy-tuloy araw-araw na parang natural na sa'yo (hindi mo na iniisip)?\n\n📖 **The Word**\n📍 1 Thessalonians 5:16-18 - \"pray continually.\" Hindi ibig sabihin nito na buong araw kang nakaluhod - ibig sabihin, laging bukas ang linya ng usapan mo sa Diyos. Ang prayer ay hindi lang tuwing may problema o tuwing Linggo - ito ay lifestyle. A praying life is a life that stays connected to God all day.\n\n🗣️ **Discussion**\n1. Ano ang pagkakaiba ng \"pag-pray kapag kailangan\" at \"pamumuhay na laging nananalangin\"?\n2. Sa tatlo - rejoice always, pray continually, give thanks - alin ang pinaka-mahirap para sa'yo? Bakit?\n3. Ano ang isang paraan para maging mas natural at tuloy-tuloy ang usapan mo sa Diyos sa araw-araw?\n\n🙏 **Prayer Focus**\nBuhay na laging nananalangin; mga pamilya ng Lakeview na maging homes of prayer.",
+      "prayerTue": "## Tuesday - Pray Continually\n🎵 Worship Song (1) *(slot)*\n🙏 Opening Prayer\n📖 **The Word** - 1 Thessalonians 5:17 - \"pray continually.\" Ang panalangin ay lifestyle, hindi event - laging bukas ang usapan sa Diyos.\n🔥 **Prayer Moment**\n- Personal: hilingin sa Diyos na maging tuloy-tuloy ang iyong pakikipag-usap sa Kanya.\n- Pares: ipanalangin ang consistency ng isa't isa sa prayer.\n- Sama-sama: na ang Lakeview ay maging isang praying church.\n🙏 Closing Prayer",
+      "prayerThu": "## Thursday - Give Thanks Always\n🎵 Worship Song (1) *(slot)*\n🙏 Opening Prayer\n📖 **The Word** - 1 Thessalonians 5:18 - \"give thanks in all circumstances.\" Ang pasasalamat ay bahagi ng lifestyle ng panalangin - kahit sa hirap.\n🔥 **Prayer Moment**\n- Personal: magpasalamat sa Diyos kahit sa mahihirap na sitwasyon ngayon.\n- Pares: ibahagi at pasalamatan ang isang bagay sa buhay ng isa't isa.\n- Sama-sama: pusong mapagpasalamat para sa buong Lakeview.\n🙏 Closing Prayer",
+      "familyConnect": "# 🏡 Family Connect - Ang Pamilyang Laging Nananalangin\n\n*Kaugnay ng sermon (A Lifestyle of Prayer), pero para sa tahanan.*\n\n📖 **Family Verse** (basahin nang buo)\n1 Thessalonians 5:16-18 - \"Rejoice always, pray continually, give thanks in all circumstances; for this is God's will for you in Christ Jesus.\"\n**Main Lesson:** Ang panalangin ay hindi lang para sa simbahan o sa oras ng problema - ito ay bahagi ng araw-araw nating buhay bilang pamilya.\n\n👨‍👩‍👧‍👦 **Gather**\nKailan tayo bilang pamilya madalas mag-usap - sa hapunan, sa sasakyan, o bago matulog?\n\n📖 **Family Word**\nAng \"pray continually\" ay parang laging bukas ang linya ng usapan sa Diyos - habang naglalakad, nagtatrabaho, o nagkukwentuhan. Kapag natututo ang pamilya na isama ang Diyos sa ordinaryong sandali - pasasalamat bago kumain, maikling dasal sa sasakyan - nagiging lifestyle ang prayer.\n\n💬 **Family Talk**\n- Anong bahagi ng araw natin bilang pamilya ang pwede nating samahan ng maikling panalangin?\n- Ano ang isang bagay ngayon na pwede nating ipagpasalamat sa Diyos bilang pamilya?\n\n🎯 **Family Challenge - \"Prayer sa Bawat Sandali\"**\nNgayong linggo, magdagdag ng maikling panalangin sa isang ordinaryong sandali - bago kumain, bago pumasok, o bago matulog - at gawing bahagi ito ng araw-araw.\n\n🙏 **Family Prayer**\nHawak-kamay, magpasalamat at manalangin - na maging tahanang laging nakikipag-usap sa Diyos."
     }
   },
   "seriesOverview": {

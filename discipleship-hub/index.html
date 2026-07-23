@@ -50,14 +50,41 @@
   .md blockquote{margin:8px 0;padding:6px 14px;border-left:3px solid var(--coral);background:var(--coral-soft);border-radius:0 8px 8px 0;color:#5a3b30}
   .md hr{border:none;border-top:1px solid var(--line);margin:14px 0}
   .tw{overflow-x:auto}
-  .series-table table{table-layout:fixed}
   .series-table td,.series-table th{overflow-wrap:break-word;word-break:break-word}
-  .series-table th:nth-child(1),.series-table td:nth-child(1){width:8%}
-  .series-table th:nth-child(2),.series-table td:nth-child(2){width:13%}
-  .series-table th:nth-child(3),.series-table td:nth-child(3){width:11%}
-  .series-table th:nth-child(4),.series-table td:nth-child(4){width:11%}
-  .series-table th:nth-child(5),.series-table td:nth-child(5){width:24%}
-  .series-table th:nth-child(6),.series-table td:nth-child(6){width:33%}
+  @media (min-width:761px){
+    .series-table table{table-layout:fixed}
+    .series-table th:nth-child(1),.series-table td:nth-child(1){width:8%}
+    .series-table th:nth-child(2),.series-table td:nth-child(2){width:13%}
+    .series-table th:nth-child(3),.series-table td:nth-child(3){width:11%}
+    .series-table th:nth-child(4),.series-table td:nth-child(4){width:11%}
+    .series-table th:nth-child(5),.series-table td:nth-child(5){width:24%}
+    .series-table th:nth-child(6),.series-table td:nth-child(6){width:33%}
+  }
+  @media (max-width:760px){
+    .md .tw{overflow:visible}
+    .md table,.md tbody,.md tr,.md td{display:block;width:auto}
+    .md tr:first-child{display:none}
+    .md tr{border:1px solid var(--line);border-radius:10px;margin:0 0 10px;padding:9px 13px;background:var(--panel)}
+    .md td{border:none;padding:4px 0}
+    .md td::before{content:attr(data-label);display:block;font-size:11px;font-weight:600;text-transform:uppercase;letter-spacing:.03em;color:var(--slate);margin-bottom:2px}
+    .md td:first-child{font-weight:600;color:var(--navy);border-bottom:1px solid var(--line);padding-bottom:6px;margin-bottom:4px}
+    .md td:first-child::before{display:none}
+    .series-table .md td:first-child,.series-table td:first-child{font-size:16px}
+  }
+  .pngw .tw{overflow:visible!important}
+  .pngw table{display:table!important}
+  .pngw tbody{display:table-row-group!important}
+  .pngw tr{display:table-row!important;border:none!important;margin:0!important;padding:0!important;background:none!important;border-radius:0!important}
+  .pngw td,.pngw th{display:table-cell!important;border:1px solid var(--line)!important;padding:6px 9px!important}
+  .pngw td::before{display:none!important}
+  .pngw td:first-child{font-weight:400!important;color:var(--ink)!important;font-size:13.5px!important;margin:0!important;border-bottom:1px solid var(--line)!important}
+  .pngw .series-table table{table-layout:fixed!important}
+  .pngw .series-table td:nth-child(1),.pngw .series-table th:nth-child(1){width:8%!important}
+  .pngw .series-table td:nth-child(2),.pngw .series-table th:nth-child(2){width:13%!important}
+  .pngw .series-table td:nth-child(3),.pngw .series-table th:nth-child(3){width:11%!important}
+  .pngw .series-table td:nth-child(4),.pngw .series-table th:nth-child(4){width:11%!important}
+  .pngw .series-table td:nth-child(5),.pngw .series-table th:nth-child(5){width:24%!important}
+  .pngw .series-table td:nth-child(6),.pngw .series-table th:nth-child(6){width:33%!important}
   .md table{border-collapse:collapse;width:100%;font-size:13.5px;margin:8px 0}
   .md th,.md td{border:1px solid var(--line);padding:6px 9px;text-align:left;vertical-align:top}
   .md th{background:#faf7f1;font-weight:600;color:var(--navy)}
@@ -119,11 +146,15 @@ function md(src){
     if(/^\|/.test(ln)){
       let tbl = []; while(i < lines.length && /^\|/.test(lines[i])){ tbl.push(lines[i]); i++; }
       const rows = tbl.filter(r => !/^\|[\s|:-]+\|?\s*$/.test(r));
+      const hdr = rows.length ? rows[0].split('|').slice(1,-1).map(c => c.trim()) : [];
       html += '<div class="tw"><table>';
       rows.forEach((r, ri) => {
         const cells = r.split('|').slice(1,-1).map(c => c.trim());
-        const tag = ri===0 ? 'th' : 'td';
-        html += '<tr>' + cells.map(c => '<'+tag+'>'+inline(c).replace(/&lt;br\s*\/?&gt;/gi,'<br>')+'</'+tag+'>').join('') + '</tr>';
+        if(ri===0){
+          html += '<tr>' + cells.map(c => '<th>'+inline(c).replace(/&lt;br\s*\/?&gt;/gi,'<br>')+'</th>').join('') + '</tr>';
+        } else {
+          html += '<tr>' + cells.map((c,ci) => '<td data-label="'+esc(hdr[ci]||'')+'">'+inline(c).replace(/&lt;br\s*\/?&gt;/gi,'<br>')+'</td>').join('') + '</tr>';
+        }
       });
       html += '</table></div>'; continue;
     }
@@ -183,6 +214,7 @@ function exportCard(cardEl, footerText, fileName, W, scale){
   foot.textContent = footerText;
   (clone.querySelector('.card-b') || clone).appendChild(foot);
   const inner = document.createElement('div');
+  inner.className = 'pngw';
   inner.style.cssText = 'width:'+W+'px;background:#fff;padding:16px';
   inner.appendChild(clone);
   const meas = document.createElement('div');
