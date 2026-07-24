@@ -157,9 +157,8 @@ window.LV = (function () {
     return out;
   }
 
-  // Resolves to an array of normalized events, or null when no sheet is configured
-  // (null tells callers to use their built-in fallback content).
-  function fetchEvents() {
+  // Fetch the published events from the Google Sheet only.
+  function fetchSheetEvents() {
     var cfg = window.LV_CONFIG || {};
     if (!cfg.sheetId) return Promise.resolve(null);
     var base = 'https://docs.google.com/spreadsheets/d/' + encodeURIComponent(cfg.sheetId) + '/gviz/tq?tqx=out:csv&';
@@ -174,6 +173,101 @@ window.LV = (function () {
           return e.title && /^\s*yes\s*$/i.test(e.published);
         });
       });
+  }
+
+  /* ---------- Discipleship Hub auto-events ----------
+     The hub (/discipleship-hub/data/*.json) is the source of truth for each
+     month's sermon series and Youth Connect. We derive calendar events from it
+     so the site reflects the series automatically:
+       - Week N sermon -> Nth Sunday of the month, 9:00 AM worship service
+       - Youth Connect -> 4th Saturday of the month, 5:00 PM
+     No Google Sheet rows needed for these. */
+
+  function nthWeekday(year, monthIdx, dow, n) {
+    var d = new Date(year, monthIdx, 1);
+    var offset = (dow - d.getDay() + 7) % 7;
+    var day = 1 + offset + (n - 1) * 7;
+    var last = new Date(year, monthIdx + 1, 0).getDate();
+    return day <= last ? new Date(year, monthIdx, day) : null;
+  }
+
+  function hubEvent(date, time, title, description) {
+    return { dateRaw: '', date: date, endDate: null, time: time, title: title,
+      category: 'Discipleship', description: description || '', image: '', link: '',
+      button: '', location: '', published: 'YES', repeat: '', repeatUntil: null };
+  }
+
+  // Parse the seriesOverview markdown table into [{week, speaker, title, verse}]
+  function parseSeriesTable(md) {
+    var out = [];
+    (md || '').split('\n').forEach(function (line) {
+      if (!/^\|\s*Week\s*\d/i.test(line)) return;
+      var cells = line.split('|').slice(1, -1).map(function (c) { return c.trim(); });
+      if (cells.length < 2) return;
+      var wk = (cells[0].match(/Week\s*(\d)/i) || [])[1];
+      var speaker = (cells[0].split(/<br\s*\/?>/i)[1] || '').trim();
+      var title = cells[1].replace(/\*\*/g, '')
+        .replace(/^[^A-Za-z0-9"']+/, '').trim(); // strip leading emoji
+      var verse = (cells[2] || '').trim();
+      if (wk && title) out.push({ week: +wk, speaker: speaker, title: title, verse: verse });
+    });
+    return out;
+  }
+
+  function hubEventsForMonth(key, m) {
+    var parts = key.split('-'); var year = +parts[0], mi = +parts[1] - 1;
+    if (isNaN(year) || isNaN(mi)) return [];
+    var evs = [];
+    if (m && m.seriesTitle && m.seriesOverview && m.seriesOverview.md) {
+      parseSeriesTable(m.seriesOverview.md).forEach(function (row) {
+        var sun = nthWeekday(year, mi, 0, row.week);
+        if (!sun) return;
+        var desc = 'Sermon series: "' + m.seriesTitle + '"' +
+          (row.verse ? ' | ' + row.verse : '') +
+          (row.speaker ? ' | Speaker: ' + row.speaker : '');
+        evs.push(hubEvent(sun, '9:00 AM', 'Sunday Worship: ' + row.title, desc));
+      });
+    }
+    if (m && m.youthConnect && m.youthConnect.title) {
+      var sat = nthWeekday(year, mi, 6, 4);
+      if (sat) {
+        var t = m.youthConnect.title.replace(/\s*\(4th Saturday\)\s*/i, '').replace(/\s*-\s*/, ': ');
+        var tag = ((m.youthConnect.md || '').match(/\*\*Tagline:\*\*\s*([^\n]+)/) || [])[1] || '';
+        evs.push(hubEvent(sat, '5:00 PM', t, tag.trim()));
+      }
+    }
+    return evs;
+  }
+
+  function fetchHubEvents() {
+    var base = '/discipleship-hub/data/';
+    return fetch(base + 'index.json?_=' + Date.now())
+      .then(function (r) { if (!r.ok) throw new Error('HTTP ' + r.status); return r.json(); })
+      .then(function (idx) {
+        var months = (idx && idx.months) || [];
+        return Promise.all(months.map(function (mo) {
+          return fetch(base + mo.key + '.json?_=' + Date.now())
+            .then(function (r) { return r.ok ? r.json() : null; })
+            .then(function (m) { return hubEventsForMonth(mo.key, m); })
+            .catch(function () { return []; });
+        }));
+      })
+      .then(function (lists) { return [].concat.apply([], lists); })
+      .catch(function () { return []; });
+  }
+
+  // Resolves to an array of normalized events (Sheet rows + Discipleship Hub
+  // auto-events), or null when neither source has anything - null tells
+  // callers to use their built-in fallback content.
+  function fetchEvents() {
+    return Promise.all([
+      fetchSheetEvents().catch(function () { return null; }),
+      fetchHubEvents()
+    ]).then(function (res) {
+      var sheet = res[0], hub = res[1] || [];
+      if (!sheet && !hub.length) return null;
+      return (sheet || []).concat(hub);
+    });
   }
 
   // Convert a Google Drive share link into a directly-embeddable image URL.
