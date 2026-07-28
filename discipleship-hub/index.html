@@ -3,6 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
+<script>if(localStorage.getItem("lvumc_dh_unlocked")==="1"){document.documentElement.classList.add("unlocked");}</script>
 <title>Lakeview Discipleship Hub</title>
 <style>
   :root{
@@ -105,16 +106,53 @@
     .series{font-size:20px}
     .card-b{padding:2px 15px 16px}
   }
+  /* home button */
+  .home-link{display:inline-flex;align-items:center;gap:6px;color:var(--teal);font-size:13px;font-weight:600;
+    text-decoration:none;padding:7px 11px;border-radius:8px;margin-bottom:10px;border:1px solid rgba(255,255,255,.16)}
+  .home-link:hover{background:rgba(255,255,255,.10);color:#fff}
+  /* leader access gate */
+  html:not(.unlocked) .app{display:none}
+  #gate{position:fixed;inset:0;display:grid;place-items:center;background:var(--bg);padding:24px;z-index:100}
+  html.unlocked #gate{display:none}
+  .gate-card{background:var(--panel);border:1px solid var(--line);border-radius:16px;padding:32px 28px;max-width:360px;width:100%;text-align:center;box-shadow:0 24px 48px -24px rgba(20,36,61,.30)}
+  .gate-lock{width:46px;height:46px;border-radius:50%;background:var(--coral-soft);color:var(--coral);display:grid;place-items:center;margin:0 auto 14px}
+  .gate-eyebrow{font-size:12px;letter-spacing:.16em;text-transform:uppercase;color:var(--coral);font-weight:700;margin:0}
+  .gate-title{font-size:22px;margin:6px 0;color:var(--navy)}
+  .gate-sub{color:var(--muted);font-size:14px;margin:0 0 18px}
+  .gate-form{display:flex;flex-direction:column;gap:10px}
+  .gate-input{font-size:16px;padding:12px 14px;border:1px solid var(--line);border-radius:8px;background:#fff;color:var(--ink)}
+  .gate-input:focus{outline:2px solid var(--coral-soft);outline-offset:1px;border-color:var(--coral)}
+  .gate-btn{background:var(--coral);color:#fff;border:0;border-radius:999px;padding:12px;font-weight:600;font-size:15px;cursor:pointer}
+  .gate-btn:hover{filter:brightness(1.06)}
+  .gate-error{font-size:13px;color:#C0526A;min-height:18px;margin:2px 0 0;font-weight:500}
+  .gate-back{display:inline-block;margin-top:16px;font-size:13px;color:var(--muted);text-decoration:none}
+  .gate-back:hover{color:var(--coral);text-decoration:underline}
 </style>
 </head>
 <body>
 <div class="app">
   <aside class="side">
+    <a class="home-link" href="/">&#8592; Home</a>
     <div class="brand">Lakeview Discipleship Hub<small>LANDASIN - one theme, whole month</small></div>
     <div class="nav-h">Month</div>
     <div id="months"></div>
   </aside>
   <main class="main" id="main"><div class="msg">Loading...</div></main>
+</div>
+
+<div id="gate">
+  <div class="gate-card">
+    <div class="gate-lock" aria-hidden="true"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="10.5" width="16" height="10" rx="2"></rect><path d="M8 10.5V7a4 4 0 0 1 8 0v3.5"></path></svg></div>
+    <p class="gate-eyebrow">Lakeview UMC</p>
+    <h1 class="gate-title">Discipleship Hub</h1>
+    <p class="gate-sub">For our leaders. Please enter the access code.</p>
+    <form class="gate-form" id="gate-form">
+      <input class="gate-input" id="gate-input" type="password" inputmode="text" autocomplete="off" autocapitalize="off" spellcheck="false" placeholder="Access code" aria-label="Access code">
+      <button class="gate-btn" type="submit">Enter</button>
+      <p class="gate-error" id="gate-error" role="alert"></p>
+    </form>
+    <a class="gate-back" href="/">&#8592; Back to thelakeviewumc.com</a>
+  </div>
 </div>
 
 <script>
@@ -320,7 +358,32 @@ async function boot(){
   }
   if(monthsList.length) loadMonth(monthsList[0].key);
 }
-boot();
+// ---- leader access gate (code stored only as a SHA-256 hash) ----
+const GATE_HASH = "f5538d84211cbd0eaceb0788814599e125ed4454e61a791374137af247f7d563";
+async function sha256hex(str){
+  const buf = await crypto.subtle.digest('SHA-256', new TextEncoder().encode(str));
+  return [...new Uint8Array(buf)].map(b => b.toString(16).padStart(2,'0')).join('');
+}
+let booted = false;
+function tryBoot(){ if(!booted){ booted = true; boot(); } }
+const gForm = document.getElementById('gate-form');
+if(gForm){
+  gForm.addEventListener('submit', async (e) => {
+    e.preventDefault();
+    const inp = document.getElementById('gate-input');
+    const err = document.getElementById('gate-error');
+    const h = await sha256hex((inp.value || '').trim());
+    if(h === GATE_HASH){
+      localStorage.setItem('lvumc_dh_unlocked','1');
+      document.documentElement.classList.add('unlocked');
+      err.textContent = ''; tryBoot();
+    } else {
+      err.textContent = 'That code is not correct. Please try again.';
+      inp.value = ''; inp.focus();
+    }
+  });
+}
+if(document.documentElement.classList.contains('unlocked')) tryBoot();
 </script>
 </body>
 </html>
