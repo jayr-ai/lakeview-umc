@@ -56,7 +56,9 @@ Each generator skill produces markdown. To publish a week:
 3. Commit + push - GitHub Pages serves the update.
 
 Resource keys: `sermon`, `setlist`, `connectGroup`, `prayerTue`, `prayerThu`,
-`familyConnect` (weekly); `youthConnect`, `seriesTitle`, `seriesArc` (monthly).
+`familyConnect`, `basketballConnect` (weekly); `youthConnect`, `seriesTitle`,
+`seriesArc` (monthly). Basketball Connect is part of the standard monthly
+deliverables - generate a guide for every week of the month.
 
 **`youthConnect.md` must always be the FULL program**, not a summary - theme package,
 program flow, the complete Group Dynamics game breakdown, THE WORD (with the Gospel
