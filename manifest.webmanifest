@@ -1,0 +1,17 @@
+{
+  "name": "Lakeview United Methodist Church",
+  "short_name": "Lakeview UMC",
+  "description": "Lakeview UMC, Lipa City, Batangas - service times, calendar, ministries, and more.",
+  "lang": "en",
+  "start_url": "/?source=pwa",
+  "scope": "/",
+  "display": "standalone",
+  "orientation": "portrait",
+  "background_color": "#F5F0E3",
+  "theme_color": "#0E2E57",
+  "icons": [
+    { "src": "/images/icon-192.png", "sizes": "192x192", "type": "image/png", "purpose": "any" },
+    { "src": "/images/icon-512.png", "sizes": "512x512", "type": "image/png", "purpose": "any" },
+    { "src": "/images/icon-maskable-512.png", "sizes": "512x512", "type": "image/png", "purpose": "maskable" }
+  ]
+}

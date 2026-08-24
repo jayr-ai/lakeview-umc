@@ -3,6 +3,13 @@
   var yr = document.getElementById('yr');
   if (yr) yr.textContent = new Date().getFullYear();
 
+  /* PWA: register the service worker so the site is installable + works offline */
+  if ('serviceWorker' in navigator) {
+    window.addEventListener('load', function () {
+      navigator.serviceWorker.register('/sw.js').catch(function () {});
+    });
+  }
+
   /* mobile menu toggle */
   var menuBtn = document.querySelector('.menu-btn');
   var menu = document.getElementById('menu');
