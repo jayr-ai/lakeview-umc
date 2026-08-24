@@ -276,6 +276,12 @@ a.card:hover .more{gap:.6rem}
 }
 html{scroll-behavior:smooth}
 
+/* install-app CTA */
+#install-cta{padding:clamp(48px,7vw,84px) 0;text-align:center}
+.install-tip{margin:16px auto 0;font-size:.95rem;color:var(--muted);background:var(--card);
+  border:1px solid var(--line);border-radius:12px;padding:14px 18px;max-width:46ch;text-align:left;line-height:1.6}
+.install-tip b{color:var(--ink)}
+
 /* ===== CALENDAR PAGE ===== */
 .cal-toolbar{display:flex;align-items:center;justify-content:space-between;gap:16px;flex-wrap:wrap;margin-bottom:22px}
 .cal-heading{display:flex;align-items:center;gap:12px;flex-wrap:wrap}
