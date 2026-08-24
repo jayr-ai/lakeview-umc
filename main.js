@@ -235,29 +235,25 @@
   loadPhotosFromSheet();
   loadEventsFromSheet();
 
-  /* ---------- install-app button ---------- */
+  /* ---------- install-app button: direct one-tap install only ----------
+     Shown only when the browser actually offers a native install (Android/Chromium).
+     Clicking it installs immediately. iPhone has no install API, so it stays hidden there. */
   (function () {
     var section = document.getElementById('install-cta');
     if (!section) return;
     var btn = document.getElementById('install-btn');
-    var tip = document.getElementById('install-tip');
     var standalone = (window.matchMedia && matchMedia('(display-mode: standalone)').matches) || window.navigator.standalone === true;
-    if (standalone) { section.hidden = true; return; }
+    section.hidden = true;
+    if (standalone) return;
     var deferred = null;
-    window.addEventListener('beforeinstallprompt', function (e) { e.preventDefault(); deferred = e; });
+    window.addEventListener('beforeinstallprompt', function (e) {
+      e.preventDefault(); deferred = e; section.hidden = false;
+    });
     window.addEventListener('appinstalled', function () { section.hidden = true; });
-    var isIOS = /iphone|ipad|ipod/i.test(navigator.userAgent) ||
-      (navigator.platform === 'MacIntel' && navigator.maxTouchPoints > 1);
-    function showTip(html) { tip.innerHTML = html; tip.hidden = false; }
     btn.addEventListener('click', function () {
-      if (deferred) {
-        deferred.prompt();
-        deferred.userChoice.then(function () { deferred = null; });
-      } else if (isIOS) {
-        showTip('On iPhone or iPad: tap the <b>Share</b> button in Safari (the square with an up arrow), then choose <b>Add to Home Screen</b>.');
-      } else {
-        showTip('Open your browser menu and choose <b>Install app</b> or <b>Add to Home screen</b>. On iPhone, use Safari’s <b>Share</b> button, then <b>Add to Home Screen</b>.');
-      }
+      if (!deferred) return;
+      deferred.prompt();
+      deferred.userChoice.then(function () { deferred = null; section.hidden = true; });
     });
   })();
 })();
