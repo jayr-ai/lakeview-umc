@@ -235,25 +235,30 @@
   loadPhotosFromSheet();
   loadEventsFromSheet();
 
-  /* ---------- install-app button: direct one-tap install only ----------
-     Shown only when the browser actually offers a native install (Android/Chromium).
-     Clicking it installs immediately. iPhone has no install API, so it stays hidden there. */
+  /* ---------- install-app button (always visible; direct install when the browser allows) ----------
+     Android/Chrome: clicking fires the real one-tap install. iPhone has no install API,
+     so a click there shows one short line (Share -> Add to Home Screen), the only method Apple allows. */
   (function () {
     var section = document.getElementById('install-cta');
     if (!section) return;
     var btn = document.getElementById('install-btn');
+    var tip = document.getElementById('install-tip');
     var standalone = (window.matchMedia && matchMedia('(display-mode: standalone)').matches) || window.navigator.standalone === true;
-    section.hidden = true;
-    if (standalone) return;
+    if (standalone) { section.hidden = true; return; } // already installed - nothing to do
+    section.hidden = false;
     var deferred = null;
-    window.addEventListener('beforeinstallprompt', function (e) {
-      e.preventDefault(); deferred = e; section.hidden = false;
-    });
+    var isIOS = /iphone|ipad|ipod/i.test(navigator.userAgent) ||
+      (navigator.platform === 'MacIntel' && navigator.maxTouchPoints > 1);
+    window.addEventListener('beforeinstallprompt', function (e) { e.preventDefault(); deferred = e; });
     window.addEventListener('appinstalled', function () { section.hidden = true; });
     btn.addEventListener('click', function () {
-      if (!deferred) return;
-      deferred.prompt();
-      deferred.userChoice.then(function () { deferred = null; section.hidden = true; });
+      if (deferred) { deferred.prompt(); deferred.userChoice.then(function () { deferred = null; }); return; }
+      if (tip) {
+        tip.hidden = false;
+        tip.innerHTML = isIOS
+          ? 'On iPhone: tap <b>Share</b>, then <b>Add to Home Screen</b>.'
+          : 'Open your browser menu and tap <b>Install app</b> (or <b>Add to Home screen</b>).';
+      }
     });
   })();
 })();
